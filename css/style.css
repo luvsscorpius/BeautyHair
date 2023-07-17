@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+:root {
+    --menu: #283459;
+    --header: #333333;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* Menu lateral */
+
+.navigation {
+    position: relative;
+    height: 100vh;
+    background-color: var(--menu);
+    width: 115px;
+    overflow-x: hidden;
+    transition: 0.5;
+}
+
+.navigation img {
+    width: 50px;
+}
+
+.navigation .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.navigation ul {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-left: 5px;
+    padding-top: 48px;
+}
+
+.navigation ul li {
+    position: relative;
+    list-style: none;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-top: 20px;
+}
+
+.navigation ul li a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+    color: #eee;
+}
+
+.navigation ul li a .title {
+    font-size: 15px;
+    position: relative;
+    display: block;
+    white-space: nowrap;
+}
+
+.navigation ul li a .icon {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    margin: 10px;
+    text-align: center;
+}
+
+.navigation ul li.active {
+    background-color: #F2AC57;
+}
+
+.navigation ul li.active a::before {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.navigation ul li.active a::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background-color: var(--bg--dark--color);
+    border-radius: 50%;
+    box-shadow: 15px -15px 0 var(--red);
+}
