@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
     font-family: 'Ubuntu', sans-serif;
 }
@@ -23,7 +23,7 @@ body {
     position: relative;
     height: 100vh;
     background-color: var(--menu);
-    width: 115px;
+    width: 110px;
     overflow-x: hidden;
     transition: 0.5;
 }
@@ -75,12 +75,13 @@ body {
     white-space: nowrap;
 }
 
+
 .navigation ul li a .icon {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin: 10px;
     text-align: center;
 }
@@ -113,7 +114,13 @@ body {
 
 /* Header */
 
-header {
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header {
     background-color: var(--header);
     height: 80px;
     width: 100%;
@@ -121,22 +128,22 @@ header {
     align-items: center;
 }
 
-header .bars {
+.header .bars {
     display: flex;
     width: 100%;
     margin: 10px;
 }
 
-header .bars .list-bars {
+.header .bars .list-bars {
     list-style: none;
 }
 
-header .bars .list-bars a {
+.header .bars .list-bars .barras {
     color: #eee;
     list-style: none;
 }
 
-header .bars-header {
+.header .bars-header {
     display: flex;
     justify-content: flex-end;
     width: 100%;
@@ -144,14 +151,14 @@ header .bars-header {
     margin: 50px;
 }
 
-header .bars-header .list-header {
+.header .bars-header .list-header {
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: flex-end;
 }
 
-header .bars-header .list-header a {
+.header .bars-header .list-header a {
     color: #eee;
     text-decoration: none;
     list-style: none;
@@ -159,5 +166,135 @@ header .bars-header .list-header a {
 }
 
 .list-icon {
-    font-size: 1.7rem;
+    font-size: 3rem;
+}
+
+
+/* Information */
+
+.information {
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.information ul {
+    margin: 20px;
+}
+
+.information ul li {
+    list-style: none;
+}
+
+.information ul li a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #000;
+}
+
+.information ul li a .arrow {
+    font-size: 3rem;
+    color: #F2AC57;
+}
+
+.information ul li a .information-title {
+    font-size: 3rem;
+}
+
+.information ul li a .p {
+    font-size: 1.5rem;
+}
+
+/* Nav */
+
+.nav {
+    background-color: var(--menu);
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    height: 53px;
+    border-radius: 5px;
+    width: 95%;
+}
+
+.input {
+    display: flex;
+    justify-content: flex-start;
+    margin: 10px;
+    width: 100%;
+}
+
+.input input {
+    width: 45%;
+    height: 33px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 1.5rem;
+}
+
+.input input::placeholder {
+    padding: 10px;
+    font-size: 1.5rem;
+}
+
+.input button {
+    background-color: #F2AC57;
+    width: 33px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    color: #eee;
+    margin-left: -5px;
+}
+
+.input button i {
+    font-size: 20px;
+}
+
+.divButton {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.divButton button {
+    background-color: #F2AC57;
+    color: #eee;
+    border: none;
+    width: 199px;
+    margin: 10px;
+    height: 38px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.divButton button:active {
+    transform: scale(0.90);
+    transition: all 100ms ease;
+}
+
+/* Modal */
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form .column {
+    display: flex;
+    flex-direction: column;
+}
+
+form .column .row {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+    flex-direction: row;
+}
+
+form .column .row input {
+    width: 100%;
 }

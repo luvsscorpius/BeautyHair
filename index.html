@@ -7,84 +7,180 @@
     <title>BeautyHair</title>
     <link rel="shortcut icon" href="img/salao-de-beleza-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
     <!-- Menu lateral -->
-    <div class="navigation" id="navigation">
-        <div class="logo">
-            <img src="img/salao-de-beleza-logo.png" alt="logo">
+    <aside>
+        <div class="navigation" id="navigation">
+            <div class="logo">
+                <img src="img/salao-de-beleza-logo.png" alt="logo">
+            </div>
+            <ul>
+                <li class="list-home">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-house"></i></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+
+                <li class="list-clientes active">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-users"></i></span>
+                        <span class="title">Clientes</span>
+                    </a>
+                </li>
+
+                <li class="list-pagamentos">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-sack-dollar"></i></span>
+                        <span class="title">Pagamentos</span>
+                    </a>
+                </li>
+
+                <li class="list-calendario">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
+                        <span class="title">Calendário</span>
+                    </a>
+                </li>
+
+                <li class="list-ajuda">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-circle-question"></i></span>
+                        <span class="title">Ajuda</span>
+                    </a>
+                </li>
+
+                <li class="list-configuracoes">
+                    <a href="#">
+                        <span class="icon"><i class="fa-solid fa-gear"></i></span>
+                        <span class="title">Configurações</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-        <ul>
-            <li class="list">
-                <a href="#">
-                    <span class="icon"><i class="fa-solid fa-house"></i></span>
-                    <span class="title">Home</span>
-                </a>
-            </li>
+    </aside>
 
-            <li class="list active">
-                <a href="#">
-                    <span class="icon"><i class="fa-solid fa-users"></i></span>
-                    <span class="title">Clientes</span>
-                </a>
-            </li>
+    <main>
 
-            <li class="list">
-                <a href="#">
-                    <span class="icon"><i class="fa-solid fa-sack-dollar"></i></span>
-                    <span class="title">Pagamentos</span>
-                </a>
-            </li>
+        <header class="header">
+            <ul class="bars">
+                <li class="list-bars">
+                    <a href="#" class="barras">
+                        <span class="list-icon"><i class="fa-solid fa-bars"></i></span>
+                    </a>
+                </li>
+            </ul>
 
-            <li class="list">
-                <a href="#">
-                    <span class="icon"><i class="fa-solid fa-calendar-days"></i></span>
-                    <span class="title">Calendário</span>
-                </a>
-            </li>
+            <ul class="bars-header">
+                <li class="list-header">
+                    <a href="#">
+                        <span class="title" style="font-size: 1.5rem;">And</span>
+                        <span style="font-size: 1.5rem;"><i class="fa-solid fa-arrow-down"></i></span>
+                    </a>
+                </li>
 
-            <li class="list">
-                <a href="#">
-                    <span class="icon"><i class="fa-solid fa-circle-question"></i></span>
-                    <span class="title">Ajuda</span>
-                </a>
-            </li>
+                <li class="list-header">
+                    <a href="#">
+                        <span class="list-icon"><i class="fa-solid fa-bell"></i></span>
+                    </a>
+                </li>
+            </ul>
+        </header>
 
-            <li class="list">
-                <a href="#">
-                    <span class="icon"><i class="fa-solid fa-gear"></i></span>
-                    <span class="title">Configurações</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+        <section class="information">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
+                        <span class="information-title">Clientes <span class="p">/ # Operações</span></span>
+                    </a>
+                </li>
+            </ul>
+        </section>
 
-    <header>
-        <ul class="bars">
-            <li class="list-bars">
-                <a href="#">
-                    <span class="list-icon"><i class="fa-solid fa-bars"></i></span>
-                </a>
-            </li>
-        </ul>
+        <nav class="nav">
+            <div class="input" id="input">
+                <input type="search" class="search" id="search" placeholder="Procurar cliente" autocomplete="off">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
 
-        <ul class="bars-header">
-            <li class="list-header">
-                <a href="#">
-                    <span class="title" style="font-size: 1.2rem;">And</span>
-                    <span style="font-size: 1.5rem;"><i class="fa-solid fa-arrow-down"></i></span>
-                </a>
-            </li>
+            <div class="divButton" id="divButton">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modal-mensagem">Adicionar
+                    cliente</button>
+            </div>
+        </nav>
 
-            <li class="list-header">
-                <a href="#">
-                    <span class="list-icon"><i class="fa-solid fa-bell"></i></span>
-                </a>
-            </li>
-        </ul>
-    </header>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-mensagem">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title">Adicionar cliente</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <div class="column">
+                                <div class="row">
 
+                                    <label for="nome">Nome</label>
+                                    <input type="text" id="nome">
+
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email">
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="row">
+
+                                    <label for="telefone">Telefone</label>
+                                    <input type="text" id="telefone">
+
+                                    <label for="celular">Celular</label>
+                                    <input type="text" id="celular">
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="row">
+
+
+                                    <label for="corte">Corte</label>
+                                    <input type="text" id="corte">
+
+                                    <label for="data">Data</label>
+                                    <input type="date" id="data">
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="row">
+                                    <label for="profissional">Profissional</label>
+                                    <select>
+                                        <option value="1">and</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
     <script src="https://kit.fontawesome.com/8e9cc19741.js" crossorigin="anonymous"></script>
 </body>
 
