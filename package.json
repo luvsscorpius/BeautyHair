@@ -1,6 +1,6 @@
 {
   "name": "beautyhair",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "BeautyHair é um software de cabeleleiro, desenvolvido com HTML, CSS e JavaScript e foi desenvolvido com a funcionalidade de colocar em prática o que eu aprendi com Classes em JavaScript.",
   "main": "index.js",
   "scripts": {
