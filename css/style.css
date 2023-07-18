@@ -298,3 +298,42 @@ form .column .row {
 form .column .row input {
     width: 100%;
 }
+
+/* ContainerTable */
+
+.containerTable {
+    background-color: #EDEDED;
+    width: 93%;
+    margin: 0 auto;
+    margin-top: 30px;
+    height: 100%;
+}
+
+.containerTable .gerarRelatorio {
+    margin-top: 10px;
+    margin-left: 20px;
+    background-color: #67BF63;
+    border: none;
+    width: 199px;
+    height: 38px;
+    color: #eee;
+    font-size: 1.5rem;
+    border-radius: 5px;
+}
+
+.containerTable .gerarRelatorio:active {
+    transform: scale(0.90);
+    transition: all 100ms ease;
+}
+
+.divTable {
+    background-color: #D8D8D8;
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 10px;
+    height: 100%;
+}
+
+.divTable .table {
+    border-bottom: 1px solid #000;
+}

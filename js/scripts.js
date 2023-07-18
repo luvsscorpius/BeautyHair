@@ -15,5 +15,90 @@ function activeLink() {
 list.forEach((item) =>
     item.addEventListener('click', activeLink))
 
-// Função para abrir o menu
+// Adicionar dados na table com classes
 
+class TableData {
+    constructor() {
+        this.tableData = []
+    }
+
+    addData(profissional, nome, email, telefone, celular, corte, data) {
+        this.tableData.push({ profissional, nome, email, telefone, celular, corte, data })
+    }
+
+    renderTable() {
+        const tableBody = document.querySelector('#table tbody')
+
+        this.tableData.forEach(data => {
+            const row = tableBody.insertRow()
+
+            const profissionalCell = row.insertCell()
+            profissionalCell.textContent = data.profissional
+
+            const nameCell = row.insertCell()
+            nameCell.textContent = data.nome
+
+            const emailCell = row.insertCell()
+            emailCell.textContent = data.email
+
+            const telefoneCell = row.insertCell()
+            telefoneCell.textContent = data.telefone
+
+            const celularCell = row.insertCell()
+            celularCell.textContent = data.celular
+
+            const corteCell = row.insertCell()
+            corteCell.textContent = data.corte
+
+            const dataCell = row.insertCell()
+            dataCell.textContent = data.data
+        })
+    }
+}
+
+// Instanciar 
+const tableData = new TableData()
+
+// Capturar o formulario
+
+const submitButton = document.getElementById("btnAdd");
+
+submitButton.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    // Obter os valores dos campos 
+
+    const profissionalInput = document.querySelector('#profissionalInput')
+    const nameInput = document.querySelector('#nome')
+    const emailInput = document.querySelector('#email')
+    const telefoneInput = document.querySelector('#telefone')
+    const celularInput = document.querySelector('#celular')
+    const corteInput = document.querySelector('#corte')
+    const dataInput = document.querySelector('#data')
+
+    const profissional = profissionalInput.value
+    const nome = nameInput.value
+    const email = emailInput.value
+    const telefone = telefoneInput.value
+    const celular = celularInput.value
+    const corte = corteInput.value
+    const data = dataInput.value
+
+    console.log(nome)
+
+    // Adicionar dados a tabela 
+    tableData.addData(profissional, nome, email, telefone, celular, corte, data)
+
+    // Atualizar dados da tabela
+    tableData.renderTable()
+
+    // Limpe os campos do formulário
+    profissionalInput.value = "";
+    nameInput.value = "";
+    emailInput.value = "";
+    telefoneInput.value = "";
+    celularInput.value = "";
+    corteInput.value = "";
+    dataInput.value = "";
+
+})
