@@ -90,13 +90,17 @@ submitButton.addEventListener('click', (event) => {
     const data = dataInput.value
     const id = tableData.id
 
+    const dangerAlert = document.querySelector('.alert-danger')
+    const successAlert = document.querySelector('.alert-success')
 
     if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data.trim() === '') {
-
+        dangerAlert.style.display = 'flex'
+        successAlert.style.display = 'none'
     } else {
         console.log(nome)
 
-
+        successAlert.style.display = 'flex'
+        dangerAlert.style.display = 'none'
 
         // Adicionar dados a tabela 
         tableData.addData(profissional, nome, email, telefone, celular, corte, data)

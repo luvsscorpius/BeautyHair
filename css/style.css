@@ -337,3 +337,9 @@ form .column .row input {
 .divTable .table th {
     border-bottom: 1px solid #000;
 }
+
+.alert {
+    display: none;
+    width: 95%;
+    margin: 20px auto;
+}
