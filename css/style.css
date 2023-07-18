@@ -305,7 +305,7 @@ form .column .row input {
     background-color: #EDEDED;
     width: 93%;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 20px;
     height: 100%;
 }
 
@@ -334,6 +334,6 @@ form .column .row input {
     height: 100%;
 }
 
-.divTable .table {
+.divTable .table th {
     border-bottom: 1px solid #000;
 }

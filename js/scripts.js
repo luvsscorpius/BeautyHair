@@ -23,17 +23,22 @@ class TableData {
     }
 
     addData(profissional, nome, email, telefone, celular, corte, data) {
-        this.tableData.push({ profissional, nome, email, telefone, celular, corte, data })
+        const id = generateUniqueId();
+        this.tableData.push({ id, profissional, nome, email, telefone, celular, corte, data })
     }
 
     renderTable() {
         const tableBody = document.querySelector('#table tbody')
+        tableBody.innerHTML = ""
 
         this.tableData.forEach(data => {
             const row = tableBody.insertRow()
 
             const profissionalCell = row.insertCell()
             profissionalCell.textContent = data.profissional
+
+            const idCell = row.insertCell()
+            idCell.textContent = data.id
 
             const nameCell = row.insertCell()
             nameCell.textContent = data.nome
@@ -83,22 +88,35 @@ submitButton.addEventListener('click', (event) => {
     const celular = celularInput.value
     const corte = corteInput.value
     const data = dataInput.value
+    const id = tableData.id
 
-    console.log(nome)
 
-    // Adicionar dados a tabela 
-    tableData.addData(profissional, nome, email, telefone, celular, corte, data)
+    if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data.trim() === '') {
 
-    // Atualizar dados da tabela
-    tableData.renderTable()
+    } else {
+        console.log(nome)
 
-    // Limpe os campos do formulário
-    profissionalInput.value = "";
-    nameInput.value = "";
-    emailInput.value = "";
-    telefoneInput.value = "";
-    celularInput.value = "";
-    corteInput.value = "";
-    dataInput.value = "";
+
+
+        // Adicionar dados a tabela 
+        tableData.addData(profissional, nome, email, telefone, celular, corte, data)
+
+        // Atualizar dados da tabela   
+        tableData.renderTable()
+
+        // Limpe os campos do formulário
+        nameInput.value = "";
+        emailInput.value = "";
+        telefoneInput.value = "";
+        celularInput.value = "";
+        corteInput.value = "";
+        dataInput.value = "";
+
+        console.log(tableData)
+    }
 
 })
+
+function generateUniqueId() {
+    return Date.now().toString(36) + Math.random().toString(36).substring(2, 5)
+}
