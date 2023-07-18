@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.2.0...v1.3.0) (2023-07-18)
+
+
+### Features
+
+* **nav and modal added:** created a nav e added modal to add clients ([0483b64](https://github.com/luvsscorpius/BeautyHair/commit/0483b6479376ba8cd75fd13c187bb2e4cf347959))
+
 # [1.2.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.1.0...v1.2.0) (2023-07-18)
 
 
