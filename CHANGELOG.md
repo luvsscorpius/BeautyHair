@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.1.0...v1.2.0) (2023-07-18)
+
+
+### Features
+
+* **header added:** header added ([326efb9](https://github.com/luvsscorpius/BeautyHair/commit/326efb9166913097ccf906abbdd63bc5c4e68cdd))
+
 # [1.1.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.0.0...v1.1.0) (2023-07-17)
 
 
