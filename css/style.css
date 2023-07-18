@@ -110,3 +110,54 @@ body {
     border-radius: 50%;
     box-shadow: 15px -15px 0 var(--red);
 }
+
+/* Header */
+
+header {
+    background-color: var(--header);
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+header .bars {
+    display: flex;
+    width: 100%;
+    margin: 10px;
+}
+
+header .bars .list-bars {
+    list-style: none;
+}
+
+header .bars .list-bars a {
+    color: #eee;
+    list-style: none;
+}
+
+header .bars-header {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 30px;
+    margin: 50px;
+}
+
+header .bars-header .list-header {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+header .bars-header .list-header a {
+    color: #eee;
+    text-decoration: none;
+    list-style: none;
+    font-size: 1.5rem;
+}
+
+.list-icon {
+    font-size: 1.7rem;
+}
