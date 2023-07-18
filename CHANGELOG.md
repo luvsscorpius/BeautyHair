@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.3.0...v1.4.0) (2023-07-18)
+
+
+### Features
+
+* **table created:** table created done ([e684fce](https://github.com/luvsscorpius/BeautyHair/commit/e684fce4ef8e24679ae4c7604014fc6825c14fbb))
+
 # [1.3.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.2.0...v1.3.0) (2023-07-18)
 
 
