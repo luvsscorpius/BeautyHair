@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/luvsscorpius/BeautyHair/compare/v1.4.0...v1.4.1) (2023-07-18)
+
+
+### Bug Fixes
+
+* **duplicated table fixed:** table was duplicating when added more than 1 client ([4426dee](https://github.com/luvsscorpius/BeautyHair/commit/4426deeeba68d779de7c3dfeffef065c53479323))
+
 # [1.4.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.3.0...v1.4.0) (2023-07-18)
 
 
