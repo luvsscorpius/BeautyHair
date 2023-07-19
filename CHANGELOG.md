@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.5.0...v1.6.0) (2023-07-19)
+
+
+### Features
+
+* **pdf added:** pDF added ([562187b](https://github.com/luvsscorpius/BeautyHair/commit/562187b726d57acabf64e17d255526713bb5b6a2))
+
 # [1.5.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.4.1...v1.5.0) (2023-07-18)
 
 
