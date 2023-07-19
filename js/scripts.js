@@ -1,5 +1,6 @@
 // Funções auxiliares 
 
+
 const elemento = (elemento) => document.querySelector(elemento)
 
 // Função para mudar o menu
@@ -124,3 +125,23 @@ submitButton.addEventListener('click', (event) => {
 function generateUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).substring(2, 5)
 }
+
+// Gerar relatório
+
+const btn_gerarRelatorio = document.querySelector('#gerarRelatorio')
+
+const gerarRelatorio = () => {
+    btn_gerarRelatorio.addEventListener('click', (e) => {
+        console.log('PDF')
+        const table = document.querySelector('#divTable').innerHTML
+        const dia = new Date()
+
+        const doc = new jsPDF('m', 'pt', 'a4')
+
+        doc.fromHTML(table)
+        doc.save("Relatório.pdf")
+    })
+}
+
+gerarRelatorio()
+
