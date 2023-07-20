@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/luvsscorpius/BeautyHair/compare/v1.6.0...v1.6.1) (2023-07-20)
+
+
+### Bug Fixes
+
+* **table pdf:** table pdf wasn't good, like it wasn't well styled ([8191f11](https://github.com/luvsscorpius/BeautyHair/commit/8191f11f6d0212bb7d96d7871a43287e1e9cbd03))
+
 # [1.6.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.5.0...v1.6.0) (2023-07-19)
 
 
