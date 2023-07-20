@@ -1,5 +1,7 @@
 // Funções auxiliares 
 
+
+
 const elemento = (elemento) => document.querySelector(elemento)
 
 // Função para mudar o menu
@@ -92,15 +94,19 @@ submitButton.addEventListener('click', (event) => {
 
     const dangerAlert = document.querySelector('.alert-danger')
     const successAlert = document.querySelector('.alert-success')
+    const alertRelatorio = document.querySelector('#alert-relatorio')
 
     if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data.trim() === '') {
         dangerAlert.style.display = 'flex'
         successAlert.style.display = 'none'
+        alertRelatorio.style.display = 'none'
+
     } else {
         console.log(nome)
 
         successAlert.style.display = 'flex'
         dangerAlert.style.display = 'none'
+        alertRelatorio.style.display = 'none'
 
         // Adicionar dados a tabela 
         tableData.addData(profissional, nome, email, telefone, celular, corte, data)
@@ -155,6 +161,13 @@ const gerarRelatorio = () => {
             //theme: striped
             // theme: plain
         })
+        const alertRelatorio = document.querySelector('#alert-relatorio')
+        const dangerAlert = document.querySelector('.alert-danger')
+        const successAlert = document.querySelector('.alert-success')
+
+        dangerAlert.style.display = 'none'
+        successAlert.style.display = 'none'
+        alertRelatorio.style.display = 'flex'
 
         pdf.save('relatório.pdf')
     })
