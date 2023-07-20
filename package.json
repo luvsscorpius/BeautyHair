@@ -20,6 +20,7 @@
     }
   },
   "dependencies": {
+    "jquery-mask-plugin": "^1.14.16",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.31"
   }

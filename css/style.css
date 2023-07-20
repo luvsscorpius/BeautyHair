@@ -288,14 +288,20 @@ form .column {
     flex-direction: column;
 }
 
-form .column .row {
+form .column .mb-3 {
     display: flex;
     gap: 10px;
     margin: 10px;
     flex-direction: row;
 }
 
-form .column .row input {
+form .column .mb-3 label {
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+form .column .mb-3 input {
     width: 100%;
 }
 
