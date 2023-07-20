@@ -235,11 +235,6 @@ main {
     font-size: 1.5rem;
 }
 
-.input input::placeholder {
-    padding: 10px;
-    font-size: 1.5rem;
-}
-
 .input button {
     background-color: #F2AC57;
     width: 33px;

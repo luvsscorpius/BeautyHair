@@ -61,6 +61,28 @@ class TableData {
             dataCell.textContent = data.data
         })
     }
+
+    filterTable(searchTerm) {
+        const tableBody = document.querySelector('#table tbody')
+        const rows = tableBody.querySelectorAll('tr')
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td')
+            let found = false;
+
+            cells.forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    found = true
+                }
+            })
+
+            if (found) {
+                row.style.display = ""
+            } else {
+                row.style.display = "none"
+            }
+        })
+    }
 }
 
 // Instanciar 
@@ -131,6 +153,16 @@ function generateUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).substring(2, 5)
 }
 
+// Captura o campo de busca pelo id
+const searchInput = document.querySelector('#search')
+
+// Adiciona um Evento de entrada ao campo de busca para atualizar a tabela de acordo com o termo de busca
+searchInput.addEventListener("input", function () {
+    console.log("teste")
+    const searchTerm = searchInput.value
+    tableData.filterTable(searchTerm)
+})
+
 // Gerar relatório
 
 const btn_gerarRelatorio = document.querySelector('#gerarRelatorio')
@@ -189,3 +221,4 @@ const phoneMask = (value) => {
     value = value.replace(/(\d)(\d{4})$/, "$1-$2")
     return value
 }
+
