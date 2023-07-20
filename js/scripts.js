@@ -1,6 +1,5 @@
 // Funções auxiliares 
 
-
 const elemento = (elemento) => document.querySelector(elemento)
 
 // Função para mudar o menu
@@ -136,10 +135,25 @@ const gerarRelatorio = () => {
         const table = document.querySelector('#divTable').innerHTML
         const dia = new Date()
 
-        const doc = new jsPDF('m', 'pt', 'a4')
+        var pdfsize = 'a0'
+        var pdf = new jsPDF('1', 'pt', pdfsize)
 
-        doc.fromHTML(table)
-        doc.save("Relatório.pdf")
+        pdf.autoTable({
+            html: '#table',
+            startY: 60,
+            styles: {
+                fontSize: 30,
+                cellWidth: 'wrap'
+            },
+            columnStyle: {
+                1: {
+                    columnWidth: 'auto'
+                }
+            },
+            theme: 'grid'
+        })
+
+        pdf.save('relatório.pdf')
     })
 }
 
