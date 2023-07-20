@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.9.0...v1.10.0) (2023-07-20)
+
+
+### Features
+
+* **table buttons and modal added:** modals and buttons table added (deleted, edit) ([387d47c](https://github.com/luvsscorpius/BeautyHair/commit/387d47c305c96315433bb1624bea8ec3b3650cfc))
+
 # [1.9.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.8.0...v1.9.0) (2023-07-20)
 
 
