@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.6.1...v1.7.0) (2023-07-20)
+
+
+### Features
+
+* **pdf alert added:** pDF alert when you click the button ([9b4c89a](https://github.com/luvsscorpius/BeautyHair/commit/9b4c89af981ff0c1ea0b1f10fef2afe3cb68d893))
+
 ## [1.6.1](https://github.com/luvsscorpius/BeautyHair/compare/v1.6.0...v1.6.1) (2023-07-20)
 
 
