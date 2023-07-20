@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.7.0...v1.8.0) (2023-07-20)
+
+
+### Features
+
+* **input mask added:** input mask added to modal inputs ([6829fd8](https://github.com/luvsscorpius/BeautyHair/commit/6829fd801c324b261b304ffe2383d6be7cfec204))
+
 # [1.7.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.6.1...v1.7.0) (2023-07-20)
 
 
