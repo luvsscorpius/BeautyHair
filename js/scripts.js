@@ -135,11 +135,12 @@ const gerarRelatorio = () => {
         const table = document.querySelector('#divTable').innerHTML
         const dia = new Date()
 
-        var pdfsize = 'a0'
-        var pdf = new jsPDF('1', 'pt', pdfsize)
+        var pdfsize = 'a0' // Tamanho do pdf
+        var pdf = new jsPDF('1', 'pt', pdfsize) // criando uma variável de pdf
 
-        pdf.autoTable({
-            html: '#table',
+        pdf.autoTable({ // Utilizando o autoTable (plugin para tabelas do jsPDF)
+            html: '#table', // trazendo sua tabela do html
+            // Estilos
             startY: 60,
             styles: {
                 fontSize: 30,
@@ -149,8 +150,10 @@ const gerarRelatorio = () => {
                 1: {
                     columnWidth: 'auto'
                 }
-            },
+            }, // Temas
             theme: 'grid'
+            //theme: striped
+            // theme: plain
         })
 
         pdf.save('relatório.pdf')
