@@ -39,9 +39,6 @@ class TableData {
             const profissionalCell = row.insertCell()
             profissionalCell.textContent = data.profissional
 
-            const idCell = row.insertCell()
-            idCell.textContent = data.id
-
             const nameCell = row.insertCell()
             nameCell.textContent = data.nome
 
@@ -63,22 +60,32 @@ class TableData {
     }
 
     filterTable(searchTerm) {
-        const tableBody = document.querySelector('#table tbody')
-        const rows = tableBody.querySelectorAll('tr')
+        const tableBody = document.querySelector('#table tbody') // Captura o corpo da tabela
+        const rows = tableBody.querySelectorAll('tr') // Obtem todas as linhas da tabela
 
+        // itera sobre as linhas da tabela
         rows.forEach(row => {
-            const cells = row.querySelectorAll('td')
-            let found = false;
+            const cells = row.querySelectorAll('td') // obtem todas as celulas da linha
 
-            cells.forEach(cell => {
+            // Verifica se o termo está presente ou não
+            let found = false;
+            cells.forEach(cell => { // includes é pra verificar se o termo existe ou nao
                 if (cell.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    // se encontra transforma a variavel em true
                     found = true
                 }
             })
 
+            // Mostrar
             if (found) {
+                /* Se o termo de busca for encontrado em alguma célula, definimos o estilo de exibição 
+                da linha como "" (vazio), o que significa que a linha será exibida normalmente.
+                */
                 row.style.display = ""
             } else {
+                /* Se o termo de busca não for encontrado em alguma célula, definimos o estilo de exibição 
+                da linha como "none", o que significa que a linha não será exibida.
+                */
                 row.style.display = "none"
             }
         })
@@ -112,7 +119,6 @@ submitButton.addEventListener('click', (event) => {
     const celular = celularInput.value
     const corte = corteInput.value
     const data = dataInput.value
-    const id = tableData.id
 
     const dangerAlert = document.querySelector('.alert-danger')
     const successAlert = document.querySelector('.alert-success')
