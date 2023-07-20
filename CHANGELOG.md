@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.8.0...v1.9.0) (2023-07-20)
+
+
+### Features
+
+* **filter table:** search and filter on table ([f24f453](https://github.com/luvsscorpius/BeautyHair/commit/f24f453a04aeb9c7e4216ea758fe1818d867dcfa))
+
 # [1.8.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.7.0...v1.8.0) (2023-07-20)
 
 
