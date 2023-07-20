@@ -344,3 +344,8 @@ form .column .mb-3 input {
     width: 95%;
     margin: 20px auto;
 }
+
+.espacamento-botoes {
+    margin-right: 5px;
+    /* Espaçamento de 5 pixels à direita do botão */
+}

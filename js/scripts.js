@@ -56,7 +56,40 @@ class TableData {
 
             const dataCell = row.insertCell()
             dataCell.textContent = data.data
+
+            const actionsCell = row.insertCell() // celular para as ações
+
+            // Botão editar
+            const editButton = document.createElement("button")
+            editButton.classList.add("btn", "btn-warning", "btn-sm", "espacamento-botoes") // Adicionando classes do bootstrap
+            editButton.innerHTML = '<i class="fas fa-edit"></i>' // Adicionando o icone do font-awesome
+            editButton.addEventListener("click", () => {
+                // Lógica para editar o cliente com base nos dados do objeto 'data'
+                editButton.setAttribute("data-toggle", "modal");
+                editButton.setAttribute("data-target", "#modal-mensagem");
+                console.log("Editar o cliente com o id:", data.id)
+            })
+            actionsCell.appendChild(editButton)
+
+            // Botão de apagar
+            const delButton = document.createElement("button")
+            delButton.classList.add("btn", "btn-danger", "btn-sm", "espacamento-botoes") // Adicionando classes do bootstrap
+            delButton.innerHTML = '<i class="fas fa-trash-alt"></i>' // Adicionando o icone do font-awesome
+            delButton.addEventListener("click", () => {
+                // Lógica para editar o cliente com base nos dados do objeto 'data'
+                delButton.setAttribute("data-toggle", "modal");
+                delButton.setAttribute("data-target", "#modalExemplo");
+                const nomecliente = data.nome
+                this.prepararExclusao(nomecliente)
+                console.log("Apagar o cliente com o id:", data.id)
+            })
+            actionsCell.appendChild(delButton)
         })
+    }
+
+    prepararExclusao(nomecliente) {
+        const spanNomeClienteExclusao = document.querySelector("#nomeClienteExclusao")
+        spanNomeClienteExclusao.textContent = nomecliente
     }
 
     filterTable(searchTerm) {
