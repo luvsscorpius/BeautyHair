@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.11.0...v1.12.0) (2023-07-21)
+
+
+### Features
+
+* **deleted function added:** delete Table function added: Now you can delete a client ([6239841](https://github.com/luvsscorpius/BeautyHair/commit/6239841e09a8e1b3028c98796108282d693c4514))
+
 # [1.11.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.10.0...v1.11.0) (2023-07-21)
 
 
