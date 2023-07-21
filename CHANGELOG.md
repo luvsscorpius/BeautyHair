@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.10.0...v1.11.0) (2023-07-21)
+
+
+### Features
+
+* **update function added:** update table cliente added: Now you can update the table client ([a716e8c](https://github.com/luvsscorpius/BeautyHair/commit/a716e8c2236ec88707b1ad321014e5a3d87ea9d1))
+
 # [1.10.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.9.0...v1.10.0) (2023-07-20)
 
 
