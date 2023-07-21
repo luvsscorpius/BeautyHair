@@ -107,18 +107,21 @@ class TableData {
                     const successAlert = document.querySelector('.alert-success')
                     const alertRelatorio = document.querySelector('#alert-relatorio')
                     const updateAlert = document.querySelector('#alert-update')
+                    const deletedAlert = document.querySelector('#alert-deleted')
 
                     if (novoNome.trim() === '' || novoEmail.trim() === '' || novoCelular.trim() === '' || novoCorte.trim() === '' || novaData.trim() === '') {
                         dangerAlert.style.display = 'flex'
                         successAlert.style.display = 'none'
                         alertRelatorio.style.display = 'none'
                         updateAlert.style.display = 'none'
+                        deletedAlert.style.display = 'none'
                     } else {
 
                         successAlert.style.display = 'none'
                         dangerAlert.style.display = 'none'
                         alertRelatorio.style.display = 'none'
                         updateAlert.style.display = 'flex'
+                        deletedAlert.style.display = 'none'
 
                         // atualizando o vetor com os novos inputs atualizados
                         data.nome = novoNome
@@ -155,6 +158,26 @@ class TableData {
                 delButton.setAttribute("data-target", "#modalExemplo");
                 const nomecliente = data.nome
                 this.prepararExclusao(nomecliente)
+
+                const dangerAlert = document.querySelector('.alert-danger')
+                const successAlert = document.querySelector('.alert-success')
+                const alertRelatorio = document.querySelector('#alert-relatorio')
+                const updateAlert = document.querySelector('#alert-update')
+                const deletedAlert = document.querySelector('#alert-deleted')
+
+                const btnDel = document.querySelector('#btnDel')
+                btnDel.addEventListener('click', () => {
+                    const idCliente = data.id
+                    tableData.excluirCliente(idCliente)
+
+                    successAlert.style.display = 'none'
+                    dangerAlert.style.display = 'none'
+                    alertRelatorio.style.display = 'none'
+                    updateAlert.style.display = 'none'
+                    deletedAlert.style.display = 'flex'
+
+                    tableData.renderTable()
+                })
                 console.log("Apagar o cliente com o id:", data.id)
             })
             actionsCell.appendChild(delButton)
@@ -183,6 +206,10 @@ class TableData {
     prepararExclusao(nomecliente) {
         const spanNomeClienteExclusao = document.querySelector("#nomeClienteExclusao")
         spanNomeClienteExclusao.textContent = nomecliente
+    }
+
+    excluirCliente(id) {
+        this.tableData = this.tableData.filter(item => item.id !== id)
     }
 
     filterTable(searchTerm) {
@@ -249,11 +276,15 @@ submitButton.addEventListener('click', (event) => {
     const dangerAlert = document.querySelector('.alert-danger')
     const successAlert = document.querySelector('.alert-success')
     const alertRelatorio = document.querySelector('#alert-relatorio')
+    const updateAlert = document.querySelector('#alert-update')
+    const deletedAlert = document.querySelector('#alert-deleted')
 
     if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data.trim() === '') {
         dangerAlert.style.display = 'flex'
         successAlert.style.display = 'none'
         alertRelatorio.style.display = 'none'
+        updateAlert.style.display = 'none'
+        deletedAlert.style.display = 'none'
 
     } else {
         console.log(nome)
@@ -261,6 +292,8 @@ submitButton.addEventListener('click', (event) => {
         successAlert.style.display = 'flex'
         dangerAlert.style.display = 'none'
         alertRelatorio.style.display = 'none'
+        updateAlert.style.display = 'none'
+        deletedAlert.style.display = 'none'
 
         // Adicionar dados a tabela 
         tableData.addData(profissional, nome, email, telefone, celular, corte, data)
