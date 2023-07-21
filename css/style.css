@@ -349,3 +349,80 @@ form .column .mb-3 input {
     margin-right: 5px;
     /* Espaçamento de 5 pixels à direita do botão */
 }
+
+/* Notificacao */
+
+/* Estilo do dropdown menu */
+.notification-dropdown {
+    position: relative;
+}
+
+.notificacao-conteudo {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    min-width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.buttons {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Estilo para mostrar a notificação quando aberta */
+.aberto .notificacao-conteudo {
+    display: block;
+}
+
+.notificacao-header {
+    border-bottom: 1px solid #000;
+}
+
+.notificacao-body {
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.3s, transform 0.5s ease-out;
+    /* Adicionamos uma transição para o efeito de saída */
+}
+
+/* Estilo para o botão de fechar */
+.close-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* Estilo para o badge da notificação */
+.notification-badge {
+    background-color: #F2AC57;
+    color: #fff;
+    border-radius: 50%;
+    padding: 5px 8px;
+    position: absolute;
+    font-size: 12px;
+}
+
+@keyframes slideOutAnimation {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+.slide-out-animation {
+    animation: slideOutAnimation 0.5s ease forwards;
+}

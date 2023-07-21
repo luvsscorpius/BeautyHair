@@ -84,8 +84,25 @@
 
                 <li class="list-header">
                     <a href="#">
-                        <span class="list-icon"><i class="fa-solid fa-bell"></i></span>
+                        <span class="list-icon" id="btnNotification"><i class="fa-solid fa-bell"></i></span>
+                        <span class="notification-badge">0</span>
                     </a>
+                    <div class="notification-dropdown">
+                        <div class="notificacao-conteudo" style="display: none;">
+                            <div class="notificacao-header">
+                                <h4>Novas notificações</h4>
+                            </div>
+                            <div class="notificacao-body">
+
+                            </div>
+                            <div class="buttons" id="buttons">
+                                <button type="button" class="btn btn-danger" id="btnFechar"
+                                    data-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-danger" id="btnLimpar" data-dismiss="modal">Limpar
+                                    todas</button>
+                            </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </header>

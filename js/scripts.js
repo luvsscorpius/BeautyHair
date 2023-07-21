@@ -1,8 +1,24 @@
 // Funções auxiliares 
 
-
-
 const elemento = (elemento) => document.querySelector(elemento)
+
+// Variaveis 
+
+//Alertas
+const dangerAlert = document.querySelector('.alert-danger')
+const successAlert = document.querySelector('.alert-success')
+const alertRelatorio = document.querySelector('#alert-relatorio')
+const updateAlert = document.querySelector('#alert-update')
+const deletedAlert = document.querySelector('#alert-deleted')
+const notificationAlertClientAdded = document.querySelector('#notificationAlertClientAdded')
+const notificationAlertClientDeleted = document.querySelector('#notificationAlertClientDeleted')
+const notificationAlertClientUpdated = document.querySelector('#notificationAlertClientUpdated')
+const notificationAlertGeneratedPDF = document.querySelector('#notificationAlertGeneratedPDF')
+
+const notificationBadge = document.querySelector('.notification-badge')
+const btnNotification = document.querySelector('#btnNotification')
+const notificacaoConteudo = document.querySelector('.notificacao-conteudo')
+const notificacaoBody = document.querySelector('.notificacao-body')
 
 // Função para mudar o menu
 
@@ -103,12 +119,6 @@ class TableData {
                     const novoCorte = spanCorteEdicao.value
                     const novaData = spanDataEdicao.value
 
-                    const dangerAlert = document.querySelector('.alert-danger')
-                    const successAlert = document.querySelector('.alert-success')
-                    const alertRelatorio = document.querySelector('#alert-relatorio')
-                    const updateAlert = document.querySelector('#alert-update')
-                    const deletedAlert = document.querySelector('#alert-deleted')
-
                     if (novoNome.trim() === '' || novoEmail.trim() === '' || novoCelular.trim() === '' || novoCorte.trim() === '' || novaData.trim() === '') {
                         dangerAlert.style.display = 'flex'
                         successAlert.style.display = 'none'
@@ -131,16 +141,11 @@ class TableData {
                         data.corte = novoCorte
                         data.data = novaData
 
+                        adicionarNotificacao('success', `Cliente ${novoNome} atualizado com sucesso.`);
+                        atualizarNotificacaoBadge()
+
                         // Atualizar dados da tabela   
                         tableData.renderTable()
-
-                        // Limpe os campos do formulário
-                        nameInput.value = "";
-                        emailInput.value = "";
-                        telefoneInput.value = "";
-                        celularInput.value = "";
-                        corteInput.value = "";
-                        dataInput.value = "";
 
                         console.log(tableData)
                     }
@@ -159,12 +164,6 @@ class TableData {
                 const nomecliente = data.nome
                 this.prepararExclusao(nomecliente)
 
-                const dangerAlert = document.querySelector('.alert-danger')
-                const successAlert = document.querySelector('.alert-success')
-                const alertRelatorio = document.querySelector('#alert-relatorio')
-                const updateAlert = document.querySelector('#alert-update')
-                const deletedAlert = document.querySelector('#alert-deleted')
-
                 const btnDel = document.querySelector('#btnDel')
                 btnDel.addEventListener('click', () => {
                     const idCliente = data.id
@@ -175,6 +174,9 @@ class TableData {
                     alertRelatorio.style.display = 'none'
                     updateAlert.style.display = 'none'
                     deletedAlert.style.display = 'flex'
+
+                    adicionarNotificacao('danger', `Cliente ${data.nome} deletado com sucesso.`);
+                    atualizarNotificacaoBadge()
 
                     tableData.renderTable()
                 })
@@ -273,12 +275,6 @@ submitButton.addEventListener('click', (event) => {
     const corte = corteInput.value
     const data = dataInput.value
 
-    const dangerAlert = document.querySelector('.alert-danger')
-    const successAlert = document.querySelector('.alert-success')
-    const alertRelatorio = document.querySelector('#alert-relatorio')
-    const updateAlert = document.querySelector('#alert-update')
-    const deletedAlert = document.querySelector('#alert-deleted')
-
     if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data.trim() === '') {
         dangerAlert.style.display = 'flex'
         successAlert.style.display = 'none'
@@ -309,6 +305,9 @@ submitButton.addEventListener('click', (event) => {
         corteInput.value = "";
         dataInput.value = "";
 
+        adicionarNotificacao('success', `Cliente ${nome} foi adicionado com sucesso.`);
+        atualizarNotificacaoBadge()
+
         console.log(tableData)
     }
 
@@ -337,7 +336,10 @@ const gerarRelatorio = () => {
     btn_gerarRelatorio.addEventListener('click', (e) => {
         console.log('PDF')
         const table = document.querySelector('#divTable').innerHTML
-        const dia = new Date()
+        const data = new Date()
+        const dia = data.getDay()
+        const mes = data.getMonth()
+        const ano = data.getFullYear()
 
         var pdfsize = 'a0' // Tamanho do pdf
         var pdf = new jsPDF('1', 'pt', pdfsize) // criando uma variável de pdf
@@ -359,13 +361,15 @@ const gerarRelatorio = () => {
             //theme: striped
             // theme: plain
         })
-        const alertRelatorio = document.querySelector('#alert-relatorio')
-        const dangerAlert = document.querySelector('.alert-danger')
-        const successAlert = document.querySelector('.alert-success')
 
-        dangerAlert.style.display = 'none'
         successAlert.style.display = 'none'
+        dangerAlert.style.display = 'none'
         alertRelatorio.style.display = 'flex'
+        updateAlert.style.display = 'none'
+        deletedAlert.style.display = 'none'
+
+        adicionarNotificacao('info', `Relatório do dia: ${dia}/${mes}/${ano} gerado com sucesso.`);
+        atualizarNotificacaoBadge()
 
         pdf.save('relatório.pdf')
     })
@@ -387,4 +391,81 @@ const phoneMask = (value) => {
     value = value.replace(/(\d)(\d{4})$/, "$1-$2")
     return value
 }
+
+// Notificação
+
+// Variavel para verificar se o conteudo está aberto ou não
+
+let isOpen = false
+let numeroNotificacoes = 0
+
+btnNotification.addEventListener('click', () => {
+    // Alterar visibilidade da notificação está aberta ou não
+    if (isOpen) {
+        notificacaoConteudo.style.display = 'none'
+        btnNotification.classList.remove('aberto')
+        removerNotificacao()
+        atualizarNotificacaoBadge()
+    } else {
+        notificacaoConteudo.style.display = 'block'
+        btnNotification.classList.add('aberto')
+
+        numeroNotificacoes = 0
+    }
+
+    isOpen = !isOpen
+})
+
+const adicionarNotificacao = (type, message) => {
+    const notificationItem = document.createElement('div')
+    const notificationP = document.createElement('p')
+    notificationItem.classList.add('alert', `alert-${type}`)
+    notificationItem.style.display = 'flex'
+    notificationItem.style.margin = '3px'
+    notificationP.textContent = message
+    notificationItem.appendChild(notificationP)
+    notificacaoBody.appendChild(notificationItem)
+
+    const firstNotification = notificacaoBody.firstChild
+    notificacaoBody.insertBefore(notificationItem, firstNotification)
+
+    numeroNotificacoes++
+    atualizarNotificacaoBadge()
+
+    const btnFechar = document.querySelector('#btnFechar')
+    const btnLimpar = document.querySelector('#btnLimpar')
+
+    btnFechar.addEventListener('click', () => {
+        notificacaoConteudo.style.display = 'none'
+        btnNotification.classList.remove('aberto')
+    })
+
+    btnLimpar.addEventListener('click', () => {
+        const notifications = document.querySelectorAll('.alert');
+
+        // Adicionar a classe de animação para desvanecer gradualmente
+        notifications.forEach((notification, index) => {
+            notification.classList.add('fade-out-animation');
+            // Atrasar a animação de cada notificação para criar um efeito escalonado
+            setTimeout(() => {
+                const updatedCount = parseInt(notificationBadge.textContent) - 1
+                notificationBadge.textContent = updatedCount >= 0 ? updatedCount : 0
+                notification.remove();
+            }, 1000 * index); // Ajuste o valor para tornar a transição mais lenta ou mais rápida (200ms aqui)
+        });
+    });
+}
+
+const removerNotificacao = () => {
+    if (numeroNotificacoes > 0) {
+        numeroNotificacoes--
+        atualizarNotificacaoBadge()
+    }
+}
+
+const atualizarNotificacaoBadge = () => {
+    notificationBadge.innerHTML = numeroNotificacoes
+}
+
+
 
