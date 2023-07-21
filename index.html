@@ -121,8 +121,12 @@
             <p>Cliente cadastrado com sucesso</p>
         </div>
 
-        <div class="alert alert-info    " id="alert-relatorio" role="alert">
+        <div class="alert alert-info" id="alert-relatorio" role="alert">
             <p>Relatório gerado com sucesso</p>
+        </div>
+
+        <div class="alert alert-success" role="alert" id="alert-update">
+            <p>Cliente atualizado com sucesso</p>
         </div>
 
         <!-- Modal -->
@@ -221,7 +225,75 @@
         </div>
 
         <!-- Modal edição -->
+        <div class="modal fade" id="modal-edit">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title">Editar cliente</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form" class="form p-5">
+                            <div class="column">
+                                <div class="mb-3">
 
+                                    <label for="nome">Nome</label>
+                                    <input type="text" id="nomeEdicao" required maxlength="26" placeholder="Seu nome"
+                                        class="form-control" value="">
+
+                                    <label for="email">Email</label>
+                                    <input type="email" id="emailEdicao" required placeholder="Email@gmail.com"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="mb-3">
+
+                                    <label for="telefone">Telefone</label>
+                                    <input type="tel" id="telefoneEdicao" maxlength="14" autocomplete="off"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                        onkeyup="handlePhone(event)" placeholder="(35) 3421-8092" class="form-control">
+
+                                    <label for="celular">Celular</label>
+                                    <input type="text" id="celularEdicao" required maxlength="15"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                        onkeyup="handlePhone(event)" placeholder="(35) 99892-2086" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="mb-3">
+
+                                    <label for="corte">Corte</label>
+                                    <input type="text" id="corteEdicao" required maxlength="20" placeholder="Seu corte"
+                                        class="form-control">
+
+                                    <label for="data">Data</label>
+                                    <input type="date" id="dataEdicao" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="mb-3">
+                                    <label for="profissional">Profissional</label>
+                                    <select required class="form-control">
+                                        <option value="and" id="profissionalInput">and</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-default" data-dismiss="modal"
+                            style="background-color: #67BF63; color: #eee;" id="btnUpdate" form="form">Salvar
+                            mudanças</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 

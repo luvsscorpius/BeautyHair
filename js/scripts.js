@@ -22,6 +22,7 @@ list.forEach((item) =>
 class TableData {
     constructor() {
         this.tableData = []
+        this.lastId = 0
     }
 
     addData(profissional, nome, email, telefone, celular, corte, data) {
@@ -66,8 +67,81 @@ class TableData {
             editButton.addEventListener("click", () => {
                 // Lógica para editar o cliente com base nos dados do objeto 'data'
                 editButton.setAttribute("data-toggle", "modal");
-                editButton.setAttribute("data-target", "#modal-mensagem");
+                editButton.setAttribute("data-target", "#modal-edit");
                 console.log("Editar o cliente com o id:", data.id)
+
+                // criando variaveis e trazendo os valores dos vetores
+                const id = data.id
+                const spanNomeClienteEdicao = data.nome
+                const spanEmailEdicao = data.email
+                const spanTelefoneEdicao = data.telefone
+                const spanCelularEdicao = data.celular
+                const spanCorteEdicao = data.corte
+                const spanDataEdicao = data.data
+
+                // mostrando os valores dos vetores no modal
+                this.editarCliente(spanNomeClienteEdicao, spanEmailEdicao, spanTelefoneEdicao, spanCelularEdicao, spanCorteEdicao, spanDataEdicao)
+
+                // criando uma variavel para o botao de update e pegando o id dele
+                const btnUpdate = document.querySelector('#btnUpdate')
+
+                // evento de clique
+                btnUpdate.addEventListener('click', () => {
+                    // pegando novamente os inputs
+                    const spanNomeClienteEdicao = document.querySelector('#nomeEdicao')
+                    const spanEmailEdicao = document.querySelector('#emailEdicao')
+                    const spanTelefoneEdicao = document.querySelector('#telefoneEdicao')
+                    const spanCelularEdicao = document.querySelector('#celularEdicao')
+                    const spanCorteEdicao = document.querySelector('#corteEdicao')
+                    const spanDataEdicao = document.querySelector('#dataEdicao')
+
+                    // criando variaveis de pegando o valores do inputs
+                    const novoNome = spanNomeClienteEdicao.value
+                    const novoEmail = spanEmailEdicao.value
+                    const novoTelefone = spanTelefoneEdicao.value
+                    const novoCelular = spanCelularEdicao.value
+                    const novoCorte = spanCorteEdicao.value
+                    const novaData = spanDataEdicao.value
+
+                    const dangerAlert = document.querySelector('.alert-danger')
+                    const successAlert = document.querySelector('.alert-success')
+                    const alertRelatorio = document.querySelector('#alert-relatorio')
+                    const updateAlert = document.querySelector('#alert-update')
+
+                    if (novoNome.trim() === '' || novoEmail.trim() === '' || novoCelular.trim() === '' || novoCorte.trim() === '' || novaData.trim() === '') {
+                        dangerAlert.style.display = 'flex'
+                        successAlert.style.display = 'none'
+                        alertRelatorio.style.display = 'none'
+                        updateAlert.style.display = 'none'
+                    } else {
+
+                        successAlert.style.display = 'none'
+                        dangerAlert.style.display = 'none'
+                        alertRelatorio.style.display = 'none'
+                        updateAlert.style.display = 'flex'
+
+                        // atualizando o vetor com os novos inputs atualizados
+                        data.nome = novoNome
+                        data.email = novoEmail
+                        data.telefone = novoTelefone
+                        data.celular = novoCelular
+                        data.corte = novoCorte
+                        data.data = novaData
+
+                        // Atualizar dados da tabela   
+                        tableData.renderTable()
+
+                        // Limpe os campos do formulário
+                        nameInput.value = "";
+                        emailInput.value = "";
+                        telefoneInput.value = "";
+                        celularInput.value = "";
+                        corteInput.value = "";
+                        dataInput.value = "";
+
+                        console.log(tableData)
+                    }
+                })
             })
             actionsCell.appendChild(editButton)
 
@@ -85,6 +159,25 @@ class TableData {
             })
             actionsCell.appendChild(delButton)
         })
+    }
+
+    editarCliente(nomeEdicao, emailEdicao, telefoneEdicao, celularEdicao, corteEdicao, dataEdicao) {
+        // Pegando os ids do modal de edição
+        const spanNomeClienteEdicao = document.querySelector('#nomeEdicao')
+        const spanEmailEdicao = document.querySelector('#emailEdicao')
+        const spanTelefoneEdicao = document.querySelector('#telefoneEdicao')
+        const spanCelularEdicao = document.querySelector('#celularEdicao')
+        const spanCorteEdicao = document.querySelector('#corteEdicao')
+        const spanDataEdicao = document.querySelector('#dataEdicao')
+
+        // Adicionando o value dos inputs com os parametros
+        spanNomeClienteEdicao.value = nomeEdicao
+        spanEmailEdicao.value = emailEdicao
+        spanTelefoneEdicao.value = telefoneEdicao
+        spanCelularEdicao.value = celularEdicao
+        spanCorteEdicao.value = corteEdicao
+        spanDataEdicao.value = dataEdicao
+
     }
 
     prepararExclusao(nomecliente) {
@@ -189,7 +282,8 @@ submitButton.addEventListener('click', (event) => {
 })
 
 function generateUniqueId() {
-    return Date.now().toString(36) + Math.random().toString(36).substring(2, 5)
+    this.lastId++
+    return this.lastId.toString(36) + Math.random().toString(36).substring(2, 5);
 }
 
 // Captura o campo de busca pelo id
