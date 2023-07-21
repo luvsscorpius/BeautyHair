@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/luvsscorpius/BeautyHair/compare/v1.13.0...v1.13.1) (2023-07-21)
+
+
+### Bug Fixes
+
+* **btnfechar fixed:** btnFechar wasn't working properly ([c9657cd](https://github.com/luvsscorpius/BeautyHair/commit/c9657cd4ea0e29965f7c57a27e1d992376953fe7))
+
 # [1.13.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.12.0...v1.13.0) (2023-07-21)
 
 
