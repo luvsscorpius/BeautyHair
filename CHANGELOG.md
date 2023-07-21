@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.12.0...v1.13.0) (2023-07-21)
+
+
+### Features
+
+* **notification function added:** notification function added ([4eb6704](https://github.com/luvsscorpius/BeautyHair/commit/4eb670436aa52105137bedb4a0c1a4de410f2029))
+
 # [1.12.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.11.0...v1.12.0) (2023-07-21)
 
 
