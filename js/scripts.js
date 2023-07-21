@@ -431,29 +431,6 @@ const adicionarNotificacao = (type, message) => {
 
     numeroNotificacoes++
     atualizarNotificacaoBadge()
-
-    const btnFechar = document.querySelector('#btnFechar')
-    const btnLimpar = document.querySelector('#btnLimpar')
-
-    btnFechar.addEventListener('click', () => {
-        notificacaoConteudo.style.display = 'none'
-        btnNotification.classList.remove('aberto')
-    })
-
-    btnLimpar.addEventListener('click', () => {
-        const notifications = document.querySelectorAll('.alert');
-
-        // Adicionar a classe de animação para desvanecer gradualmente
-        notifications.forEach((notification, index) => {
-            notification.classList.add('fade-out-animation');
-            // Atrasar a animação de cada notificação para criar um efeito escalonado
-            setTimeout(() => {
-                const updatedCount = parseInt(notificationBadge.textContent) - 1
-                notificationBadge.textContent = updatedCount >= 0 ? updatedCount : 0
-                notification.remove();
-            }, 1000 * index); // Ajuste o valor para tornar a transição mais lenta ou mais rápida (200ms aqui)
-        });
-    });
 }
 
 const removerNotificacao = () => {
@@ -466,6 +443,29 @@ const removerNotificacao = () => {
 const atualizarNotificacaoBadge = () => {
     notificationBadge.innerHTML = numeroNotificacoes
 }
+
+const btnFechar = document.querySelector('#btnFechar')
+const btnLimpar = document.querySelector('#btnLimpar')
+
+btnFechar.addEventListener('click', () => {
+    notificacaoConteudo.style.display = 'none'
+    btnNotification.classList.remove('aberto')
+})
+
+btnLimpar.addEventListener('click', () => {
+    const notifications = document.querySelectorAll('.alert');
+
+    // Adicionar a classe de animação para desvanecer gradualmente
+    notifications.forEach((notification, index) => {
+        notification.classList.add('fade-out-animation');
+        // Atrasar a animação de cada notificação para criar um efeito escalonado
+        setTimeout(() => {
+            const updatedCount = parseInt(notificationBadge.textContent) - 1
+            notificationBadge.textContent = updatedCount >= 0 ? updatedCount : 0
+            notification.remove();
+        }, 1000 * index); // Ajuste o valor para tornar a transição mais lenta ou mais rápida (200ms aqui)
+    });
+});
 
 
 
