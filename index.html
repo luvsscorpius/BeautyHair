@@ -208,6 +208,9 @@
                                     <select required class="form-control">
                                         <option value="and" id="profissionalInput">and</option>
                                     </select>
+                                    <label for="valor">Valor</label>
+                                    <input type="text" id="valor" class="form-control"
+                                        onkeyup="mascaraMoeda(this, event)" required placeholder="R$ 0,00">
                                 </div>
                             </div>
 
@@ -300,6 +303,9 @@
                                     <label for="profissional">Profissional</label>
                                     <select required class="form-control">
                                         <option value="and" id="profissionalInput">and</option>
+                                        <label for="valor">Valor</label>
+                                        <input type="text" id="valorEdicao" class="form-control" required
+                                            placeholder="R$ 0,00" onkeyup="mascaraMoeda(this, event)">
                                     </select>
                                 </div>
                             </div>
@@ -316,8 +322,6 @@
             </div>
         </div>
 
-
-
         <section>
             <div class="containerTable" id="containerTable">
                 <button class="gerarRelatorio" id="gerarRelatorio">$ Gerar relatório</button>
@@ -332,6 +336,7 @@
                                 <th>Celular</th>
                                 <th>Corte</th>
                                 <th>Data</th>
+                                <th>Valor</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>

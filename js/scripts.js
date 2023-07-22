@@ -41,9 +41,9 @@ class TableData {
         this.lastId = 0
     }
 
-    addData(profissional, nome, email, telefone, celular, corte, data) {
+    addData(profissional, nome, email, telefone, celular, corte, data, valor) {
         const id = generateUniqueId();
-        this.tableData.push({ id, profissional, nome, email, telefone, celular, corte, data })
+        this.tableData.push({ id, profissional, nome, email, telefone, celular, corte, data, valor })
     }
 
     renderTable() {
@@ -74,6 +74,9 @@ class TableData {
             const dataCell = row.insertCell()
             dataCell.textContent = data.data
 
+            const valorCell = row.insertCell()
+            valorCell.textContent = data.valor
+
             const actionsCell = row.insertCell() // celular para as ações
 
             // Botão editar
@@ -94,9 +97,10 @@ class TableData {
                 const spanCelularEdicao = data.celular
                 const spanCorteEdicao = data.corte
                 const spanDataEdicao = data.data
+                const spanValorEdicao = data.valor
 
                 // mostrando os valores dos vetores no modal
-                this.editarCliente(spanNomeClienteEdicao, spanEmailEdicao, spanTelefoneEdicao, spanCelularEdicao, spanCorteEdicao, spanDataEdicao)
+                this.editarCliente(spanNomeClienteEdicao, spanEmailEdicao, spanTelefoneEdicao, spanCelularEdicao, spanCorteEdicao, spanDataEdicao, spanValorEdicao)
 
                 // criando uma variavel para o botao de update e pegando o id dele
                 const btnUpdate = document.querySelector('#btnUpdate')
@@ -110,6 +114,7 @@ class TableData {
                     const spanCelularEdicao = document.querySelector('#celularEdicao')
                     const spanCorteEdicao = document.querySelector('#corteEdicao')
                     const spanDataEdicao = document.querySelector('#dataEdicao')
+                    const spanValorEdicao = document.querySelector('#valorEdicao')
 
                     // criando variaveis de pegando o valores do inputs
                     const novoNome = spanNomeClienteEdicao.value
@@ -118,8 +123,9 @@ class TableData {
                     const novoCelular = spanCelularEdicao.value
                     const novoCorte = spanCorteEdicao.value
                     const novaData = spanDataEdicao.value
+                    const novoValor = spanValorEdicao.value
 
-                    if (novoNome.trim() === '' || novoEmail.trim() === '' || novoCelular.trim() === '' || novoCorte.trim() === '' || novaData.trim() === '') {
+                    if (novoNome.trim() === '' || novoEmail.trim() === '' || novoCelular.trim() === '' || novoCorte.trim() === '' || novaData.trim() === '' || novoValor.trim() === '') {
                         dangerAlert.style.display = 'flex'
                         successAlert.style.display = 'none'
                         alertRelatorio.style.display = 'none'
@@ -140,6 +146,7 @@ class TableData {
                         data.celular = novoCelular
                         data.corte = novoCorte
                         data.data = novaData
+                        data.valor = novoValor
 
                         adicionarNotificacao('success', `Cliente ${novoNome} atualizado com sucesso.`);
                         atualizarNotificacaoBadge()
@@ -186,7 +193,7 @@ class TableData {
         })
     }
 
-    editarCliente(nomeEdicao, emailEdicao, telefoneEdicao, celularEdicao, corteEdicao, dataEdicao) {
+    editarCliente(nomeEdicao, emailEdicao, telefoneEdicao, celularEdicao, corteEdicao, dataEdicao, valorEdicao) {
         // Pegando os ids do modal de edição
         const spanNomeClienteEdicao = document.querySelector('#nomeEdicao')
         const spanEmailEdicao = document.querySelector('#emailEdicao')
@@ -194,6 +201,7 @@ class TableData {
         const spanCelularEdicao = document.querySelector('#celularEdicao')
         const spanCorteEdicao = document.querySelector('#corteEdicao')
         const spanDataEdicao = document.querySelector('#dataEdicao')
+        const spanValorEdicao = document.querySelector('#valorEdicao')
 
         // Adicionando o value dos inputs com os parametros
         spanNomeClienteEdicao.value = nomeEdicao
@@ -202,6 +210,7 @@ class TableData {
         spanCelularEdicao.value = celularEdicao
         spanCorteEdicao.value = corteEdicao
         spanDataEdicao.value = dataEdicao
+        spanValorEdicao.value = valorEdicao
 
     }
 
@@ -266,6 +275,7 @@ submitButton.addEventListener('click', (event) => {
     const celularInput = document.querySelector('#celular')
     const corteInput = document.querySelector('#corte')
     const dataInput = document.querySelector('#data')
+    const valorInput = document.querySelector('#valor')
 
     const profissional = profissionalInput.value
     const nome = nameInput.value
@@ -274,8 +284,9 @@ submitButton.addEventListener('click', (event) => {
     const celular = celularInput.value
     const corte = corteInput.value
     const data = dataInput.value
+    const valor = valorInput.value
 
-    if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data.trim() === '') {
+    if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data.trim() === '' || valor.trim() === '') {
         dangerAlert.style.display = 'flex'
         successAlert.style.display = 'none'
         alertRelatorio.style.display = 'none'
@@ -292,7 +303,7 @@ submitButton.addEventListener('click', (event) => {
         deletedAlert.style.display = 'none'
 
         // Adicionar dados a tabela 
-        tableData.addData(profissional, nome, email, telefone, celular, corte, data)
+        tableData.addData(profissional, nome, email, telefone, celular, corte, data, valor)
 
         // Atualizar dados da tabela   
         tableData.renderTable()
@@ -304,6 +315,7 @@ submitButton.addEventListener('click', (event) => {
         celularInput.value = "";
         corteInput.value = "";
         dataInput.value = "";
+        valorInput.value = ""
 
         adicionarNotificacao('success', `Cliente ${nome} foi adicionado com sucesso.`);
         atualizarNotificacaoBadge()
@@ -377,7 +389,7 @@ const gerarRelatorio = () => {
 
 gerarRelatorio()
 
-// Input Mask 
+// Input Mask Phone
 
 const handlePhone = (event) => {
     let input = event.target
@@ -390,6 +402,43 @@ const phoneMask = (value) => {
     value = value.replace(/(\d{2})(\d)/, "($1) $2")
     value = value.replace(/(\d)(\d{4})$/, "$1-$2")
     return value
+}
+
+// Máscara moeda
+
+// Definição de um método para inverter a ordem dos caracteres em uma string
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+};
+
+// Função responsável por aplicar uma máscara de moeda a um campo de input
+const mascaraMoeda = (campo, evento) => {
+    // Verifica a tecla pressionada com base no evento de teclado (cross-browser)
+    var tecla = (!evento) ? window.event.keyCode : evento.which;
+
+    // Obtém o valor do campo de input e remove caracteres não numéricos
+    var valor = campo.value.replace(/[^\d]+/gi, '')
+
+    // Variável para armazenar o resultado formatado da moeda (inicia com "R$ ")
+    var resultado = "R$ ";
+
+    // Definição da máscara de formatação para o valor monetário em formato brasileiro (inverte a string)
+    var mascara = "##.###.###,##".reverse();
+
+    // Loop para aplicar a máscara de acordo com a lógica
+    for (var x = 0, y = 0; x < mascara.length && y < valor.length;) {
+        // Se o caractere da máscara não for "#", adiciona-o diretamente ao resultado
+        if (mascara.charAt(x) != '#') {
+            resultado += mascara.charAt(x);
+            x++;
+        } else {
+            // Se o caractere da máscara for "#", adiciona o próximo caractere numérico do valor ao resultado
+            resultado += valor.charAt(y);
+            y++;
+            x++;
+        }
+    }
+    campo.value = resultado
 }
 
 // Notificação
