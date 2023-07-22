@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.13.1...v1.14.0) (2023-07-22)
+
+
+### Features
+
+* **input valor added:** input valor added and currency mask as well ([fdf8a7c](https://github.com/luvsscorpius/BeautyHair/commit/fdf8a7cf1f5c40ce9383180ad7fba68c9b631c33))
+
 ## [1.13.1](https://github.com/luvsscorpius/BeautyHair/compare/v1.13.0...v1.13.1) (2023-07-21)
 
 
