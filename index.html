@@ -32,10 +32,10 @@
                     </a>
                 </li>
 
-                <li class="list-pagamentos">
+                <li class="list-financeiro">
                     <a href="#">
                         <span class="icon"><i class="fa-solid fa-sack-dollar"></i></span>
-                        <span class="title">Pagamentos</span>
+                        <span class="title">Financeiro</span>
                     </a>
                 </li>
 
@@ -322,6 +322,7 @@
             </div>
         </div>
 
+        <!-- AbaCliente -->
         <section>
             <div class="containerTable" id="containerTable">
                 <button class="gerarRelatorio" id="gerarRelatorio">$ Gerar relatório</button>
@@ -341,6 +342,59 @@
                             </tr>
                         </thead>
                         <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- AbaFinanceiro -->
+        <section class="information" id="informationFinanceiro">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
+                        <span class="information-title" id="informationTitleFinanaceiro">Financeiro <span class="p">/ #
+                                Operações</span></span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <nav class="nav" id="navFinanceiro">
+            <div class="input" id="input">
+                <input type="text" class="search" id="searchFinaceiro" placeholder="Procurar transação"
+                    autocomplete="off">
+                <button type="button" class="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="divButton" id="divButtonFinaceiro">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modal-">Adicionar
+                    transação</button>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modal-">Ver histórico</button>
+            </div>
+        </nav>
+
+
+        <section>
+            <div class="containerTable" id="containerTableFinanceiro">
+                <button class="gerarRelatorio" id="gerarRelatorioFinanceiro">$ Gerar relatório</button>
+                <div id="divTableFinanceiro" class="divTable">
+                    <table class="table" id="tableFinanceiro">
+                        <thead>
+                            <tr>
+                                <th>Profissional</th>
+                                <th>Categoria</th>
+                                <th>Nome</th>
+                                <th>Corte</th>
+                                <th>Data</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <th colspan="5" id="totalTitle">Total</th>
+                            <th id="total">R$</th>
+                        </tfoot>
                     </table>
                 </div>
             </div>

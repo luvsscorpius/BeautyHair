@@ -22,7 +22,7 @@ const notificacaoBody = document.querySelector('.notificacao-body')
 
 // Função para mudar o menu
 
-const list = document.querySelectorAll('.list-home, .list-clientes, .list-pagamentos, .list-calendario, .list-ajuda, .list-configuracoes')
+const list = document.querySelectorAll('.list-home, .list-clientes, .list-financeiro, .list-calendario, .list-ajuda, .list-configuracoes')
 
 function activeLink() {
     list.forEach((item) =>
@@ -32,6 +32,62 @@ function activeLink() {
 
 list.forEach((item) =>
     item.addEventListener('click', activeLink))
+
+// Função para trocar as abas
+
+const abaClientes = document.querySelector('.containerTable')
+const navClientes = document.querySelector('.nav')
+const information = document.querySelector('.information')
+
+const informationFinanceiro = document.querySelector('#informationFinanceiro')
+const navFinanceiro = document.querySelector('#navFinanceiro')
+const containerTableFinanceiro = document.querySelector('#containerTableFinanceiro')
+
+const clientes = () => {
+    const clientes = document.querySelector('.list-clientes').addEventListener('click', () => {
+        console.log('Cliquei na aba clientes')
+        console.log(abaClientes.style.display)
+        if (abaClientes.style.display == 'none' && navClientes.style.display == 'none') {
+            // Colocar visivelmente aba cliente
+            abaClientes.style.display = 'block'
+            navClientes.style.display = 'flex'
+            information.style.display = 'flex'
+
+            // Deixar aba financeiro oculta
+            containerTableFinanceiro.style.display = 'none'
+            informationFinanceiro.style.display = 'none'
+            navFinanceiro.style.display = 'none'
+
+        }
+    })
+}
+
+const financeiro = () => {
+    const financeiro = document.querySelector('.list-financeiro').addEventListener('click', () => {
+        console.log('Cliquei na aba financeiro')
+        if (containerTableFinanceiro.style.display = 'none') {
+            // Deixar aba clientes oculta
+            abaClientes.style.display = 'none'
+            navClientes.style.display = 'none'
+            information.style.display = 'none'
+
+            // Deixar aba financeiro visivel
+            containerTableFinanceiro.style.display = 'block'
+            informationFinanceiro.style.display = 'flex'
+            navFinanceiro.style.display = 'flex'
+
+            // alertas ocultos
+            dangerAlert.style.display = 'none'
+            successAlert.style.display = 'none'
+            alertRelatorio.style.display = 'none'
+            updateAlert.style.display = 'none'
+            deletedAlert.style.display = 'none'
+        }
+    })
+}
+
+financeiro()
+clientes()
 
 // Adicionar dados na table com classes
 
@@ -77,7 +133,7 @@ class TableData {
             const valorCell = row.insertCell()
             valorCell.textContent = data.valor
 
-            const actionsCell = row.insertCell() // celular para as ações
+            const actionsCell = row.insertCell() // celula para as ações
 
             // Botão editar
             const editButton = document.createElement("button")
@@ -254,6 +310,40 @@ class TableData {
             }
         })
     }
+
+    renderTableFinanceiro() {
+        const tableBodyFinanceiro = document.querySelector('#tableFinanceiro tbody')
+        tableBodyFinanceiro.innerHTML = ""
+
+        this.tableData.forEach(data => {
+            const row = tableBodyFinanceiro.insertRow()
+
+            const profissionalCell = row.insertCell()
+            profissionalCell.textContent = data.profissional
+
+            const categoriaCell = row.insertCell()
+            categoriaCell.textContent = 'Serviços'
+
+            const nomeCell = row.insertCell()
+            nomeCell.textContent = data.nome
+
+            const corteCell = row.insertCell()
+            corteCell.textContent = data.corte
+
+            const dataCell = row.insertCell()
+            dataCell.textContent = data.data
+
+            const valorCell = row.insertCell()
+            valorCell.textContent = data.valor
+
+        })
+    }
+
+    totalFinanceiro() {
+        const total = document.querySelector('#total')
+        total.innerHTML = '300'
+        this.renderTableFinanceiro()
+    }
 }
 
 // Instanciar 
@@ -307,6 +397,8 @@ submitButton.addEventListener('click', (event) => {
 
         // Atualizar dados da tabela   
         tableData.renderTable()
+        tableData.renderTableFinanceiro()
+        tableData.totalFinanceiro()
 
         // Limpe os campos do formulário
         nameInput.value = "";

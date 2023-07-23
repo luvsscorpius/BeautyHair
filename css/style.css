@@ -303,6 +303,7 @@ form .column .mb-3 input {
 /* ContainerTable */
 
 .containerTable {
+    display: block;
     background-color: #EDEDED;
     width: 93%;
     margin: 0 auto;
@@ -337,6 +338,10 @@ form .column .mb-3 input {
 
 .divTable .table th {
     border-bottom: 1px solid #000;
+}
+
+tfoot th {
+    font-size: 20px;
 }
 
 .alert {
@@ -425,4 +430,18 @@ form .column .mb-3 input {
 
 .slide-out-animation {
     animation: slideOutAnimation 0.5s ease forwards;
+}
+
+/* Aba financeiro */
+
+#informationFinanceiro {
+    display: none;
+}
+
+#navFinanceiro {
+    display: none;
+}
+
+#containerTableFinanceiro {
+    display: none;
 }
