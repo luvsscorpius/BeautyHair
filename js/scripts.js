@@ -131,7 +131,7 @@ class TableData {
             dataCell.textContent = data.data
 
             const valorCell = row.insertCell()
-            valorCell.textContent = data.valor
+            valorCell.textContent = `R$ ${data.valor}`
 
             const actionsCell = row.insertCell() // celula para as ações
 
@@ -209,6 +209,8 @@ class TableData {
 
                         // Atualizar dados da tabela   
                         tableData.renderTable()
+                        tableData.renderTableFinanceiro()
+                        tableData.totalFinanceiro()
 
                         console.log(tableData)
                     }
@@ -242,6 +244,8 @@ class TableData {
                     atualizarNotificacaoBadge()
 
                     tableData.renderTable()
+                    tableData.renderTableFinanceiro()
+                    tableData.totalFinanceiro()
                 })
                 console.log("Apagar o cliente com o id:", data.id)
             })
@@ -324,6 +328,9 @@ class TableData {
             const categoriaCell = row.insertCell()
             categoriaCell.textContent = 'Serviços'
 
+            const idCell = row.insertCell()
+            idCell.textContent = data.id
+
             const nomeCell = row.insertCell()
             nomeCell.textContent = data.nome
 
@@ -334,14 +341,24 @@ class TableData {
             dataCell.textContent = data.data
 
             const valorCell = row.insertCell()
-            valorCell.textContent = data.valor
+            valorCell.textContent = `R$ ${data.valor}`
 
         })
     }
 
     totalFinanceiro() {
-        const total = document.querySelector('#total')
-        total.innerHTML = '300'
+        const totalTitle = document.querySelector('#total')
+        let total = 0
+        this.tableData.forEach((data) => {
+            const valorFormatado = parseFloat(data.valor.trim())
+
+            console.log(total)
+            if (!isNaN(valorFormatado)) {
+                total += valorFormatado
+            }
+        })
+
+        totalTitle.innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`
         this.renderTableFinanceiro()
     }
 }
@@ -395,11 +412,6 @@ submitButton.addEventListener('click', (event) => {
         // Adicionar dados a tabela 
         tableData.addData(profissional, nome, email, telefone, celular, corte, data, valor)
 
-        // Atualizar dados da tabela   
-        tableData.renderTable()
-        tableData.renderTableFinanceiro()
-        tableData.totalFinanceiro()
-
         // Limpe os campos do formulário
         nameInput.value = "";
         emailInput.value = "";
@@ -411,6 +423,14 @@ submitButton.addEventListener('click', (event) => {
 
         adicionarNotificacao('success', `Cliente ${nome} foi adicionado com sucesso.`);
         atualizarNotificacaoBadge()
+
+        adicionarNotificacao('success', `Nova transação feita com sucesso no valor de R$ ${valor}.`);
+        atualizarNotificacaoBadge()
+
+        // Atualizar dados da tabela   
+        tableData.renderTable()
+        tableData.renderTableFinanceiro()
+        tableData.totalFinanceiro()
 
         console.log(tableData)
     }
@@ -512,7 +532,7 @@ const mascaraMoeda = (campo, evento) => {
     var valor = campo.value.replace(/[^\d]+/gi, '')
 
     // Variável para armazenar o resultado formatado da moeda (inicia com "R$ ")
-    var resultado = "R$ ";
+    var resultado = "";
 
     // Definição da máscara de formatação para o valor monetário em formato brasileiro (inverte a string)
     var mascara = "##.###.###,##".reverse();
@@ -545,13 +565,9 @@ btnNotification.addEventListener('click', () => {
     if (isOpen) {
         notificacaoConteudo.style.display = 'none'
         btnNotification.classList.remove('aberto')
-        removerNotificacao()
-        atualizarNotificacaoBadge()
     } else {
         notificacaoConteudo.style.display = 'block'
         btnNotification.classList.add('aberto')
-
-        numeroNotificacoes = 0
     }
 
     isOpen = !isOpen
