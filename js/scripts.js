@@ -361,6 +361,37 @@ class TableData {
         totalTitle.innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`
         this.renderTableFinanceiro()
     }
+
+    filterTableFinanceiro(searchTerm) {
+        const tableFinanceiro = document.querySelector('#tableFinanceiro tbody')
+        const rows = tableFinanceiro.querySelectorAll('tr')
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td') // obtem todas as celulas da linha
+
+            // Verifica se o termo está presente ou não
+            let found = false;
+            cells.forEach(cell => { // includes é pra verificar se o termo existe ou nao
+                if (cell.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    // se encontra transforma a variavel em true
+                    found = true
+                }
+            })
+
+            // Mostrar
+            if (found) {
+                /* Se o termo de busca for encontrado em alguma célula, definimos o estilo de exibição 
+                da linha como "" (vazio), o que significa que a linha será exibida normalmente.
+                */
+                row.style.display = ""
+            } else {
+                /* Se o termo de busca não for encontrado em alguma célula, definimos o estilo de exibição 
+                da linha como "none", o que significa que a linha não será exibida.
+                */
+                row.style.display = "none"
+            }
+        })
+    }
 }
 
 // Instanciar 
@@ -444,13 +475,19 @@ function generateUniqueId() {
 
 // Captura o campo de busca pelo id
 const searchInput = document.querySelector('#search')
+const searchInputFinanceiro = document.querySelector('#searchFinaceiro')
 
 // Adiciona um Evento de entrada ao campo de busca para atualizar a tabela de acordo com o termo de busca
 searchInput.addEventListener("input", function () {
-    console.log("teste")
     const searchTerm = searchInput.value
     tableData.filterTable(searchTerm)
 })
+
+searchInputFinanceiro.addEventListener("input", function () {
+    const searchTerm = searchInputFinanceiro.value
+    tableData.filterTableFinanceiro(searchTerm)
+})
+
 
 // Gerar relatório
 
