@@ -367,9 +367,28 @@
                 <button type="button" class="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             <div class="divButton" id="divButtonFinaceiro">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modal-">Ver histórico</button>
+                <button class="btn btn-primary" id="btnExtrato" data-toggle="modal"
+                    data-target=".bd-example-modal-lg">Extrato</button>
             </div>
         </nav>
+
+        <div class="modal fade bd-example-modal-lg" id="modalExtrato" tabindex="-1" role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title">Extrato</h4>
+                    </div>
+                    <div class="modal-body" id="modalBodyFinanceiro">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-danger" id="btnDel" data-dismiss="modal">Relatório</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="alert alert-info" id="alert-relatorio-financeiro" role="alert">
             <p>Relatório gerado com sucesso</p>

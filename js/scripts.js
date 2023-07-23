@@ -709,5 +709,106 @@ btnLimpar.addEventListener('click', () => {
     });
 });
 
+// Extrato
 
+const mostrarExtrato = () => {
+    // Capturando o modal
+    const modalExtrato = document.querySelector('#modalExtrato')
+
+    // Capturando o corpo do modal
+    const modalExtratoBody = document.querySelector('#modalBodyFinanceiro')
+
+    // Limpando o corpo do modal antes de adicionar
+    modalExtratoBody.innerHTML = ''
+
+    // Objeto para separar transações por data
+    const transacoesPorData = {}
+
+    // Obter todas as transações financeiras da tabela de dados
+    const transacoes = tableData.tableData;
+
+    transacoes.forEach((transacao) => {
+        const data = transacao.data
+        if (!transacoesPorData[data]) {
+            transacoesPorData[data] = [] // Cria um array vazio para armazenar as transações dessa data
+        }
+
+        transacoesPorData[data].push(transacao) // Adiciona a transação ao array da data correspondente
+    })
+
+    const divExtrato = document.createElement('div')
+    divExtrato.classList.add('extrato')
+
+    // Adicionar o cabeçalho do extrato
+    const divCabecalho = document.createElement('div');
+    divCabecalho.classList.add('extrato-cabecalho');
+
+    const tituloExtrato = document.createElement('h3')
+    tituloExtrato.textContent = 'Extrato de transações'
+
+    const dataAtual = new Date()
+    const dataFormatada = `${dataAtual.getDate()}/${dataAtual.getMonth() + 1}/${dataAtual.getFullYear()}`
+    const dataExtato = document.createElement('p')
+    dataExtato.textContent = `${dataFormatada}`
+
+    divExtrato.appendChild(tituloExtrato)
+    tituloExtrato.appendChild(dataExtato)
+
+    // Adicionar o corpo do extrato (lista de transações)
+    const listaExtrato = document.createElement('ul');
+    listaExtrato.classList.add('list-group');
+
+    // Percorre o objeto transacoesPorData para criar as seções de transições
+    for (const data in transacoesPorData) {
+        const transacaoData = transacoesPorData[data]
+
+        // Cria uma seção para a data
+        const itemData = document.createElement('li')
+        itemData.classList.add('list-group-item', 'list-group-item-secondary')
+        const dataTransacao = new Date(data)
+        const dataFormatada = `${dataTransacao.getDate()}/${dataTransacao.getMonth() + 1}/${dataTransacao.getFullYear()}`;
+        itemData.textContent = dataFormatada
+
+        listaExtrato.appendChild(itemData)
+
+        // Coloca a seção na lista
+        transacaoData.forEach((transacao) => {
+            const itemTransacao = document.createElement('li')
+            itemTransacao.classList.add('list-group-item')
+
+            // Cria elementos para exibir as informações da transações na lista
+            const descricaoTransacao = document.createElement('h5')
+            descricaoTransacao.textContent = transacao.corte
+
+            const detalhesTransacao = document.createElement('p');
+            detalhesTransacao.innerHTML = `
+          <strong>Profissional:</strong> ${transacao.profissional}<br>
+          <strong>Cliente:</strong> ${transacao.nome}<br>
+          <strong>E-mail:</strong> ${transacao.email}<br>
+          <strong>Telefone:</strong> ${transacao.telefone}<br>
+          <strong>Celular:</strong> ${transacao.celular}<br>
+          <strong>Valor:</strong> R$ ${transacao.valor}<br>
+        `;
+
+            // Adiciona os elementos item da transição
+            itemTransacao.appendChild(descricaoTransacao);
+            itemTransacao.appendChild(detalhesTransacao);
+
+            // Adiciona os items a lista
+            listaExtrato.appendChild(itemTransacao);
+        })
+    }
+
+    divExtrato.appendChild(divCabecalho);
+    divExtrato.appendChild(listaExtrato);
+
+    // Adicionar o extrato ao corpo do modal
+    modalExtratoBody.appendChild(divExtrato);
+}
+
+const btnExtrato = document.querySelector('#btnExtrato')
+
+btnExtrato.addEventListener('click', () => {
+    mostrarExtrato()
+})
 
