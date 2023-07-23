@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.14.0...v1.15.0) (2023-07-23)
+
+
+### Features
+
+* **aba financeiro added:** aba financeiro addded ([b87df1a](https://github.com/luvsscorpius/BeautyHair/commit/b87df1a2fae00a8b58bab77fe0fe568c422e46d9))
+
 # [1.14.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.13.1...v1.14.0) (2023-07-22)
 
 
