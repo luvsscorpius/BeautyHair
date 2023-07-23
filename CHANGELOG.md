@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.15.0...v1.16.0) (2023-07-23)
+
+
+### Features
+
+* **financeiro table sum added:** financeiro table total added ([038532c](https://github.com/luvsscorpius/BeautyHair/commit/038532cd6a7dfc635c0c63253c388b25bda72a29))
+
 # [1.15.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.14.0...v1.15.0) (2023-07-23)
 
 
