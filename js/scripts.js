@@ -10,6 +10,7 @@ const successAlert = document.querySelector('.alert-success')
 const alertRelatorio = document.querySelector('#alert-relatorio')
 const updateAlert = document.querySelector('#alert-update')
 const deletedAlert = document.querySelector('#alert-deleted')
+const alertRelatorioFinanceiro = document.querySelector('#alert-relatorio-financeiro')
 const notificationAlertClientAdded = document.querySelector('#notificationAlertClientAdded')
 const notificationAlertClientDeleted = document.querySelector('#notificationAlertClientDeleted')
 const notificationAlertClientUpdated = document.querySelector('#notificationAlertClientUpdated')
@@ -187,6 +188,7 @@ class TableData {
                         alertRelatorio.style.display = 'none'
                         updateAlert.style.display = 'none'
                         deletedAlert.style.display = 'none'
+                        alertRelatorioFinanceiro.style.display = 'none'
                     } else {
 
                         successAlert.style.display = 'none'
@@ -194,6 +196,7 @@ class TableData {
                         alertRelatorio.style.display = 'none'
                         updateAlert.style.display = 'flex'
                         deletedAlert.style.display = 'none'
+                        alertRelatorioFinanceiro.style.display = 'none'
 
                         // atualizando o vetor com os novos inputs atualizados
                         data.nome = novoNome
@@ -239,6 +242,7 @@ class TableData {
                     alertRelatorio.style.display = 'none'
                     updateAlert.style.display = 'none'
                     deletedAlert.style.display = 'flex'
+                    alertRelatorioFinanceiro.style.display = 'none'
 
                     adicionarNotificacao('danger', `Cliente ${data.nome} deletado com sucesso.`);
                     atualizarNotificacaoBadge()
@@ -430,6 +434,7 @@ submitButton.addEventListener('click', (event) => {
         alertRelatorio.style.display = 'none'
         updateAlert.style.display = 'none'
         deletedAlert.style.display = 'none'
+        alertRelatorioFinanceiro.style.display = 'none'
 
     } else {
         console.log(nome)
@@ -439,6 +444,7 @@ submitButton.addEventListener('click', (event) => {
         alertRelatorio.style.display = 'none'
         updateAlert.style.display = 'none'
         deletedAlert.style.display = 'none'
+        alertRelatorioFinanceiro.style.display = 'none'
 
         // Adicionar dados a tabela 
         tableData.addData(profissional, nome, email, telefone, celular, corte, data, valor)
@@ -492,18 +498,21 @@ searchInputFinanceiro.addEventListener("input", function () {
 // Gerar relatório
 
 const btn_gerarRelatorio = document.querySelector('#gerarRelatorio')
+const btn_gerarRelatorioFinanceiro = document.querySelector('#gerarRelatorioFinanceiro')
+
+// Data
+const data = new Date()
+const dia = data.getDate()
+const mes = data.getMonth() + 1
+const ano = data.getFullYear()
 
 const gerarRelatorio = () => {
     btn_gerarRelatorio.addEventListener('click', (e) => {
         console.log('PDF')
-        const table = document.querySelector('#divTable').innerHTML
-        const data = new Date()
-        const dia = data.getDay()
-        const mes = data.getMonth()
-        const ano = data.getFullYear()
 
-        var pdfsize = 'a0' // Tamanho do pdf
-        var pdf = new jsPDF('1', 'pt', pdfsize) // criando uma variável de pdf
+        // configurando e criando o pdf
+        const pdfsize = 'a0' // Tamanho do pdf
+        const pdf = new jsPDF('1', 'pt', pdfsize) // criando uma variável de pdf
 
         pdf.autoTable({ // Utilizando o autoTable (plugin para tabelas do jsPDF)
             html: '#table', // trazendo sua tabela do html
@@ -528,6 +537,7 @@ const gerarRelatorio = () => {
         alertRelatorio.style.display = 'flex'
         updateAlert.style.display = 'none'
         deletedAlert.style.display = 'none'
+        alertRelatorioFinanceiro.style.display = 'none'
 
         adicionarNotificacao('info', `Relatório do dia: ${dia}/${mes}/${ano} gerado com sucesso.`);
         atualizarNotificacaoBadge()
@@ -536,7 +546,45 @@ const gerarRelatorio = () => {
     })
 }
 
+const gerarRelatorioFinanceiro = () => {
+    btn_gerarRelatorioFinanceiro.addEventListener('click', () => {
+        console.log('PDF Financeiro')
+
+        // configurando e criando o pdf
+        const pdfsize = 'a0' // Tamanho do pdf
+        const pdf = new jsPDF('1', 'pt', pdfsize) // criando uma variável de pdf
+
+        pdf.autoTable({
+            html: '#tableFinanceiro',
+            StartY: 60,
+            styles: {
+                fontSize: 30,
+                cellWidth: 'wrap'
+            },
+            columnStyle: {
+                1: {
+                    columnWidth: 'auto'
+                }
+            },
+            theme: 'grid'
+        })
+
+        successAlert.style.display = 'none'
+        dangerAlert.style.display = 'none'
+        alertRelatorio.style.display = 'none'
+        updateAlert.style.display = 'none'
+        deletedAlert.style.display = 'none'
+        alertRelatorioFinanceiro.style.display = 'flex'
+
+        adicionarNotificacao('info', `Relatório Financeiro do dia: ${dia}/${mes}/${ano} gerado com sucesso.`);
+        atualizarNotificacaoBadge()
+
+        pdf.save('Relatório-Financeiro.pdf')
+    })
+}
+
 gerarRelatorio()
+gerarRelatorioFinanceiro()
 
 // Input Mask Phone
 
