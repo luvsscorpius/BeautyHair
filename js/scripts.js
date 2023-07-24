@@ -724,16 +724,23 @@ const mostrarExtrato = () => {
     // Objeto para separar transações por data
     const transacoesPorData = {}
 
+    // Array com o nome dos meses 
+    const nomeMeses = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ]
+
     // Obter todas as transações financeiras da tabela de dados
     const transacoes = tableData.tableData;
 
     transacoes.forEach((transacao) => {
-        const data = transacao.data
-        if (!transacoesPorData[data]) {
-            transacoesPorData[data] = [] // Cria um array vazio para armazenar as transações dessa data
+        const data = new Date(transacao.data)
+        const mes = data.getMonth()
+        const mesAno = `${nomeMeses[data.getMonth()]} / ${data.getFullYear()}`; // Montar a string "Nome do Mês / Ano"
+        if (!transacoesPorData[mesAno]) {
+            transacoesPorData[mesAno] = [] // Cria um array vazio para armazenar as transações dessa data
         }
 
-        transacoesPorData[data].push(transacao) // Adiciona a transação ao array da data correspondente
+        transacoesPorData[mesAno].push(transacao) // Adiciona a transação ao array da data correspondente
     })
 
     const divExtrato = document.createElement('div')
@@ -743,16 +750,25 @@ const mostrarExtrato = () => {
     const divCabecalho = document.createElement('div');
     divCabecalho.classList.add('extrato-cabecalho');
 
-    const tituloExtrato = document.createElement('h3')
-    tituloExtrato.textContent = 'Extrato de transações'
+    const divInputs = document.createElement('div')
+    divInputs.classList.add('divInputs')
 
-    const dataAtual = new Date()
-    const dataFormatada = `${dataAtual.getDate()}/${dataAtual.getMonth() + 1}/${dataAtual.getFullYear()}`
-    const dataExtato = document.createElement('p')
-    dataExtato.textContent = `${dataFormatada}`
+    const searchInputExtrato = document.createElement('input')
+    searchInputExtrato.classList.add('searchExtrato')
+    searchInputExtrato.setAttribute('placeholder', 'Pesquisar')
 
-    divExtrato.appendChild(tituloExtrato)
-    tituloExtrato.appendChild(dataExtato)
+    // Criar o elemento span para o ícone e adicionar a classe do ícone do Font Awesome (por exemplo, o ícone de pesquisa)
+    const searchIcon = document.createElement('span');
+    searchIcon.classList.add('fas', 'fa-search'); // Adicione as classes do Font Awesome para o ícone que você deseja usar
+    searchIcon.style.fontSize = '20px'
+    searchIcon.style.margin = '10px'
+
+    // Anexar o ícone ao elemento input como um elemento filho
+    divCabecalho.appendChild(divInputs);
+
+    divInputs.appendChild(searchIcon);
+    divInputs.appendChild(searchInputExtrato)
+
 
     // Adicionar o corpo do extrato (lista de transações)
     const listaExtrato = document.createElement('ul');
@@ -760,38 +776,47 @@ const mostrarExtrato = () => {
 
     // Percorre o objeto transacoesPorData para criar as seções de transições
     for (const data in transacoesPorData) {
-        const transacaoData = transacoesPorData[data]
+        const transacaoDoMes = transacoesPorData[data]
 
         // Cria uma seção para a data
-        const itemData = document.createElement('li')
-        itemData.classList.add('list-group-item', 'list-group-item-secondary')
-        const dataTransacao = new Date(data)
-        const dataFormatada = `${dataTransacao.getDate()}/${dataTransacao.getMonth() + 1}/${dataTransacao.getFullYear()}`;
-        itemData.textContent = dataFormatada
+        const itemMes = document.createElement('li')
+        itemMes.classList.add('list-group-item', 'list-group-item-secondary')
 
-        listaExtrato.appendChild(itemData)
+        // Função split para separar o mes e o ano
+        const [mes, ano] = data.split('/')
+
+        // Verificar se o mês é um número válido entre 1 e 12
+        const numeroMes = parseInt(mes)
+        if (numeroMes >= 1 && numeroMes <= 12) {
+            itemMes.innerHTML = `<h4><strong>${nomeMeses[numeroMes - 1]}</strong></h4>  <p>${ano}</p>` // Exibi o nome do mês e ano
+        } else {
+            itemMes.innerHTML = `<h4><strong>${mes}</strong></h4>  <p>${ano}</p>`
+        }
+
+        listaExtrato.appendChild(itemMes)
 
         // Coloca a seção na lista
-        transacaoData.forEach((transacao) => {
+        transacaoDoMes.forEach((transacao) => {
             const itemTransacao = document.createElement('li')
             itemTransacao.classList.add('list-group-item')
 
             // Cria elementos para exibir as informações da transações na lista
-            const descricaoTransacao = document.createElement('h5')
-            descricaoTransacao.textContent = transacao.corte
+            const nomeTransacao = document.createElement('h5')
+            nomeTransacao.innerHTML = `<strong>Pagamento corte: ${transacao.corte}</strong>`
+
+            const valorTransacao = document.createElement('p')
+            valorTransacao.style.color = '#67BF63'
+            valorTransacao.innerHTML = `<strong>R$ ${transacao.valor}</strong>`
 
             const detalhesTransacao = document.createElement('p');
             detalhesTransacao.innerHTML = `
-          <strong>Profissional:</strong> ${transacao.profissional}<br>
-          <strong>Cliente:</strong> ${transacao.nome}<br>
-          <strong>E-mail:</strong> ${transacao.email}<br>
-          <strong>Telefone:</strong> ${transacao.telefone}<br>
-          <strong>Celular:</strong> ${transacao.celular}<br>
-          <strong>Valor:</strong> R$ ${transacao.valor}<br>
-        `;
+            ${transacao.nome}<br>
+            Entradas<br>
+            `;
 
             // Adiciona os elementos item da transição
-            itemTransacao.appendChild(descricaoTransacao);
+            itemTransacao.appendChild(nomeTransacao);
+            itemTransacao.appendChild(valorTransacao)
             itemTransacao.appendChild(detalhesTransacao);
 
             // Adiciona os items a lista

@@ -454,3 +454,32 @@ tfoot th {
     height: auto;
     max-height: 70vh;
 }
+
+.extrato-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.divInputs {
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.searchExtrato {
+    height: 35px;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+}
+
+.searchExtrato::placeholder {
+    font-weight: bold;
+}
