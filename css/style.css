@@ -457,7 +457,7 @@ tfoot th {
 
 .extrato-cabecalho {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     gap: 5px;
 }
 
@@ -482,4 +482,27 @@ tfoot th {
 
 .searchExtrato::placeholder {
     font-weight: bold;
+}
+
+.divBtnExtrato {
+    background-color: #eee;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    border-radius: 5px;
+}
+
+.btnExtrato {
+    background-color: #eee;
+    border: none;
+    font-weight: bold;
+    color: #707070;
+    margin: 10px;
+}
+
+.btnExtrato:active {
+    transform: scale(.9);
+    transition: all 100ms ease;
 }

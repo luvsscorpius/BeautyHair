@@ -212,7 +212,6 @@ class TableData {
 
                         // Atualizar dados da tabela   
                         tableData.renderTable()
-                        tableData.renderTableFinanceiro()
                         tableData.totalFinanceiro()
 
                         console.log(tableData)
@@ -583,6 +582,7 @@ const gerarRelatorioFinanceiro = () => {
     })
 }
 
+
 gerarRelatorio()
 gerarRelatorioFinanceiro()
 
@@ -750,12 +750,17 @@ const mostrarExtrato = () => {
     const divCabecalho = document.createElement('div');
     divCabecalho.classList.add('extrato-cabecalho');
 
+    // Div para agrupar input e icon de search
     const divInputs = document.createElement('div')
     divInputs.classList.add('divInputs')
 
+    // Criando input
     const searchInputExtrato = document.createElement('input')
     searchInputExtrato.classList.add('searchExtrato')
     searchInputExtrato.setAttribute('placeholder', 'Pesquisar')
+
+    // Anexar o ícone ao elemento input como um elemento filho
+    divCabecalho.appendChild(divInputs);
 
     // Criar o elemento span para o ícone e adicionar a classe do ícone do Font Awesome (por exemplo, o ícone de pesquisa)
     const searchIcon = document.createElement('span');
@@ -763,16 +768,67 @@ const mostrarExtrato = () => {
     searchIcon.style.fontSize = '20px'
     searchIcon.style.margin = '10px'
 
-    // Anexar o ícone ao elemento input como um elemento filho
-    divCabecalho.appendChild(divInputs);
-
     divInputs.appendChild(searchIcon);
     divInputs.appendChild(searchInputExtrato)
 
+    // Div Botão de exportar extrato
+    const divBtnExtrato = document.createElement('div')
+    divBtnExtrato.classList.add('divBtnExtrato')
+
+    // Criando botao para exportar o extrato 
+    const btnExtrato = document.createElement('button')
+    btnExtrato.classList.add('btnExtrato')
+    btnExtrato.setAttribute('id', 'btnExportarExtrato')
+    btnExtrato.textContent = 'Exportar'
+
+    // criando o icon de exportar
+    const exportIcon = document.createElement('span')
+    exportIcon.classList.add('fa-solid', 'fa-file-export')
+    exportIcon.style.fontSize = '20px'
+
+    divCabecalho.appendChild(divBtnExtrato)
+    divBtnExtrato.appendChild(exportIcon)
+    divBtnExtrato.appendChild(btnExtrato)
+
+    // função para gerar relatório do extrato
+    const gerarRelatorioExtrato = () => {
+        btnExtrato.addEventListener('click', () => {
+            console.log('Botão PDF extrato')
+
+            const doc = new jsPDF()
+            doc.fromHTML(listaExtrato)
+            doc.save('Extrato.pdf')
+        })
+    }
+
+    gerarRelatorioExtrato()
 
     // Adicionar o corpo do extrato (lista de transações)
     const listaExtrato = document.createElement('ul');
     listaExtrato.classList.add('list-group');
+
+    // Evento de escuta de input
+    searchInputExtrato.addEventListener('input', () => {
+
+        // criando uma constante onde sera guardada o valor do input
+        const termoPesquisa = searchInputExtrato.value.trim().toLowerCase();
+        const itensTransacao = listaExtrato.querySelectorAll('li'); // Seleciona todos os itens da lista de transações
+
+        // varrendo a lista de li
+        itensTransacao.forEach((itemTransacao) => {
+            const nomeTransacao = itemTransacao.textContent.toLowerCase(); // Obtém o nome da transação ou uma string vazia se não houver <h5>
+
+            // se a constante nomeTransacao tiver o valor do input ele mostrara na tela
+            if (nomeTransacao.includes(termoPesquisa)) {
+                itemTransacao.style.display = 'flex'; // Exibe o item da transação se o termo de pesquisa for encontrado
+            } else {
+                // caso nao tenha o valor digitado ele ocultara (deixara em branco)
+                itemTransacao.style.display = 'none'; // Oculta o item da transação se o termo de pesquisa não for encontrado
+            }
+        });
+
+
+    })
 
     // Percorre o objeto transacoesPorData para criar as seções de transições
     for (const data in transacoesPorData) {
@@ -799,10 +855,24 @@ const mostrarExtrato = () => {
         transacaoDoMes.forEach((transacao) => {
             const itemTransacao = document.createElement('li')
             itemTransacao.classList.add('list-group-item')
+            itemTransacao.style.display = 'flex'
+
+            // Icone
+            const divIconDollar = document.createElement('div')
+            divIconDollar.classList.add('divIconDollar')
+            divIconDollar.style.display = 'flex'
+            divIconDollar.style.alignItems = 'center'
+            const spanIconDollar = document.createElement('span');
+            spanIconDollar.classList.add('fa-solid', 'fa-hand-holding-dollar'); // Adicione as classes do Font Awesome para o ícone que você deseja usar
+            spanIconDollar.style.fontSize = '20px'
+            spanIconDollar.style.margin = '10px'
+
+            const divInfo = document.createElement('div')
+            divInfo.classList.add('divInfo')
 
             // Cria elementos para exibir as informações da transações na lista
             const nomeTransacao = document.createElement('h5')
-            nomeTransacao.innerHTML = `<strong>Pagamento corte: ${transacao.corte}</strong>`
+            nomeTransacao.innerHTML = `<strong>Pagamento: ${transacao.corte}</strong>`
 
             const valorTransacao = document.createElement('p')
             valorTransacao.style.color = '#67BF63'
@@ -815,9 +885,12 @@ const mostrarExtrato = () => {
             `;
 
             // Adiciona os elementos item da transição
-            itemTransacao.appendChild(nomeTransacao);
-            itemTransacao.appendChild(valorTransacao)
-            itemTransacao.appendChild(detalhesTransacao);
+            itemTransacao.appendChild(divIconDollar)
+            divIconDollar.appendChild(spanIconDollar)
+            itemTransacao.appendChild(divInfo)
+            divInfo.appendChild(nomeTransacao);
+            divInfo.appendChild(valorTransacao)
+            divInfo.appendChild(detalhesTransacao);
 
             // Adiciona os items a lista
             listaExtrato.appendChild(itemTransacao);
