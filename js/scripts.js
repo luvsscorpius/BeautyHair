@@ -732,6 +732,14 @@ const mostrarExtrato = () => {
     // Obter todas as transações financeiras da tabela de dados
     const transacoes = tableData.tableData;
 
+    // Ordenar as transações por data em ordem de chegada e, em seguida, inverter a ordem
+    transacoes.sort((a, b) => {
+        const dataA = new Date(a.data);
+        const dataB = new Date(b.data);
+        return dataA - dataB;
+    });
+    transacoes.reverse(); // Inverte a ordem das transações
+
     transacoes.forEach((transacao) => {
         const data = new Date(transacao.data)
         const mes = data.getMonth()
@@ -909,4 +917,23 @@ const btnExtrato = document.querySelector('#btnExtrato')
 btnExtrato.addEventListener('click', () => {
     mostrarExtrato()
 })
+
+// Função para não permitir datas anteriores a atuais
+
+const bloquearMesesAnteriores = () => {
+    const dataAtual = new Date()
+
+    dataAtual.setDate(dataAtual.getDate() - 1)
+    const valorMinimo = dataAtual.toISOString().slice(0, 10)
+
+    // Obtém a referência do elemento input
+    const inputDate = document.querySelector('#dataEdicao')
+    const inputDateEdicao = document.querySelector('#data')
+
+    // define os valores minimos 
+    inputDate.setAttribute("min", valorMinimo)
+    inputDateEdicao.setAttribute("min", valorMinimo)
+}
+
+bloquearMesesAnteriores()
 
