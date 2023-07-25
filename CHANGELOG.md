@@ -1,3 +1,15 @@
+# [1.17.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.16.0...v1.17.0) (2023-07-25)
+
+
+### Features
+
+* **generate tablefinanceiro pdf added:** now you can generate your tableFinanceiro PDF ([1869880](https://github.com/luvsscorpius/BeautyHair/commit/186988075a6264b85677099f939a8c9c24ec0b59))
+* **ordered months on statements:** now the months will be ordered on statements ([58de970](https://github.com/luvsscorpius/BeautyHair/commit/58de97036d41ff9852d871b04c7a0f1872d9f712))
+* **search input added on statements/reports:** working on a search input to look for reports ([f19b09e](https://github.com/luvsscorpius/BeautyHair/commit/f19b09e84aa259b81323855254a623745cf4ee74))
+* **search/pdf extrato added:** now you can search or generate a pdf on statements ([96693b6](https://github.com/luvsscorpius/BeautyHair/commit/96693b66ef5458c3998a03a156118700e74ac02e))
+* **searchtablefinanceiro function added:** now you can search the Financeiro Table ([eae4836](https://github.com/luvsscorpius/BeautyHair/commit/eae483619a641976ea597242882853c5dc62868f))
+* **statements/reports added:** now you can see your statements/reports ([a6d9a6b](https://github.com/luvsscorpius/BeautyHair/commit/a6d9a6b55ea9a39b2998ee93b88f15db97d315f9))
+
 # [1.16.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.15.0...v1.16.0) (2023-07-23)
 
 
