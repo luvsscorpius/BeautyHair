@@ -10,6 +10,7 @@ const successAlert = document.querySelector('.alert-success')
 const alertRelatorio = document.querySelector('#alert-relatorio')
 const updateAlert = document.querySelector('#alert-update')
 const deletedAlert = document.querySelector('#alert-deleted')
+const alertRelatorioFinanceiro = document.querySelector('#alert-relatorio-financeiro')
 const notificationAlertClientAdded = document.querySelector('#notificationAlertClientAdded')
 const notificationAlertClientDeleted = document.querySelector('#notificationAlertClientDeleted')
 const notificationAlertClientUpdated = document.querySelector('#notificationAlertClientUpdated')
@@ -187,6 +188,7 @@ class TableData {
                         alertRelatorio.style.display = 'none'
                         updateAlert.style.display = 'none'
                         deletedAlert.style.display = 'none'
+                        alertRelatorioFinanceiro.style.display = 'none'
                     } else {
 
                         successAlert.style.display = 'none'
@@ -194,6 +196,7 @@ class TableData {
                         alertRelatorio.style.display = 'none'
                         updateAlert.style.display = 'flex'
                         deletedAlert.style.display = 'none'
+                        alertRelatorioFinanceiro.style.display = 'none'
 
                         // atualizando o vetor com os novos inputs atualizados
                         data.nome = novoNome
@@ -209,7 +212,6 @@ class TableData {
 
                         // Atualizar dados da tabela   
                         tableData.renderTable()
-                        tableData.renderTableFinanceiro()
                         tableData.totalFinanceiro()
 
                         console.log(tableData)
@@ -239,6 +241,7 @@ class TableData {
                     alertRelatorio.style.display = 'none'
                     updateAlert.style.display = 'none'
                     deletedAlert.style.display = 'flex'
+                    alertRelatorioFinanceiro.style.display = 'none'
 
                     adicionarNotificacao('danger', `Cliente ${data.nome} deletado com sucesso.`);
                     atualizarNotificacaoBadge()
@@ -361,6 +364,37 @@ class TableData {
         totalTitle.innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`
         this.renderTableFinanceiro()
     }
+
+    filterTableFinanceiro(searchTerm) {
+        const tableFinanceiro = document.querySelector('#tableFinanceiro tbody')
+        const rows = tableFinanceiro.querySelectorAll('tr')
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td') // obtem todas as celulas da linha
+
+            // Verifica se o termo está presente ou não
+            let found = false;
+            cells.forEach(cell => { // includes é pra verificar se o termo existe ou nao
+                if (cell.textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    // se encontra transforma a variavel em true
+                    found = true
+                }
+            })
+
+            // Mostrar
+            if (found) {
+                /* Se o termo de busca for encontrado em alguma célula, definimos o estilo de exibição 
+                da linha como "" (vazio), o que significa que a linha será exibida normalmente.
+                */
+                row.style.display = ""
+            } else {
+                /* Se o termo de busca não for encontrado em alguma célula, definimos o estilo de exibição 
+                da linha como "none", o que significa que a linha não será exibida.
+                */
+                row.style.display = "none"
+            }
+        })
+    }
 }
 
 // Instanciar 
@@ -399,6 +433,7 @@ submitButton.addEventListener('click', (event) => {
         alertRelatorio.style.display = 'none'
         updateAlert.style.display = 'none'
         deletedAlert.style.display = 'none'
+        alertRelatorioFinanceiro.style.display = 'none'
 
     } else {
         console.log(nome)
@@ -408,6 +443,7 @@ submitButton.addEventListener('click', (event) => {
         alertRelatorio.style.display = 'none'
         updateAlert.style.display = 'none'
         deletedAlert.style.display = 'none'
+        alertRelatorioFinanceiro.style.display = 'none'
 
         // Adicionar dados a tabela 
         tableData.addData(profissional, nome, email, telefone, celular, corte, data, valor)
@@ -444,29 +480,38 @@ function generateUniqueId() {
 
 // Captura o campo de busca pelo id
 const searchInput = document.querySelector('#search')
+const searchInputFinanceiro = document.querySelector('#searchFinaceiro')
 
 // Adiciona um Evento de entrada ao campo de busca para atualizar a tabela de acordo com o termo de busca
 searchInput.addEventListener("input", function () {
-    console.log("teste")
     const searchTerm = searchInput.value
     tableData.filterTable(searchTerm)
 })
 
+searchInputFinanceiro.addEventListener("input", function () {
+    const searchTerm = searchInputFinanceiro.value
+    tableData.filterTableFinanceiro(searchTerm)
+})
+
+
 // Gerar relatório
 
 const btn_gerarRelatorio = document.querySelector('#gerarRelatorio')
+const btn_gerarRelatorioFinanceiro = document.querySelector('#gerarRelatorioFinanceiro')
+
+// Data
+const data = new Date()
+const dia = data.getDate()
+const mes = data.getMonth() + 1
+const ano = data.getFullYear()
 
 const gerarRelatorio = () => {
     btn_gerarRelatorio.addEventListener('click', (e) => {
         console.log('PDF')
-        const table = document.querySelector('#divTable').innerHTML
-        const data = new Date()
-        const dia = data.getDay()
-        const mes = data.getMonth()
-        const ano = data.getFullYear()
 
-        var pdfsize = 'a0' // Tamanho do pdf
-        var pdf = new jsPDF('1', 'pt', pdfsize) // criando uma variável de pdf
+        // configurando e criando o pdf
+        const pdfsize = 'a0' // Tamanho do pdf
+        const pdf = new jsPDF('1', 'pt', pdfsize) // criando uma variável de pdf
 
         pdf.autoTable({ // Utilizando o autoTable (plugin para tabelas do jsPDF)
             html: '#table', // trazendo sua tabela do html
@@ -491,6 +536,7 @@ const gerarRelatorio = () => {
         alertRelatorio.style.display = 'flex'
         updateAlert.style.display = 'none'
         deletedAlert.style.display = 'none'
+        alertRelatorioFinanceiro.style.display = 'none'
 
         adicionarNotificacao('info', `Relatório do dia: ${dia}/${mes}/${ano} gerado com sucesso.`);
         atualizarNotificacaoBadge()
@@ -499,7 +545,46 @@ const gerarRelatorio = () => {
     })
 }
 
+const gerarRelatorioFinanceiro = () => {
+    btn_gerarRelatorioFinanceiro.addEventListener('click', () => {
+        console.log('PDF Financeiro')
+
+        // configurando e criando o pdf
+        const pdfsize = 'a0' // Tamanho do pdf
+        const pdf = new jsPDF('1', 'pt', pdfsize) // criando uma variável de pdf
+
+        pdf.autoTable({
+            html: '#tableFinanceiro',
+            StartY: 60,
+            styles: {
+                fontSize: 30,
+                cellWidth: 'wrap'
+            },
+            columnStyle: {
+                1: {
+                    columnWidth: 'auto'
+                }
+            },
+            theme: 'grid'
+        })
+
+        successAlert.style.display = 'none'
+        dangerAlert.style.display = 'none'
+        alertRelatorio.style.display = 'none'
+        updateAlert.style.display = 'none'
+        deletedAlert.style.display = 'none'
+        alertRelatorioFinanceiro.style.display = 'flex'
+
+        adicionarNotificacao('info', `Relatório Financeiro do dia: ${dia}/${mes}/${ano} gerado com sucesso.`);
+        atualizarNotificacaoBadge()
+
+        pdf.save('Relatório-Financeiro.pdf')
+    })
+}
+
+
 gerarRelatorio()
+gerarRelatorioFinanceiro()
 
 // Input Mask Phone
 
@@ -624,5 +709,231 @@ btnLimpar.addEventListener('click', () => {
     });
 });
 
+// Extrato
 
+const mostrarExtrato = () => {
+    // Capturando o modal
+    const modalExtrato = document.querySelector('#modalExtrato')
+
+    // Capturando o corpo do modal
+    const modalExtratoBody = document.querySelector('#modalBodyFinanceiro')
+
+    // Limpando o corpo do modal antes de adicionar
+    modalExtratoBody.innerHTML = ''
+
+    // Objeto para separar transações por data
+    const transacoesPorData = {}
+
+    // Array com o nome dos meses 
+    const nomeMeses = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ]
+
+    // Obter todas as transações financeiras da tabela de dados
+    const transacoes = tableData.tableData;
+
+    // Ordenar as transações por data em ordem de chegada e, em seguida, inverter a ordem
+    transacoes.sort((a, b) => {
+        const dataA = new Date(a.data);
+        const dataB = new Date(b.data);
+        return dataA - dataB;
+    });
+    transacoes.reverse(); // Inverte a ordem das transações
+
+    transacoes.forEach((transacao) => {
+        const data = new Date(transacao.data)
+        const mes = data.getMonth()
+        const mesAno = `${nomeMeses[data.getMonth()]} / ${data.getFullYear()}`; // Montar a string "Nome do Mês / Ano"
+        if (!transacoesPorData[mesAno]) {
+            transacoesPorData[mesAno] = [] // Cria um array vazio para armazenar as transações dessa data
+        }
+
+        transacoesPorData[mesAno].push(transacao) // Adiciona a transação ao array da data correspondente
+    })
+
+    const divExtrato = document.createElement('div')
+    divExtrato.classList.add('extrato')
+
+    // Adicionar o cabeçalho do extrato
+    const divCabecalho = document.createElement('div');
+    divCabecalho.classList.add('extrato-cabecalho');
+
+    // Div para agrupar input e icon de search
+    const divInputs = document.createElement('div')
+    divInputs.classList.add('divInputs')
+
+    // Criando input
+    const searchInputExtrato = document.createElement('input')
+    searchInputExtrato.classList.add('searchExtrato')
+    searchInputExtrato.setAttribute('placeholder', 'Pesquisar')
+
+    // Anexar o ícone ao elemento input como um elemento filho
+    divCabecalho.appendChild(divInputs);
+
+    // Criar o elemento span para o ícone e adicionar a classe do ícone do Font Awesome (por exemplo, o ícone de pesquisa)
+    const searchIcon = document.createElement('span');
+    searchIcon.classList.add('fas', 'fa-search'); // Adicione as classes do Font Awesome para o ícone que você deseja usar
+    searchIcon.style.fontSize = '20px'
+    searchIcon.style.margin = '10px'
+
+    divInputs.appendChild(searchIcon);
+    divInputs.appendChild(searchInputExtrato)
+
+    // Div Botão de exportar extrato
+    const divBtnExtrato = document.createElement('div')
+    divBtnExtrato.classList.add('divBtnExtrato')
+
+    // Criando botao para exportar o extrato 
+    const btnExtrato = document.createElement('button')
+    btnExtrato.classList.add('btnExtrato')
+    btnExtrato.setAttribute('id', 'btnExportarExtrato')
+    btnExtrato.textContent = 'Exportar'
+
+    // criando o icon de exportar
+    const exportIcon = document.createElement('span')
+    exportIcon.classList.add('fa-solid', 'fa-file-export')
+    exportIcon.style.fontSize = '20px'
+
+    divCabecalho.appendChild(divBtnExtrato)
+    divBtnExtrato.appendChild(exportIcon)
+    divBtnExtrato.appendChild(btnExtrato)
+
+    // função para gerar relatório do extrato
+    const gerarRelatorioExtrato = () => {
+        btnExtrato.addEventListener('click', () => {
+            console.log('Botão PDF extrato')
+
+            const doc = new jsPDF()
+            doc.fromHTML(listaExtrato)
+            doc.save('Extrato.pdf')
+        })
+    }
+
+    gerarRelatorioExtrato()
+
+    // Adicionar o corpo do extrato (lista de transações)
+    const listaExtrato = document.createElement('ul');
+    listaExtrato.classList.add('list-group');
+
+    // Evento de escuta de input
+    searchInputExtrato.addEventListener('input', () => {
+
+        // criando uma constante onde sera guardada o valor do input
+        const termoPesquisa = searchInputExtrato.value.trim().toLowerCase();
+        const itensTransacao = listaExtrato.querySelectorAll('li'); // Seleciona todos os itens da lista de transações
+
+        // varrendo a lista de li
+        itensTransacao.forEach((itemTransacao) => {
+            const nomeTransacao = itemTransacao.textContent.toLowerCase(); // Obtém o nome da transação ou uma string vazia se não houver <h5>
+
+            // se a constante nomeTransacao tiver o valor do input ele mostrara na tela
+            if (nomeTransacao.includes(termoPesquisa)) {
+                itemTransacao.style.display = 'flex'; // Exibe o item da transação se o termo de pesquisa for encontrado
+            } else {
+                // caso nao tenha o valor digitado ele ocultara (deixara em branco)
+                itemTransacao.style.display = 'none'; // Oculta o item da transação se o termo de pesquisa não for encontrado
+            }
+        });
+
+
+    })
+
+    // Percorre o objeto transacoesPorData para criar as seções de transições
+    for (const data in transacoesPorData) {
+        const transacaoDoMes = transacoesPorData[data]
+
+        // Cria uma seção para a data
+        const itemMes = document.createElement('li')
+        itemMes.classList.add('list-group-item', 'list-group-item-secondary')
+
+        // Função split para separar o mes e o ano
+        const [mes, ano] = data.split('/')
+
+        // Verificar se o mês é um número válido entre 1 e 12
+        const numeroMes = parseInt(mes)
+        if (numeroMes >= 1 && numeroMes <= 12) {
+            itemMes.innerHTML = `<h4><strong>${nomeMeses[numeroMes - 1]}</strong></h4>  <p>${ano}</p>` // Exibi o nome do mês e ano
+        } else {
+            itemMes.innerHTML = `<h4><strong>${mes}</strong></h4>  <p>${ano}</p>`
+        }
+
+        listaExtrato.appendChild(itemMes)
+
+        // Coloca a seção na lista
+        transacaoDoMes.forEach((transacao) => {
+            const itemTransacao = document.createElement('li')
+            itemTransacao.classList.add('list-group-item')
+            itemTransacao.style.display = 'flex'
+
+            // Icone
+            const divIconDollar = document.createElement('div')
+            divIconDollar.classList.add('divIconDollar')
+            divIconDollar.style.display = 'flex'
+            divIconDollar.style.alignItems = 'center'
+            const spanIconDollar = document.createElement('span');
+            spanIconDollar.classList.add('fa-solid', 'fa-hand-holding-dollar'); // Adicione as classes do Font Awesome para o ícone que você deseja usar
+            spanIconDollar.style.fontSize = '20px'
+            spanIconDollar.style.margin = '10px'
+
+            const divInfo = document.createElement('div')
+            divInfo.classList.add('divInfo')
+
+            // Cria elementos para exibir as informações da transações na lista
+            const nomeTransacao = document.createElement('h5')
+            nomeTransacao.innerHTML = `<strong>Pagamento: ${transacao.corte}</strong>`
+
+            const valorTransacao = document.createElement('p')
+            valorTransacao.style.color = '#67BF63'
+            valorTransacao.innerHTML = `<strong>R$ ${transacao.valor}</strong>`
+
+            const detalhesTransacao = document.createElement('p');
+            detalhesTransacao.innerHTML = `
+            ${transacao.nome}<br>
+            Entradas<br>
+            `;
+
+            // Adiciona os elementos item da transição
+            itemTransacao.appendChild(divIconDollar)
+            divIconDollar.appendChild(spanIconDollar)
+            itemTransacao.appendChild(divInfo)
+            divInfo.appendChild(nomeTransacao);
+            divInfo.appendChild(valorTransacao)
+            divInfo.appendChild(detalhesTransacao);
+
+            // Adiciona os items a lista
+            listaExtrato.appendChild(itemTransacao);
+        })
+    }
+
+    divExtrato.appendChild(divCabecalho);
+    divExtrato.appendChild(listaExtrato);
+
+    // Adicionar o extrato ao corpo do modal
+    modalExtratoBody.appendChild(divExtrato);
+}
+
+const btnExtrato = document.querySelector('#btnExtrato')
+
+btnExtrato.addEventListener('click', () => {
+    mostrarExtrato()
+})
+
+// Função para não permitir datas anteriores a atuais
+
+const bloquearMesesAnteriores = () => {
+    const dataAtual = new Date()
+
+    dataAtual.setDate(dataAtual.getDate() - 1)
+    const valorMinimo = dataAtual.toISOString().slice(0, 10)
+
+    // Obtém a referência do elemento input
+    const inputDate = document.querySelector('#dataEdicao')
+    const inputDateEdicao = document.querySelector('#data')
+
+    // define os valores minimos 
+    inputDate.setAttribute("min", valorMinimo)
+    inputDateEdicao.setAttribute("min", valorMinimo)
+}
+
+bloquearMesesAnteriores()
 

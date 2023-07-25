@@ -397,6 +397,9 @@ tfoot th {
     align-items: center;
     transition: opacity 0.3s, transform 0.5s ease-out;
     /* Adicionamos uma transição para o efeito de saída */
+    height: auto;
+    overflow-y: scroll;
+    max-height: 50vh;
 }
 
 /* Estilo para o botão de fechar */
@@ -444,4 +447,62 @@ tfoot th {
 
 #containerTableFinanceiro {
     display: none;
+}
+
+#modalBodyFinanceiro {
+    overflow-y: scroll;
+    height: auto;
+    max-height: 70vh;
+}
+
+.extrato-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.divInputs {
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.searchExtrato {
+    height: 35px;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+}
+
+.searchExtrato::placeholder {
+    font-weight: bold;
+}
+
+.divBtnExtrato {
+    background-color: #eee;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    border-radius: 5px;
+}
+
+.btnExtrato {
+    background-color: #eee;
+    border: none;
+    font-weight: bold;
+    color: #707070;
+    margin: 10px;
+}
+
+.btnExtrato:active {
+    transform: scale(.9);
+    transition: all 100ms ease;
 }
