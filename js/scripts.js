@@ -44,6 +44,8 @@ const informationFinanceiro = document.querySelector('#informationFinanceiro')
 const navFinanceiro = document.querySelector('#navFinanceiro')
 const containerTableFinanceiro = document.querySelector('#containerTableFinanceiro')
 
+const abaCalendar = document.querySelector('#calendar')
+
 const clientes = () => {
     const clientes = document.querySelector('.list-clientes').addEventListener('click', () => {
         console.log('Cliquei na aba clientes')
@@ -58,6 +60,9 @@ const clientes = () => {
             containerTableFinanceiro.style.display = 'none'
             informationFinanceiro.style.display = 'none'
             navFinanceiro.style.display = 'none'
+
+            // Deixar a aba calendario oculta
+            abaCalendar.style.display = 'none'
 
         }
     })
@@ -77,6 +82,9 @@ const financeiro = () => {
             informationFinanceiro.style.display = 'flex'
             navFinanceiro.style.display = 'flex'
 
+            // Deixar a aba calendario oculta
+            abaCalendar.style.display = 'none'
+
             // alertas ocultos
             dangerAlert.style.display = 'none'
             successAlert.style.display = 'none'
@@ -87,8 +95,29 @@ const financeiro = () => {
     })
 }
 
-financeiro()
+const calendar = () => {
+    const calendar = document.querySelector('.list-calendario').addEventListener('click', () => {
+        console.log('Cliquei na aba calendário')
+        if (abaCalendar.style.display = 'none') {
+            //Deixar a aba de clientes ocultas
+            abaClientes.style.display = 'none'
+            navClientes.style.display = 'none'
+            information.style.display = 'none'
+
+            // Deixar a aba financeiro oculto
+            containerTableFinanceiro.style.display = 'none'
+            informationFinanceiro.style.display = 'none'
+            navFinanceiro.style.display = 'none'
+
+            // Deixar a aba calendario visivel
+            abaCalendar.style.display = 'flex'
+        }
+    })
+}
+
 clientes()
+financeiro()
+calendar()
 
 // Adicionar dados na table com classes
 
@@ -936,4 +965,97 @@ const bloquearMesesAnteriores = () => {
 }
 
 bloquearMesesAnteriores()
+
+// Calendar
+
+class Evento {
+    constructor() {
+        // O constructor é um método especial que é executado quando um objeto da classe é criado.
+
+        // Criando o objeto eventsByDate (eventos por data)
+        this.eventsByDate = {}
+    }
+}
+
+// Precisamos criar variáveis globais para pegar o ano e o mês atual
+let currentMonth = new Date().getMonth()
+let currentYear = new Date().getFullYear()
+
+// Agora precisamos pegar o corpo do calendario (tabela) e o span onde ficará o mes e o ano
+const calendarBody = document.querySelector('#calendarBody')
+const monthYearText = document.querySelector('#monthYear')
+
+// Agora precisamos criar uma função para gerar o corpo do calendário
+
+const generateCalendar = (month, year) => {
+    // Precisamos pegar o primeiro dia do mês
+    const firstDay = new Date(year, month, 1).getDay()
+
+    // Também precisamos pegar o último dia do mês
+    const lastDay = new Date(year, month + 1, 0).getDate()
+
+    // Precisaremos limpar o corpo do calendário caso tenha alguma coisa
+    calendarBody.innerHTML = ''
+
+    // Precisamos adicionar o nome e o ano atual ao h2
+    monthYearText.textContent = `${getMonthName(month)} ${year}`
+
+    // Iniciando a várivel date com 1, pois o mês inicia em 1 e não em 0.
+    let date = 1
+
+    // Agora vamos criar o corpo da tabela usando laços de repetição.
+    // Se week for menor que, incremente até chegar em 5, para criar as linhas do calendário (6 linhas)
+    for (let week = 0; week < 6; week++) {
+        // Criando a linha 
+        const row = document.createElement('tr')
+
+        // Depois de criar as linhas precisamos criar os dias do calendário (celulas), usaremos denovo laço de repetiçaõ.
+        // Enquanto dia for menor que 7, incremente uma celula até ter 7 celulas.
+        for (let day = 0; day < 7; day++) {
+            // vamos criar as celulas onde os dias ficarão
+            const cell = document.createElement('td')
+
+            // Adicionaremos uma classe a essa celula para poder estilizar.
+            cell.classList.add('cellCalendar')
+
+            // Agora precisamos separar onde ficarao os dias (numeros) e depois onde ficaram os eventos, primeiro criaremos onde ficaram os dias.
+            const cellDay = document.createElement('p')
+
+            // E agora precisamos adicionar o paragrafo como filho da celula (td)
+            cell.appendChild(cellDay)
+
+            //Agora precisamos saber se chegou no primeiro dia do mês ou se ja passou do último para os dias ficarem certos nas celulas.
+            // Se a semana for igual a 0 e dia for menor que o primeiro dia, ou a data for maior que o último dia, a celula precisara estar vazia.
+            if ((week === 0 && day < firstDay) || (date > lastDay)) {
+                // Limpando a celula
+                cell.textContent = ""
+
+                //Caso contrário
+            } else {
+                // Preencha a celula (o paragrafo especificamente) com a data
+                cellDay.textContent = date
+
+                // E precisamos incrementar a data
+                date++
+            }
+
+            // Agora precisamos adicionar as celulas (tr) as linhas (adicionar como filhas)
+            row.appendChild(cell)
+        }
+        // E também precisamos adicionar as linhas (como filhas) ao corpo do calendário
+        calendarBody.appendChild(row)
+    }
+}
+
+// Precisamos criar uma função com um array com os nomes dos meses para passar para o calendário
+const getMonthName = (month) => {
+    const monthNames = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ]
+
+    return monthNames[month]
+}
+
+getMonthName()
+generateCalendar(currentMonth, currentYear)
 

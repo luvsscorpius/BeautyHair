@@ -419,6 +419,39 @@
                 </div>
             </div>
         </section>
+
+        <!-- Calendar -->
+
+        <section>
+            <div class="calendar" id="calendar">
+                <div class="divMonthYear" id="divMonthYear">
+                    <span class="previousMonth" id="previousMonth">&lt;</span>
+                    <h2 class="3" id="monthYear"></h2>
+                    <span class="nextMonth" id="nextMonth">&gt;</span>
+                </div>
+
+                <!-- Tabela -->
+                <table class="calendarTable" id="calendarTable">
+                    <!-- Cabeçalho -->
+                    <thead>
+                        <!-- Tr são linhas de uma tabela -->
+                        <tr class="calendarTableTr">
+                            <!-- Th são celulas do cabeçalho/footer -->
+                            <th class="calendarTableTh">Dom</th>
+                            <th class="calendarTableTh">Seg</th>
+                            <th class="calendarTableTh">Ter</th>
+                            <th class="calendarTableTh">Qua</th>
+                            <th class="calendarTableTh">Qui</th>
+                            <th class="calendarTableTh">Sex</th>
+                            <th class="calendarTableTh">Sab</th>
+                        </tr>
+                    </thead>
+
+                    <!-- tbody é o corpo da tabela e será inserida dinamicamente -->
+                    <tbody class="calendarBody" id="calendarBody"></tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>

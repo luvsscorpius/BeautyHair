@@ -506,3 +506,79 @@ tfoot th {
     transform: scale(.9);
     transition: all 100ms ease;
 }
+
+/* Calendar */
+
+.calendar {
+    display: none;
+    width: 100%;
+    padding: 20px;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    flex-direction: column;
+}
+
+.divMonthYear {
+    background-color: var(--menu);
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.divMonthYear span {
+    margin: 10px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.divMonthYear h2 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 100%;
+}
+
+.monthYear {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.calendarTableTh,
+td {
+    text-align: center;
+    width: 10%;
+}
+
+td:hover {
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.calendarTableTr {
+    background-color: #F2AC57;
+    color: #fff;
+    font-size: 20px;
+    height: 60px;
+}
+
+td {
+    padding-top: 50px;
+}
+
+.cellCalendar {
+    width: 100px;
+    height: 65px;
+    text-align: center;
+    /* vertical-align: top (alinha no topo) */
+    vertical-align: top;
+    overflow: hidden;
+}
