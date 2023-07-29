@@ -157,7 +157,7 @@ class TableData {
             corteCell.textContent = data.corte
 
             const dataCell = row.insertCell()
-            dataCell.textContent = data.data
+            dataCell.textContent = data.data.toISOString().slice(0, 16)
 
             const valorCell = row.insertCell()
             valorCell.textContent = `R$ ${data.valor}`
@@ -452,10 +452,10 @@ submitButton.addEventListener('click', (event) => {
     const telefone = telefoneInput.value
     const celular = celularInput.value
     const corte = corteInput.value
-    const data = dataInput.value
+    const data = new Date(dataInput.value.trim())
     const valor = valorInput.value
 
-    if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data.trim() === '' || valor.trim() === '') {
+    if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data === '' || valor.trim() === '') {
         dangerAlert.style.display = 'flex'
         successAlert.style.display = 'none'
         alertRelatorio.style.display = 'none'
@@ -495,6 +495,15 @@ submitButton.addEventListener('click', (event) => {
         tableData.renderTable()
         tableData.renderTableFinanceiro()
         tableData.totalFinanceiro()
+
+        const color = document.querySelector('#eventColor')
+        color.value = "#1976d2"
+        eventManager.addEvent(nome, color.value, data, corte)
+
+        currentMonth = data.getMonth()
+        currentYear = data.getFullYear()
+
+        generateCalendar(currentMonth, currentYear, eventManager)
 
         console.log(tableData)
     }
@@ -973,12 +982,12 @@ class Evento {
     }
 
     // Método para adicionar eventos
-    addEvent(nome, corte, data) {
+    addEvent(nome, color, data, corte) {
         const dateString = data.toDateString();
         if (!this.eventsByDate[dateString]) {
             this.eventsByDate[dateString] = [];
         }
-        this.eventsByDate[dateString].push({ nome, corte, data });
+        this.eventsByDate[dateString].push({ nome, corte, data, color });
     }
 
     // pegar os eventos por data
@@ -999,20 +1008,31 @@ const eventManager = new Evento()
 const calendarBody = document.querySelector('#calendarBody')
 const monthYearText = document.querySelector('#monthYear')
 
-// Capturando o botão de salvar
-submitButton.addEventListener('click', () => {
-    // Pegando os dados 
-    const nome = document.querySelector('#nome').value
-    const corte = document.querySelector('#corte').value
-    const data = new Date(document.querySelector('#data').value);
+const btnSalvar = document.querySelector('#btnSalvar')
 
-    console.log(nome)
-    eventManager.addEvent(nome, corte, data)
+//Capturando o botão de salvar
+btnSalvar.addEventListener('click', () => {
+    // Pegando os dados 
+    const nome = document.querySelector('#eventTitle').value
+    const color = document.querySelector('#eventColor').value
+    const data = new Date(document.querySelector('#eventTime').value);
+
+    eventManager.addEvent(nome, color, data)
 
     currentMonth = data.getMonth()
     currentYear = data.getFullYear()
 
     generateCalendar(currentMonth, currentYear, eventManager)
+})
+
+// vamos capturar a cor selecionada
+const eventColorSelect = document.querySelector("#eventColor")
+const selectedOption = document.querySelector(".selected-option");
+
+// Evento de escuta para saber qual foi escolhida e quando foi trocada
+eventColorSelect.addEventListener("change", () => {
+    const color = eventColorSelect.value
+    selectedOption.style.backgroundColor = color
 })
 
 // Agora precisamos criar uma função para gerar o corpo do calendário
@@ -1043,19 +1063,19 @@ const generateCalendar = (month, year, eventManager) => {
         // Enquanto dia for menor que 7, incremente uma celula até ter 7 celulas.
         for (let day = 0; day < 7; day++) {
             // vamos criar as celulas onde os dias ficarão
-            const cell = document.createElement('td')
+            let cell = document.createElement('td')
 
             // Adicionaremos uma classe a essa celula para poder estilizar.
             cell.classList.add('cellCalendar')
 
             // Agora precisamos separar onde ficarao os dias (numeros) e depois onde ficaram os eventos, primeiro criaremos onde ficaram os dias.
-            const cellDay = document.createElement('p')
+            let cellDay = document.createElement('p')
 
             // E agora precisamos adicionar o paragrafo como filho da celula (td)
             cell.appendChild(cellDay)
 
             // Adicionando atributos na celula para quando for clicada abrir o modal
-            cell.setAttribute('data-target', '#modal-mensagem')
+            cell.setAttribute('data-target', '#modalEvento')
             cell.setAttribute('data-toggle', 'modal')
 
             cell.addEventListener('click', () => {
@@ -1065,22 +1085,14 @@ const generateCalendar = (month, year, eventManager) => {
                 const adjustedDate = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), clickedDate.getDate())
                 const dateString = adjustedDate.toISOString().slice(0, 16) // Formatando a data
                 console.log(dateString)
-                const data = document.querySelector('#data')
+                const data = document.querySelector('#eventTime')
                 data.value = dateString
 
-                const nome = document.querySelector('#nome')
-                const email = document.querySelector('#email')
-                const telefone = document.querySelector('#telefone')
-                const celular = document.querySelector('#celular')
-                const corte = document.querySelector('#corte')
-                const valor = document.querySelector('#valor')
+                const nome = document.querySelector('#eventTitle')
+                const color = document.querySelector('#eventColor')
 
                 nome.value = ""
-                email.value = ""
-                telefone.value = ""
-                celular.value = ""
-                corte.value = ""
-                valor.value = ""
+                color.value = ""
 
             })
 
@@ -1110,10 +1122,15 @@ const generateCalendar = (month, year, eventManager) => {
                     const eventItem = document.createElement('div')
                     eventItem.classList.add('eventItem')
 
-                    eventItem.innerHTML = `<strong>${event.nome}</strong> ${event.corte}`
+                    // Coloca a cor de fundo escolhida pelo usuário
+                    eventItem.style.backgroundColor = event.color
+                    // Coloca o titulo adicionado pelo usuário com negrito
+                    eventItem.innerHTML = `<strong>${event.nome}</strong>`;
 
                     // Armazenar as informações do evento como atributos de dados
-                    eventItem.dataset.eventName = event.nome
+                    eventItem.dataset.eventTitle = event.nome
+                    eventItem.dataset.eventColor = event.color
+                    eventItem.dataset.eventDate = event.data.toISOString(); // transforma O formato resultante será algo como "AAAA-MM-DDTHH:mm:ss.sssZ".
 
                     eventElement.appendChild(eventItem)
                 })

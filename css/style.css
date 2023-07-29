@@ -572,3 +572,78 @@ td {
     vertical-align: top;
     overflow: hidden;
 }
+
+/* Modal calendar */
+
+.eventoForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.formControl {
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.formControl input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    font-size: 19px;
+    width: 100%;
+}
+
+.formControl input:focus {
+    border-bottom: 2px solid #0056b3;
+}
+
+.formControl input::placeholder {
+    font-weight: bold;
+    font-size: 19px;
+}
+
+.formControl input,
+select {
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 19px;
+}
+
+.formControl i {
+    margin: 5px;
+    font-size: 2rem;
+}
+
+.selected-option {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    margin: 5px;
+}
+
+.options-list {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.options-list li {
+    padding: 5px;
+}
+
+.options-list li:hover {
+    background-color: #f1f1f1;
+}
