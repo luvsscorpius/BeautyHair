@@ -129,9 +129,8 @@ class TableData {
 
     addData(profissional, nome, email, telefone, celular, corte, data, valor) {
         const id = generateUniqueId();
-        this.tableData.push({ id, profissional, nome, email, telefone, celular, corte, data, valor })
+        this.tableData.push({ id, profissional, nome, email, telefone, celular, corte, data, valor });
     }
-
     renderTable() {
         const tableBody = document.querySelector('#table tbody')
         tableBody.innerHTML = ""
@@ -478,13 +477,13 @@ submitButton.addEventListener('click', (event) => {
         tableData.addData(profissional, nome, email, telefone, celular, corte, data, valor)
 
         // Limpe os campos do formulário
-        nameInput.value = "";
-        emailInput.value = "";
-        telefoneInput.value = "";
-        celularInput.value = "";
-        corteInput.value = "";
-        dataInput.value = "";
-        valorInput.value = ""
+        // nameInput.value = "";
+        // emailInput.value = "";
+        // telefoneInput.value = "";
+        // celularInput.value = "";
+        // corteInput.value = "";
+        // dataInput.value = "";
+        // valorInput.value = ""
 
         adicionarNotificacao('success', `Cliente ${nome} foi adicionado com sucesso.`);
         atualizarNotificacaoBadge()
@@ -950,10 +949,10 @@ btnExtrato.addEventListener('click', () => {
 // Função para não permitir datas anteriores a atuais
 
 const bloquearMesesAnteriores = () => {
-    const dataAtual = new Date()
+    const dataAtual = new Date();
 
-    dataAtual.setDate(dataAtual.getDate() - 1)
-    const valorMinimo = dataAtual.toISOString().slice(0, 10)
+    dataAtual.setMinutes(dataAtual.getMinutes() - 1);
+    const valorMinimo = dataAtual.toISOString().slice(0, 16); // Pega apenas os 16 primeiros caracteres
 
     // Obtém a referência do elemento input
     const inputDate = document.querySelector('#dataEdicao')
@@ -970,10 +969,22 @@ bloquearMesesAnteriores()
 
 class Evento {
     constructor() {
-        // O constructor é um método especial que é executado quando um objeto da classe é criado.
+        this.eventsByDate = {};
+    }
 
-        // Criando o objeto eventsByDate (eventos por data)
-        this.eventsByDate = {}
+    // Método para adicionar eventos
+    addEvent(nome, corte, data) {
+        const dateString = data.toDateString();
+        if (!this.eventsByDate[dateString]) {
+            this.eventsByDate[dateString] = [];
+        }
+        this.eventsByDate[dateString].push({ nome, corte, data });
+    }
+
+    // pegar os eventos por data
+    getEventsByDate(data) {
+        const dateString = data.toDateString()
+        return this.eventsByDate[dateString] || []
     }
 }
 
@@ -981,13 +992,32 @@ class Evento {
 let currentMonth = new Date().getMonth()
 let currentYear = new Date().getFullYear()
 
+// Instanciando a classe evento
+const eventManager = new Evento()
+
 // Agora precisamos pegar o corpo do calendario (tabela) e o span onde ficará o mes e o ano
 const calendarBody = document.querySelector('#calendarBody')
 const monthYearText = document.querySelector('#monthYear')
 
+// Capturando o botão de salvar
+submitButton.addEventListener('click', () => {
+    // Pegando os dados 
+    const nome = document.querySelector('#nome').value
+    const corte = document.querySelector('#corte').value
+    const data = new Date(document.querySelector('#data').value);
+
+    console.log(nome)
+    eventManager.addEvent(nome, corte, data)
+
+    currentMonth = data.getMonth()
+    currentYear = data.getFullYear()
+
+    generateCalendar(currentMonth, currentYear, eventManager)
+})
+
 // Agora precisamos criar uma função para gerar o corpo do calendário
 
-const generateCalendar = (month, year) => {
+const generateCalendar = (month, year, eventManager) => {
     // Precisamos pegar o primeiro dia do mês
     const firstDay = new Date(year, month, 1).getDay()
 
@@ -1024,6 +1054,36 @@ const generateCalendar = (month, year) => {
             // E agora precisamos adicionar o paragrafo como filho da celula (td)
             cell.appendChild(cellDay)
 
+            // Adicionando atributos na celula para quando for clicada abrir o modal
+            cell.setAttribute('data-target', '#modal-mensagem')
+            cell.setAttribute('data-toggle', 'modal')
+
+            cell.addEventListener('click', () => {
+                // Pegando a data da célula clicada
+                const clickedDate = new Date(year, month, parseInt(cell.textContent))
+
+                const adjustedDate = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), clickedDate.getDate())
+                const dateString = adjustedDate.toISOString().slice(0, 16) // Formatando a data
+                console.log(dateString)
+                const data = document.querySelector('#data')
+                data.value = dateString
+
+                const nome = document.querySelector('#nome')
+                const email = document.querySelector('#email')
+                const telefone = document.querySelector('#telefone')
+                const celular = document.querySelector('#celular')
+                const corte = document.querySelector('#corte')
+                const valor = document.querySelector('#valor')
+
+                nome.value = ""
+                email.value = ""
+                telefone.value = ""
+                celular.value = ""
+                corte.value = ""
+                valor.value = ""
+
+            })
+
             //Agora precisamos saber se chegou no primeiro dia do mês ou se ja passou do último para os dias ficarem certos nas celulas.
             // Se a semana for igual a 0 e dia for menor que o primeiro dia, ou a data for maior que o último dia, a celula precisara estar vazia.
             if ((week === 0 && day < firstDay) || (date > lastDay)) {
@@ -1034,6 +1094,31 @@ const generateCalendar = (month, year) => {
             } else {
                 // Preencha a celula (o paragrafo especificamente) com a data
                 cellDay.textContent = date
+
+                // Cria o elemento para mostrar os eventos
+                const eventElement = document.createElement('div')
+                eventElement.classList.add('eventContainer')
+                eventElement.classList.add('celulas')
+
+                // Verifica se ha eventos para a data atual
+                const currentDate = new Date(year, month, date)
+                const eventsForDate = eventManager.getEventsByDate(currentDate)
+
+                // Mostrar os eventos na célula de cada data
+                eventsForDate.forEach(event => {
+                    //Precisamos criar uma div para cada evento
+                    const eventItem = document.createElement('div')
+                    eventItem.classList.add('eventItem')
+
+                    eventItem.innerHTML = `<strong>${event.nome}</strong> ${event.corte}`
+
+                    // Armazenar as informações do evento como atributos de dados
+                    eventItem.dataset.eventName = event.nome
+
+                    eventElement.appendChild(eventItem)
+                })
+
+                cell.appendChild(eventElement)
 
                 // E precisamos incrementar a data
                 date++
@@ -1057,5 +1142,5 @@ const getMonthName = (month) => {
 }
 
 getMonthName()
-generateCalendar(currentMonth, currentYear)
+generateCalendar(currentMonth, currentYear, eventManager)
 

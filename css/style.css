@@ -543,19 +543,9 @@ tfoot th {
     height: 100%;
 }
 
-.monthYear {
-    text-align: center;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
 .calendarTableTh,
-td {
+.cellCalendar {
     text-align: center;
-    width: 10%;
 }
 
 td:hover {
