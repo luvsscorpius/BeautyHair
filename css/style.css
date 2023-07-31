@@ -565,6 +565,7 @@ td {
 
 .cellCalendar {
     width: 100px;
+    max-width: 100px;
     height: 65px;
     text-align: center;
     /* vertical-align: top (alinha no topo) */
