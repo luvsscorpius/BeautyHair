@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/luvsscorpius/BeautyHair/compare/v1.18.0...v1.18.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* **max width added:** max width to the cellCalendar added ([bb709ca](https://github.com/luvsscorpius/BeautyHair/commit/bb709caeaa8f0376831ff69645cbbd105596b945))
+
 # [1.18.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.17.0...v1.18.0) (2023-07-31)
 
 
