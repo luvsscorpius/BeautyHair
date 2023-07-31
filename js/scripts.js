@@ -1070,6 +1070,7 @@ btnSalvar.addEventListener('click', () => {
 
 // vamos capturar a cor selecionada
 const eventColorSelect = document.querySelector("#eventColor")
+const eventColorEdicaoSelect = document.querySelector("#eventColorEdicao")
 const selectedOption = document.querySelector(".selected-option");
 const selectedOptionEdicao = document.querySelector("#selectedOptionEdicao");
 
@@ -1077,6 +1078,10 @@ const selectedOptionEdicao = document.querySelector("#selectedOptionEdicao");
 eventColorSelect.addEventListener("change", () => {
     const color = eventColorSelect.value
     selectedOption.style.backgroundColor = color
+})
+
+eventColorEdicaoSelect.addEventListener("change", () => {
+    const color = eventColorEdicaoSelect.value
     selectedOptionEdicao.style.backgroundColor = color
 })
 
