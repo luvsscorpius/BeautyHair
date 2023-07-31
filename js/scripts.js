@@ -1018,23 +1018,25 @@ class Evento {
 
     }
 
-    // Método para deletar evento
-    deleteEvent(nome, color, data, corte) {
-        //Precisamos transformar a em string para verificar
-        const dateString = data.toDateString()
+    // Método para deletar eventos da lista
+    deleteEvent(nome, color, date) {
+        // transformando a data em string
+        const dateString = date.toDateString()
+        console.log(dateString)
 
-        // Precisamos agora verificar se o evento que você deseja deletar existe na data 
+        // Verificar se o evento existe
         if (this.eventsByDate[dateString]) {
-            // Agora precisamos achar o evento clicado e para isso usaremos o indexOf
-            const eventIndex = this.eventsByDate[dateString].indexOf(event => {
+            // Depois de verificar se existe, precisamos achar o evento especifico
+            const eventIndex = this.eventsByDate[dateString].findIndex(event => {
                 return event.nome === nome && event.color === color
             })
-
-            // Agora se achar o indice do evento clicado a gente deleta
+            // se o eventIndex for diferente de -1 faça
             if (eventIndex !== -1) {
+                // o método splice remove o evento do array
                 this.eventsByDate[dateString].splice(eventIndex, 1)
             } else {
-                console.log('Não há eventos para essa data')
+                // Caso o evento não seja encontrado
+                console.log('Evento não encontrado na lista.')
             }
         }
     }
@@ -1157,8 +1159,9 @@ const generateCalendar = (month, year, eventManager) => {
                     colorInput.value = color
                     dateInput.value = dateString
 
-                    //Pegando o botão de salvar edição
+                    //Pegando o botão de salvar edição e de exclusão
                     const btnSalvarEdicao = document.querySelector('#btnSalvarEdicao')
+                    const btnDeletar = document.querySelector('#btnDeleteEvent')
 
                     // Evento de clique
                     btnSalvarEdicao.addEventListener('click', () => {
@@ -1180,6 +1183,25 @@ const generateCalendar = (month, year, eventManager) => {
 
                         //E precisamos renderizar o calendário novamente atualizado
                         generateCalendar(currentMonth, currentYear, eventManager)
+                    })
+
+                    // Evento de clique para apagar o evento
+                    btnDeletar.addEventListener('click', () => {
+                        console.log('Deletei')
+
+                        // Precisamos pegar as informações do evento clicado a serem deletados
+                        const nomeToDelete = clickedEvent.dataset.eventTitle
+                        const colorToDelete = clickedEvent.dataset.eventColor
+                        const dateToDelete = new Date(clickedEvent.dataset.eventDate) // Converter a data de volta para objeto Date
+                        console.log(dateToDelete)
+
+                        // Precisamos enviar as informações a serem deletadas igualmente como foi no de atualizar mas agora mudando o método 
+                        eventManager.deleteEvent(nomeToDelete, colorToDelete, dateToDelete)
+
+                        // E atualizar o calendário novamente
+                        generateCalendar(currentMonth, currentYear, eventManager)
+
+                        console.log(eventManager.eventsByDate)
                     })
 
                 } else {
@@ -1235,6 +1257,8 @@ const generateCalendar = (month, year, eventManager) => {
                     // Armazenar as informações do evento como atributos de dados
                     eventItem.dataset.eventTitle = event.nome
                     eventItem.dataset.eventColor = event.color
+                    eventItem.dataset.eventDate = event.data
+                    console.log(event.data)
                     // eventItem.dataset.eventDate = event.data.toISOString().slice(0, 16); // transforma O formato resultante será algo como "AAAA-MM-DDTHH:mm:ss.sssZ".
 
                     eventElement.appendChild(eventItem)
