@@ -44,6 +44,8 @@ const informationFinanceiro = document.querySelector('#informationFinanceiro')
 const navFinanceiro = document.querySelector('#navFinanceiro')
 const containerTableFinanceiro = document.querySelector('#containerTableFinanceiro')
 
+const abaCalendar = document.querySelector('#calendar')
+
 const clientes = () => {
     const clientes = document.querySelector('.list-clientes').addEventListener('click', () => {
         console.log('Cliquei na aba clientes')
@@ -58,6 +60,9 @@ const clientes = () => {
             containerTableFinanceiro.style.display = 'none'
             informationFinanceiro.style.display = 'none'
             navFinanceiro.style.display = 'none'
+
+            // Deixar a aba calendario oculta
+            abaCalendar.style.display = 'none'
 
         }
     })
@@ -77,6 +82,9 @@ const financeiro = () => {
             informationFinanceiro.style.display = 'flex'
             navFinanceiro.style.display = 'flex'
 
+            // Deixar a aba calendario oculta
+            abaCalendar.style.display = 'none'
+
             // alertas ocultos
             dangerAlert.style.display = 'none'
             successAlert.style.display = 'none'
@@ -87,8 +95,29 @@ const financeiro = () => {
     })
 }
 
-financeiro()
+const calendar = () => {
+    const calendar = document.querySelector('.list-calendario').addEventListener('click', () => {
+        console.log('Cliquei na aba calendário')
+        if (abaCalendar.style.display = 'none') {
+            //Deixar a aba de clientes ocultas
+            abaClientes.style.display = 'none'
+            navClientes.style.display = 'none'
+            information.style.display = 'none'
+
+            // Deixar a aba financeiro oculto
+            containerTableFinanceiro.style.display = 'none'
+            informationFinanceiro.style.display = 'none'
+            navFinanceiro.style.display = 'none'
+
+            // Deixar a aba calendario visivel
+            abaCalendar.style.display = 'flex'
+        }
+    })
+}
+
 clientes()
+financeiro()
+calendar()
 
 // Adicionar dados na table com classes
 
@@ -100,9 +129,8 @@ class TableData {
 
     addData(profissional, nome, email, telefone, celular, corte, data, valor) {
         const id = generateUniqueId();
-        this.tableData.push({ id, profissional, nome, email, telefone, celular, corte, data, valor })
+        this.tableData.push({ id, profissional, nome, email, telefone, celular, corte, data, valor });
     }
-
     renderTable() {
         const tableBody = document.querySelector('#table tbody')
         tableBody.innerHTML = ""
@@ -129,7 +157,7 @@ class TableData {
             corteCell.textContent = data.corte
 
             const dataCell = row.insertCell()
-            dataCell.textContent = data.data
+            dataCell.textContent = data.data.toISOString().slice(0, 16)
 
             const valorCell = row.insertCell()
             valorCell.textContent = `R$ ${data.valor}`
@@ -424,10 +452,10 @@ submitButton.addEventListener('click', (event) => {
     const telefone = telefoneInput.value
     const celular = celularInput.value
     const corte = corteInput.value
-    const data = dataInput.value
+    const data = new Date(dataInput.value.trim())
     const valor = valorInput.value
 
-    if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data.trim() === '' || valor.trim() === '') {
+    if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data === '' || valor.trim() === '') {
         dangerAlert.style.display = 'flex'
         successAlert.style.display = 'none'
         alertRelatorio.style.display = 'none'
@@ -449,13 +477,13 @@ submitButton.addEventListener('click', (event) => {
         tableData.addData(profissional, nome, email, telefone, celular, corte, data, valor)
 
         // Limpe os campos do formulário
-        nameInput.value = "";
-        emailInput.value = "";
-        telefoneInput.value = "";
-        celularInput.value = "";
-        corteInput.value = "";
-        dataInput.value = "";
-        valorInput.value = ""
+        // nameInput.value = "";
+        // emailInput.value = "";
+        // telefoneInput.value = "";
+        // celularInput.value = "";
+        // corteInput.value = "";
+        // dataInput.value = "";
+        // valorInput.value = ""
 
         adicionarNotificacao('success', `Cliente ${nome} foi adicionado com sucesso.`);
         atualizarNotificacaoBadge()
@@ -467,6 +495,15 @@ submitButton.addEventListener('click', (event) => {
         tableData.renderTable()
         tableData.renderTableFinanceiro()
         tableData.totalFinanceiro()
+
+        const color = document.querySelector('#eventColor')
+        color.value = "#1976d2"
+        eventManager.addEvent(nome, color.value, data, corte)
+
+        currentMonth = data.getMonth()
+        currentYear = data.getFullYear()
+
+        generateCalendar(currentMonth, currentYear, eventManager)
 
         console.log(tableData)
     }
@@ -921,10 +958,10 @@ btnExtrato.addEventListener('click', () => {
 // Função para não permitir datas anteriores a atuais
 
 const bloquearMesesAnteriores = () => {
-    const dataAtual = new Date()
+    const dataAtual = new Date();
 
-    dataAtual.setDate(dataAtual.getDate() - 1)
-    const valorMinimo = dataAtual.toISOString().slice(0, 10)
+    dataAtual.setMinutes(dataAtual.getMinutes() - 1);
+    const valorMinimo = dataAtual.toISOString().slice(0, 16); // Pega apenas os 16 primeiros caracteres
 
     // Obtém a referência do elemento input
     const inputDate = document.querySelector('#dataEdicao')
@@ -936,4 +973,411 @@ const bloquearMesesAnteriores = () => {
 }
 
 bloquearMesesAnteriores()
+
+// Calendar
+
+class Evento {
+    constructor() {
+        this.eventsByDate = {};
+    }
+
+    // Método para adicionar eventos
+    addEvent(nome, color, data, corte) {
+        const dateString = data.toDateString();
+
+        // Criando uma forma de não deixar a criação de eventos antes do dia atual
+        const currentDate = new Date()
+        currentDate.setHours(0, 0, 0, 0)
+
+        if (data >= currentDate) {
+            if (!this.eventsByDate[dateString]) {
+                this.eventsByDate[dateString] = [];
+            }
+            this.eventsByDate[dateString].push({ nome, corte, data, color });
+        } else {
+            console.log("Não é possível criar eventos em datas passadas")
+        }
+    }
+
+    // pegar os eventos por data
+    getEventsByDate(data) {
+        const dateString = data.toDateString()
+        return this.eventsByDate[dateString] || []
+    }
+
+    // Método para alterar o evento
+    updateEvent(oldNome, oldColor, oldDate, novoNome, novaCor, novaData) {
+        // Também precisaremos verificar se o evento existe naquela data para poder alterar
+        const oldDateString = oldDate.toDateString()
+
+        if (this.eventsByDate[oldDateString]) {
+            const oldEventIndex = this.eventsByDate[oldDateString].findIndex(event => {
+                return event.nome === oldNome && event.color === oldColor
+            })
+
+            // Se o evento existir, precisamos achar o evento especifico
+            if (oldEventIndex !== -1) {
+                this.eventsByDate[oldDateString][oldEventIndex].nome = novoNome
+                this.eventsByDate[oldDateString][oldEventIndex].color = novaCor
+                this.eventsByDate[oldDateString][oldEventIndex].data = novaData
+            } else {
+                console.log('Evento não encontrado na lista')
+            }
+        }
+
+    }
+
+    // Método para deletar eventos da lista
+    deleteEvent(nome, color, date) {
+        // transformando a data em string
+        const dateString = date.toDateString()
+        console.log(dateString)
+
+        // Verificar se o evento existe
+        if (this.eventsByDate[dateString]) {
+            // Depois de verificar se existe, precisamos achar o evento especifico
+            const eventIndex = this.eventsByDate[dateString].findIndex(event => {
+                return event.nome === nome && event.color === color
+            })
+            // se o eventIndex for diferente de -1 faça
+            if (eventIndex !== -1) {
+                // o método splice remove o evento do array
+                this.eventsByDate[dateString].splice(eventIndex, 1)
+            } else {
+                // Caso o evento não seja encontrado
+                console.log('Evento não encontrado na lista.')
+            }
+        }
+    }
+}
+
+// Precisamos criar variáveis globais para pegar o ano e o mês atual
+let currentMonth = new Date().getMonth()
+const mesAtual = new Date().getMonth()
+let currentYear = new Date().getFullYear()
+
+// Instanciando a classe evento
+const eventManager = new Evento()
+
+// Agora precisamos pegar o corpo do calendario (tabela) e o span onde ficará o mes e o ano
+const calendarBody = document.querySelector('#calendarBody')
+const monthYearText = document.querySelector('#monthYear')
+
+const btnSalvar = document.querySelector('#btnSalvar')
+
+//Capturando o botão de salvar
+btnSalvar.addEventListener('click', () => {
+    // Pegando os dados 
+    const nome = document.querySelector('#eventTitle').value
+    const color = document.querySelector('#eventColor').value
+    const data = new Date(document.querySelector('#eventTime').value);
+
+    eventManager.addEvent(nome, color, data)
+
+    currentMonth = data.getMonth()
+    currentYear = data.getFullYear()
+
+    generateCalendar(currentMonth, currentYear, eventManager)
+})
+
+// vamos capturar a cor selecionada
+const eventColorSelect = document.querySelector("#eventColor")
+const eventColorEdicaoSelect = document.querySelector("#eventColorEdicao")
+const selectedOption = document.querySelector(".selected-option");
+const selectedOptionEdicao = document.querySelector("#selectedOptionEdicao");
+
+// Evento de escuta para saber qual foi escolhida e quando foi trocada
+eventColorSelect.addEventListener("change", () => {
+    const color = eventColorSelect.value
+    selectedOption.style.backgroundColor = color
+})
+
+eventColorEdicaoSelect.addEventListener("change", () => {
+    const color = eventColorEdicaoSelect.value
+    selectedOptionEdicao.style.backgroundColor = color
+})
+
+// Agora precisamos criar uma função para gerar o corpo do calendário
+
+const generateCalendar = (month, year, eventManager) => {
+    // Precisamos pegar o primeiro dia do mês
+    const firstDay = new Date(year, month, 1).getDay()
+
+    // Também precisamos pegar o último dia do mês
+    const lastDay = new Date(year, month + 1, 0).getDate()
+
+    // Precisamos saber o número do dia atual
+    const today = new Date().getDate()
+
+    // Precisaremos limpar o corpo do calendário caso tenha alguma coisa
+    calendarBody.innerHTML = ''
+
+    // Precisamos adicionar o nome e o ano atual ao h2
+    monthYearText.textContent = `${getMonthName(month)} ${year}`
+
+    // Iniciando a várivel date com 1, pois o mês inicia em 1 e não em 0.
+    let date = 1
+
+    // Agora vamos criar o corpo da tabela usando laços de repetição.
+    // Se week for menor que, incremente até chegar em 5, para criar as linhas do calendário (6 linhas)
+    for (let week = 0; week < 6; week++) {
+        // Criando a linha 
+        const row = document.createElement('tr')
+
+        // Depois de criar as linhas precisamos criar os dias do calendário (celulas), usaremos denovo laço de repetiçaõ.
+        // Enquanto dia for menor que 7, incremente uma celula até ter 7 celulas.
+        for (let day = 0; day < 7; day++) {
+            // vamos criar as celulas onde os dias ficarão
+            let cell = document.createElement('td')
+
+            // Adicionaremos uma classe a essa celula para poder estilizar.
+            cell.classList.add('cellCalendar')
+
+            // Agora precisamos separar onde ficarao os dias (numeros) e depois onde ficaram os eventos, primeiro criaremos onde ficaram os dias.
+            let cellDay = document.createElement('p')
+
+            // E agora precisamos adicionar o paragrafo como filho da celula (td)
+            cell.appendChild(cellDay)
+
+            cell.addEventListener('click', () => {
+
+                // Pegando a data da célula clicada
+                const clickedDate = new Date(year, month, parseInt(cell.textContent))
+
+                // Precisamos setar as horas para 00 para conseguir criar na data atual também
+                const currentDate = new Date();
+                currentDate.setHours(0, 0, 0, 0);
+                const clickedDateWithoutTime = new Date(clickedDate);
+                clickedDateWithoutTime.setHours(0, 0, 0, 0);
+
+                if (new Date() >= clickedDate && clickedDateWithoutTime.getTime() !== currentDate.getTime()) {
+                    cell.getAttribute('data-disabled') === 'true'
+                } else {
+                    // Adicionando atributos na celula para quando for clicada abrir o modal
+                    cell.setAttribute('data-target', '#modalEvento')
+                    cell.setAttribute('data-toggle', 'modal')
+
+                }
+
+                // Capturar o evento clicado
+                const clickedEvent = event.target.closest('.eventItem')
+                if (clickedEvent) {
+
+                    // Setando o atributo para que se houver evento ele chame o modal de edição/exclusão
+                    cell.setAttribute('data-target', '#modalEdicao')
+                    cell.setAttribute('data-toggle', 'modal')
+
+                    //Capturando os dados do evento clicado que foi previamente salvo no dataset quando o evento eh criado
+                    const nome = clickedEvent.dataset.eventTitle
+                    const color = clickedEvent.dataset.eventColor
+                    const adjustedDate = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), clickedDate.getDate());
+                    const dateString = adjustedDate.toISOString().slice(0, 16); // formata a data para 'YYYY-MM-DDTHH:mm'
+
+                    // Agora precisamos pegar os inputs do modal para inserir esses valores no modal
+                    const nomeInput = document.querySelector('#eventTitleEdicao')
+                    const colorInput = document.querySelector('#eventColorEdicao')
+                    const dateInput = document.querySelector('#eventTimeEdicao')
+
+                    //Atribuindo os valores do evento clicado no input de edição
+                    nomeInput.value = nome
+                    colorInput.value = color
+                    dateInput.value = dateString
+
+                    //Pegando o botão de salvar edição e de exclusão
+                    const btnSalvarEdicao = document.querySelector('#btnSalvarEdicao')
+                    const btnDeletar = document.querySelector('#btnDeleteEvent')
+
+                    // Evento de clique
+                    btnSalvarEdicao.addEventListener('click', () => {
+                        console.log('Salvei')
+
+                        // Agora que o evento de clique foi adicionado, precisamos criar novas constantes que irão receber os novos dados do input
+                        const novoNome = nomeInput.value
+                        const novaCor = colorInput.value
+                        const novaData = dateInput.value
+
+                        // E também precisaremos saber quais erao as informações antigas
+                        const oldNome = clickedEvent.dataset.eventTitle
+                        const oldColor = clickedEvent.dataset.eventColor
+
+                        // console.log(eventManager.eventsByDate)
+
+                        // Precisamos chamar o método da classe que atualiza os dados
+                        eventManager.updateEvent(oldNome, oldColor, clickedDate, novoNome, novaCor, novaCor)
+
+                        //E precisamos renderizar o calendário novamente atualizado
+                        generateCalendar(currentMonth, currentYear, eventManager)
+                    })
+
+                    // Evento de clique para apagar o evento
+                    btnDeletar.addEventListener('click', () => {
+                        console.log('Deletei')
+
+                        // Precisamos pegar as informações do evento clicado a serem deletados
+                        const nomeToDelete = clickedEvent.dataset.eventTitle
+                        const colorToDelete = clickedEvent.dataset.eventColor
+                        const dateToDelete = new Date(clickedEvent.dataset.eventDate) // Converter a data de volta para objeto Date
+                        console.log(dateToDelete)
+
+                        // Precisamos enviar as informações a serem deletadas igualmente como foi no de atualizar mas agora mudando o método 
+                        eventManager.deleteEvent(nomeToDelete, colorToDelete, dateToDelete)
+
+                        // E atualizar o calendário novamente
+                        generateCalendar(currentMonth, currentYear, eventManager)
+
+                        console.log(eventManager.eventsByDate)
+                    })
+
+                } else {
+                    // Pegando a data da célula clicada
+                    const clickedDate = new Date(year, month, parseInt(cell.textContent))
+
+                    const adjustedDate = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), clickedDate.getDate())
+                    const dateString = adjustedDate.toISOString().slice(0, 16) // Formatando a data
+                    console.log(dateString)
+                    const data = document.querySelector('#eventTime')
+                    data.value = dateString
+
+                    const nome = document.querySelector('#eventTitle')
+                    const color = document.querySelector('#eventColor')
+
+                    nome.value = ""
+                    color.value = ""
+                }
+
+            })
+
+            //Agora precisamos saber se chegou no primeiro dia do mês ou se ja passou do último para os dias ficarem certos nas celulas.
+            // Se a semana for igual a 0 e dia for menor que o primeiro dia, ou a data for maior que o último dia, a celula precisara estar vazia.
+            if ((week === 0 && day < firstDay) || (date > lastDay)) {
+                // Limpando a celula
+                cell.textContent = ""
+
+                //Caso contrário
+            } else {
+                // Preencha a celula (o paragrafo especificamente) com a data
+                cellDay.textContent = date
+
+                // Cria o elemento para mostrar os eventos
+                const eventElement = document.createElement('div')
+                eventElement.classList.add('eventContainer')
+                eventElement.classList.add('celulas')
+
+                // Verifica se ha eventos para a data atual
+                const currentDate = new Date(year, month, date)
+                const eventsForDate = eventManager.getEventsByDate(currentDate)
+
+                // Mostrar os eventos na célula de cada data
+                eventsForDate.forEach(event => {
+                    //Precisamos criar uma div para cada evento
+                    const eventItem = document.createElement('div')
+                    eventItem.classList.add('eventItem')
+
+                    // Coloca a cor de fundo escolhida pelo usuário
+                    eventItem.style.backgroundColor = event.color
+                    // Coloca o titulo adicionado pelo usuário com negrito
+                    eventItem.innerHTML = `<strong>${event.nome}</strong>`;
+
+                    // Armazenar as informações do evento como atributos de dados
+                    eventItem.dataset.eventTitle = event.nome
+                    eventItem.dataset.eventColor = event.color
+                    eventItem.dataset.eventDate = event.data
+                    console.log(event.data)
+                    // eventItem.dataset.eventDate = event.data.toISOString().slice(0, 16); // transforma O formato resultante será algo como "AAAA-MM-DDTHH:mm:ss.sssZ".
+
+                    eventElement.appendChild(eventItem)
+                })
+
+                // Verificar o dia atual para estilizar o paragrafo
+                if (month === currentMonth && year === currentYear) {
+                    if (parseInt(cellDay.textContent) === today && month === new Date().getMonth()) {
+                        cellDay.classList.add('cellDay')
+                    } else {
+                        cellDay.classList.remove('cellDay')
+                    }
+                } else {
+                    cellDay.classList.remove('cellDay')
+                }
+
+                cell.appendChild(eventElement)
+
+                // E precisamos incrementar a data
+                date++
+            }
+
+            // Agora precisamos adicionar as celulas (tr) as linhas (adicionar como filhas)
+            row.appendChild(cell)
+        }
+        // E também precisamos adicionar as linhas (como filhas) ao corpo do calendário
+        calendarBody.appendChild(row)
+    }
+}
+
+// Precisamos criar uma função com um array com os nomes dos meses para passar para o calendário
+const getMonthName = (month) => {
+    const monthNames = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ]
+
+    return monthNames[month]
+}
+
+const previousMonth = document.querySelector('#previousMonth')
+const nextMonth = document.querySelector('#nextMonth')
+
+//Controlar a animação
+let isAnimating = false;
+
+previousMonth.addEventListener('click', () => {
+    console.log('Voltei')
+    if (isAnimating) return; // Evita cliques repetidos durante a animação
+    isAnimating = true;
+
+    // Precisamos tirar um mês quando for clicado
+    currentMonth--
+    if (currentMonth < 0) {
+        currentMonth = 11
+        currentYear--
+    }
+
+    monthYearText.classList.add('fade-slide-previous')
+
+    // Vamos usar o setTimeOut para dar a animação
+    setTimeout(() => {
+        monthYearText.classList.remove('fade-slide-previous')
+        isAnimating = false;
+    }, 300)
+
+    generateCalendar(currentMonth, currentYear, eventManager)
+})
+
+nextMonth.addEventListener('click', () => {
+    console.log('Avancei')
+    if (isAnimating) return; // Evita cliques repetidos durante a animação
+    isAnimating = true;
+
+    // Adiciona mais um ao mes atual
+    currentMonth++
+    // Se mês atual for maior que 11 (no caso 12) ele atualiza a variável para 0
+    if (currentMonth > 11) {
+        currentMonth = 0
+        // E adiciona mais 1 ao ano atual
+        currentYear++
+    }
+
+    monthYearText.classList.add('fade-slide-next')
+
+    void monthYearText.offsetWidth;
+
+    // Vamos usar o setTimeOut para dar a animação
+    setTimeout(() => {
+        monthYearText.classList.remove('fade-slide-next')
+        isAnimating = false;
+    }, 300)
+
+    generateCalendar(currentMonth, currentYear, eventManager)
+})
+
+getMonthName()
+generateCalendar(currentMonth, currentYear, eventManager)
 
