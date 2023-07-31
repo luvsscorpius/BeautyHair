@@ -1,3 +1,22 @@
+# [1.18.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.17.0...v1.18.0) (2023-07-31)
+
+
+### Bug Fixes
+
+* **eventcolor fixed:** eventcolor on edit modal wasnt working as it should ([5fefaf2](https://github.com/luvsscorpius/BeautyHair/commit/5fefaf20d5c3d09bf44bf54c141ee840fd9a02f9))
+
+
+### Features
+
+* **calendar aba added:** calendar function initialized ([ba8380c](https://github.com/luvsscorpius/BeautyHair/commit/ba8380cdaf4a3045e9fb7c7df75e206a6bd55645))
+* **calendar limitations:** now you can only create a new event from the present day ([5bb4f1c](https://github.com/luvsscorpius/BeautyHair/commit/5bb4f1c5f4d482b99890dc2910bf0835d05b88e3))
+* **change months:** now you can see the past and future months ([8de08b7](https://github.com/luvsscorpius/BeautyHair/commit/8de08b7a210c59d8d999820be1a133a1a7ee9925))
+* **clients added to calendar:** now when you add a client, you also add to the calendar ([ffa1fba](https://github.com/luvsscorpius/BeautyHair/commit/ffa1fba5e6e261249b07b716a0dc4dd0a18b626e))
+* **colors added to the events:** now the events have colors ([ee046db](https://github.com/luvsscorpius/BeautyHair/commit/ee046db04d5141e33e010e7f236ef897e9aaba1c))
+* **delete event added:** now you can delete ur events in case u dont need them anymore ([a5ebbe3](https://github.com/luvsscorpius/BeautyHair/commit/a5ebbe38fbde968b6800c85bc095d86a577efee3))
+* **present day styled:** now the present day has a different style so you can see its today ([b798698](https://github.com/luvsscorpius/BeautyHair/commit/b798698207cc9c6f2600d133622512e355a1be68))
+* **updateevent added:** now you can update your events in case u've got something wrong ([daebb6a](https://github.com/luvsscorpius/BeautyHair/commit/daebb6af8b88b9ecb2c8fc0ae21638c69f6e2f08))
+
 # [1.17.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.16.0...v1.17.0) (2023-07-25)
 
 
