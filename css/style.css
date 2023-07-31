@@ -550,7 +550,6 @@ tfoot th {
 
 td:hover {
     background-color: #ccc;
-    cursor: pointer;
 }
 
 .calendarTableTr {
@@ -681,4 +680,18 @@ select {
 .icones button i {
     border: 0;
     outline: none;
+}
+
+.eventItem:hover {
+    color: #eee;
+    cursor: pointer;
+}
+
+.cellDay {
+    color: #eee;
+    font-weight: 700;
+    background-color: #0056b3;
+    border-radius: 50%;
+    width: 25px;
+    margin: 0 auto;
 }

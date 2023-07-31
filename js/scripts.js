@@ -1096,6 +1096,9 @@ const generateCalendar = (month, year, eventManager) => {
     // Também precisamos pegar o último dia do mês
     const lastDay = new Date(year, month + 1, 0).getDate()
 
+    // Precisamos saber o número do dia atual
+    const today = new Date().getDate()
+
     // Precisaremos limpar o corpo do calendário caso tenha alguma coisa
     calendarBody.innerHTML = ''
 
@@ -1263,6 +1266,17 @@ const generateCalendar = (month, year, eventManager) => {
 
                     eventElement.appendChild(eventItem)
                 })
+
+                // Verificar o dia atual para estilizar o paragrafo
+                if (month === currentMonth && year === currentYear) {
+                    if (parseInt(cellDay.textContent) === today && month === new Date().getMonth()) {
+                        cellDay.classList.add('cellDay')
+                    } else {
+                        cellDay.classList.remove('cellDay')
+                    }
+                } else {
+                    cellDay.classList.remove('cellDay')
+                }
 
                 cell.appendChild(eventElement)
 
