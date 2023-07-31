@@ -647,3 +647,38 @@ select {
 .options-list li:hover {
     background-color: #f1f1f1;
 }
+
+/* Modal edição */
+
+#modal-headerEdicao {
+    display: flex;
+    align-items: center;
+}
+
+.tituloModalEdicao {
+    width: 100%;
+}
+
+.icones {
+    display: flex;
+    align-items: center;
+}
+
+.icones button {
+    opacity: 0.85;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    background-color: #fff;
+    font-size: 20px;
+    margin: 0 5px;
+}
+
+.icones button:hover {
+    opacity: 1;
+}
+
+.icones button i {
+    border: 0;
+    outline: none;
+}

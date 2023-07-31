@@ -995,6 +995,49 @@ class Evento {
         const dateString = data.toDateString()
         return this.eventsByDate[dateString] || []
     }
+
+    // Método para alterar o evento
+    updateEvent(oldNome, oldColor, oldDate, novoNome, novaCor, novaData) {
+        // Também precisaremos verificar se o evento existe naquela data para poder alterar
+        const oldDateString = oldDate.toDateString()
+
+        if (this.eventsByDate[oldDateString]) {
+            const oldEventIndex = this.eventsByDate[oldDateString].findIndex(event => {
+                return event.nome === oldNome && event.color === oldColor
+            })
+
+            // Se o evento existir, precisamos achar o evento especifico
+            if (oldEventIndex !== -1) {
+                this.eventsByDate[oldDateString][oldEventIndex].nome = novoNome
+                this.eventsByDate[oldDateString][oldEventIndex].color = novaCor
+                this.eventsByDate[oldDateString][oldEventIndex].data = novaData
+            } else {
+                console.log('Evento não encontrado na lista')
+            }
+        }
+
+    }
+
+    // Método para deletar evento
+    deleteEvent(nome, color, data, corte) {
+        //Precisamos transformar a em string para verificar
+        const dateString = data.toDateString()
+
+        // Precisamos agora verificar se o evento que você deseja deletar existe na data 
+        if (this.eventsByDate[dateString]) {
+            // Agora precisamos achar o evento clicado e para isso usaremos o indexOf
+            const eventIndex = this.eventsByDate[dateString].indexOf(event => {
+                return event.nome === nome && event.color === color
+            })
+
+            // Agora se achar o indice do evento clicado a gente deleta
+            if (eventIndex !== -1) {
+                this.eventsByDate[dateString].splice(eventIndex, 1)
+            } else {
+                console.log('Não há eventos para essa data')
+            }
+        }
+    }
 }
 
 // Precisamos criar variáveis globais para pegar o ano e o mês atual
@@ -1028,11 +1071,13 @@ btnSalvar.addEventListener('click', () => {
 // vamos capturar a cor selecionada
 const eventColorSelect = document.querySelector("#eventColor")
 const selectedOption = document.querySelector(".selected-option");
+const selectedOptionEdicao = document.querySelector("#selectedOptionEdicao");
 
 // Evento de escuta para saber qual foi escolhida e quando foi trocada
 eventColorSelect.addEventListener("change", () => {
     const color = eventColorSelect.value
     selectedOption.style.backgroundColor = color
+    selectedOptionEdicao.style.backgroundColor = color
 })
 
 // Agora precisamos criar uma função para gerar o corpo do calendário
@@ -1079,20 +1124,75 @@ const generateCalendar = (month, year, eventManager) => {
             cell.setAttribute('data-toggle', 'modal')
 
             cell.addEventListener('click', () => {
+
                 // Pegando a data da célula clicada
                 const clickedDate = new Date(year, month, parseInt(cell.textContent))
 
-                const adjustedDate = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), clickedDate.getDate())
-                const dateString = adjustedDate.toISOString().slice(0, 16) // Formatando a data
-                console.log(dateString)
-                const data = document.querySelector('#eventTime')
-                data.value = dateString
+                // Capturar o evento clicado
+                const clickedEvent = event.target.closest('.eventItem')
+                if (clickedEvent) {
 
-                const nome = document.querySelector('#eventTitle')
-                const color = document.querySelector('#eventColor')
+                    // Setando o atributo para que se houver evento ele chame o modal de edição/exclusão
+                    cell.setAttribute('data-target', '#modalEdicao')
+                    cell.setAttribute('data-toggle', 'modal')
 
-                nome.value = ""
-                color.value = ""
+                    //Capturando os dados do evento clicado que foi previamente salvo no dataset quando o evento eh criado
+                    const nome = clickedEvent.dataset.eventTitle
+                    const color = clickedEvent.dataset.eventColor
+                    const adjustedDate = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), clickedDate.getDate());
+                    const dateString = adjustedDate.toISOString().slice(0, 16); // formata a data para 'YYYY-MM-DDTHH:mm'
+
+                    // Agora precisamos pegar os inputs do modal para inserir esses valores no modal
+                    const nomeInput = document.querySelector('#eventTitleEdicao')
+                    const colorInput = document.querySelector('#eventColorEdicao')
+                    const dateInput = document.querySelector('#eventTimeEdicao')
+
+                    //Atribuindo os valores do evento clicado no input de edição
+                    nomeInput.value = nome
+                    colorInput.value = color
+                    dateInput.value = dateString
+
+                    //Pegando o botão de salvar edição
+                    const btnSalvarEdicao = document.querySelector('#btnSalvarEdicao')
+
+                    // Evento de clique
+                    btnSalvarEdicao.addEventListener('click', () => {
+                        console.log('Salvei')
+
+                        // Agora que o evento de clique foi adicionado, precisamos criar novas constantes que irão receber os novos dados do input
+                        const novoNome = nomeInput.value
+                        const novaCor = colorInput.value
+                        const novaData = dateInput.value
+
+                        // E também precisaremos saber quais erao as informações antigas
+                        const oldNome = clickedEvent.dataset.eventTitle
+                        const oldColor = clickedEvent.dataset.eventColor
+
+                        // console.log(eventManager.eventsByDate)
+
+                        // Precisamos chamar o método da classe que atualiza os dados
+                        eventManager.updateEvent(oldNome, oldColor, clickedDate, novoNome, novaCor, novaCor)
+
+                        //E precisamos renderizar o calendário novamente atualizado
+                        generateCalendar(currentMonth, currentYear, eventManager)
+                    })
+
+                } else {
+                    // Pegando a data da célula clicada
+                    const clickedDate = new Date(year, month, parseInt(cell.textContent))
+
+                    const adjustedDate = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), clickedDate.getDate())
+                    const dateString = adjustedDate.toISOString().slice(0, 16) // Formatando a data
+                    console.log(dateString)
+                    const data = document.querySelector('#eventTime')
+                    data.value = dateString
+
+                    const nome = document.querySelector('#eventTitle')
+                    const color = document.querySelector('#eventColor')
+
+                    nome.value = ""
+                    color.value = ""
+                }
 
             })
 
@@ -1130,7 +1230,7 @@ const generateCalendar = (month, year, eventManager) => {
                     // Armazenar as informações do evento como atributos de dados
                     eventItem.dataset.eventTitle = event.nome
                     eventItem.dataset.eventColor = event.color
-                    eventItem.dataset.eventDate = event.data.toISOString(); // transforma O formato resultante será algo como "AAAA-MM-DDTHH:mm:ss.sssZ".
+                    // eventItem.dataset.eventDate = event.data.toISOString().slice(0, 16); // transforma O formato resultante será algo como "AAAA-MM-DDTHH:mm:ss.sssZ".
 
                     eventElement.appendChild(eventItem)
                 })
