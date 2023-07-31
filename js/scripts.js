@@ -984,10 +984,19 @@ class Evento {
     // Método para adicionar eventos
     addEvent(nome, color, data, corte) {
         const dateString = data.toDateString();
-        if (!this.eventsByDate[dateString]) {
-            this.eventsByDate[dateString] = [];
+
+        // Criando uma forma de não deixar a criação de eventos antes do dia atual
+        const currentDate = new Date()
+        currentDate.setHours(0, 0, 0, 0)
+
+        if (data >= currentDate) {
+            if (!this.eventsByDate[dateString]) {
+                this.eventsByDate[dateString] = [];
+            }
+            this.eventsByDate[dateString].push({ nome, corte, data, color });
+        } else {
+            console.log("Não é possível criar eventos em datas passadas")
         }
-        this.eventsByDate[dateString].push({ nome, corte, data, color });
     }
 
     // pegar os eventos por data
@@ -1044,6 +1053,7 @@ class Evento {
 
 // Precisamos criar variáveis globais para pegar o ano e o mês atual
 let currentMonth = new Date().getMonth()
+const mesAtual = new Date().getMonth()
 let currentYear = new Date().getFullYear()
 
 // Instanciando a classe evento
@@ -1129,14 +1139,25 @@ const generateCalendar = (month, year, eventManager) => {
             // E agora precisamos adicionar o paragrafo como filho da celula (td)
             cell.appendChild(cellDay)
 
-            // Adicionando atributos na celula para quando for clicada abrir o modal
-            cell.setAttribute('data-target', '#modalEvento')
-            cell.setAttribute('data-toggle', 'modal')
-
             cell.addEventListener('click', () => {
 
                 // Pegando a data da célula clicada
                 const clickedDate = new Date(year, month, parseInt(cell.textContent))
+
+                // Precisamos setar as horas para 00 para conseguir criar na data atual também
+                const currentDate = new Date();
+                currentDate.setHours(0, 0, 0, 0);
+                const clickedDateWithoutTime = new Date(clickedDate);
+                clickedDateWithoutTime.setHours(0, 0, 0, 0);
+
+                if (new Date() >= clickedDate && clickedDateWithoutTime.getTime() !== currentDate.getTime()) {
+                    cell.getAttribute('data-disabled') === 'true'
+                } else {
+                    // Adicionando atributos na celula para quando for clicada abrir o modal
+                    cell.setAttribute('data-target', '#modalEvento')
+                    cell.setAttribute('data-toggle', 'modal')
+
+                }
 
                 // Capturar o evento clicado
                 const clickedEvent = event.target.closest('.eventItem')

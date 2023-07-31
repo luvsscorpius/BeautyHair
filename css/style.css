@@ -570,6 +570,7 @@ td {
     /* vertical-align: top (alinha no topo) */
     vertical-align: top;
     overflow: hidden;
+    user-select: none;
 }
 
 /* Modal calendar */
