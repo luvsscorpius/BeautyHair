@@ -695,3 +695,21 @@ select {
     width: 25px;
     margin: 0 auto;
 }
+
+/* Animação passar os meses do calendário */
+.fade-slide-next {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.fade-slide-previous {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+/* Adicione esta classe para evitar que a transição ocorra ao remover a classe 'fade-slide' */
+.no-transition {
+    transition: none;
+}

@@ -1301,6 +1301,62 @@ const getMonthName = (month) => {
     return monthNames[month]
 }
 
+const previousMonth = document.querySelector('#previousMonth')
+const nextMonth = document.querySelector('#nextMonth')
+
+//Controlar a animação
+let isAnimating = false;
+
+previousMonth.addEventListener('click', () => {
+    console.log('Voltei')
+    if (isAnimating) return; // Evita cliques repetidos durante a animação
+    isAnimating = true;
+
+    // Precisamos tirar um mês quando for clicado
+    currentMonth--
+    if (currentMonth < 0) {
+        currentMonth = 11
+        currentYear--
+    }
+
+    monthYearText.classList.add('fade-slide-previous')
+
+    // Vamos usar o setTimeOut para dar a animação
+    setTimeout(() => {
+        monthYearText.classList.remove('fade-slide-previous')
+        isAnimating = false;
+    }, 300)
+
+    generateCalendar(currentMonth, currentYear, eventManager)
+})
+
+nextMonth.addEventListener('click', () => {
+    console.log('Avancei')
+    if (isAnimating) return; // Evita cliques repetidos durante a animação
+    isAnimating = true;
+
+    // Adiciona mais um ao mes atual
+    currentMonth++
+    // Se mês atual for maior que 11 (no caso 12) ele atualiza a variável para 0
+    if (currentMonth > 11) {
+        currentMonth = 0
+        // E adiciona mais 1 ao ano atual
+        currentYear++
+    }
+
+    monthYearText.classList.add('fade-slide-next')
+
+    void monthYearText.offsetWidth;
+
+    // Vamos usar o setTimeOut para dar a animação
+    setTimeout(() => {
+        monthYearText.classList.remove('fade-slide-next')
+        isAnimating = false;
+    }, 300)
+
+    generateCalendar(currentMonth, currentYear, eventManager)
+})
+
 getMonthName()
 generateCalendar(currentMonth, currentYear, eventManager)
 
