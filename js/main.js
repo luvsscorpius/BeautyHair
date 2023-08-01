@@ -1,6 +1,11 @@
-// Funções auxiliares 
+// Importando a função de trocar a aba do menu
+import { clientes } from "./menuModule.js"
+import { financeiro } from "./menuModule.js"
+import { calendar } from "./menuModule.js"
 
-const elemento = (elemento) => document.querySelector(elemento)
+document.querySelector('.list-clientes').addEventListener('click', clientes)
+document.querySelector('.list-financeiro').addEventListener('click', financeiro)
+document.querySelector('.list-calendario').addEventListener('click', calendar)
 
 // Variaveis 
 
@@ -21,104 +26,6 @@ const btnNotification = document.querySelector('#btnNotification')
 const notificacaoConteudo = document.querySelector('.notificacao-conteudo')
 const notificacaoBody = document.querySelector('.notificacao-body')
 
-// Função para mudar o menu
-
-const list = document.querySelectorAll('.list-home, .list-clientes, .list-financeiro, .list-calendario, .list-ajuda, .list-configuracoes')
-
-function activeLink() {
-    list.forEach((item) =>
-        item.classList.remove('active'))
-    this.classList.add('active')
-}
-
-list.forEach((item) =>
-    item.addEventListener('click', activeLink))
-
-// Função para trocar as abas
-
-const abaClientes = document.querySelector('.containerTable')
-const navClientes = document.querySelector('.nav')
-const information = document.querySelector('.information')
-
-const informationFinanceiro = document.querySelector('#informationFinanceiro')
-const navFinanceiro = document.querySelector('#navFinanceiro')
-const containerTableFinanceiro = document.querySelector('#containerTableFinanceiro')
-
-const abaCalendar = document.querySelector('#calendar')
-
-const clientes = () => {
-    const clientes = document.querySelector('.list-clientes').addEventListener('click', () => {
-        console.log('Cliquei na aba clientes')
-        console.log(abaClientes.style.display)
-        if (abaClientes.style.display == 'none' && navClientes.style.display == 'none') {
-            // Colocar visivelmente aba cliente
-            abaClientes.style.display = 'block'
-            navClientes.style.display = 'flex'
-            information.style.display = 'flex'
-
-            // Deixar aba financeiro oculta
-            containerTableFinanceiro.style.display = 'none'
-            informationFinanceiro.style.display = 'none'
-            navFinanceiro.style.display = 'none'
-
-            // Deixar a aba calendario oculta
-            abaCalendar.style.display = 'none'
-
-        }
-    })
-}
-
-const financeiro = () => {
-    const financeiro = document.querySelector('.list-financeiro').addEventListener('click', () => {
-        console.log('Cliquei na aba financeiro')
-        if (containerTableFinanceiro.style.display = 'none') {
-            // Deixar aba clientes oculta
-            abaClientes.style.display = 'none'
-            navClientes.style.display = 'none'
-            information.style.display = 'none'
-
-            // Deixar aba financeiro visivel
-            containerTableFinanceiro.style.display = 'block'
-            informationFinanceiro.style.display = 'flex'
-            navFinanceiro.style.display = 'flex'
-
-            // Deixar a aba calendario oculta
-            abaCalendar.style.display = 'none'
-
-            // alertas ocultos
-            dangerAlert.style.display = 'none'
-            successAlert.style.display = 'none'
-            alertRelatorio.style.display = 'none'
-            updateAlert.style.display = 'none'
-            deletedAlert.style.display = 'none'
-        }
-    })
-}
-
-const calendar = () => {
-    const calendar = document.querySelector('.list-calendario').addEventListener('click', () => {
-        console.log('Cliquei na aba calendário')
-        if (abaCalendar.style.display = 'none') {
-            //Deixar a aba de clientes ocultas
-            abaClientes.style.display = 'none'
-            navClientes.style.display = 'none'
-            information.style.display = 'none'
-
-            // Deixar a aba financeiro oculto
-            containerTableFinanceiro.style.display = 'none'
-            informationFinanceiro.style.display = 'none'
-            navFinanceiro.style.display = 'none'
-
-            // Deixar a aba calendario visivel
-            abaCalendar.style.display = 'flex'
-        }
-    })
-}
-
-clientes()
-financeiro()
-calendar()
-
 // Adicionar dados na table com classes
 
 class TableData {
@@ -128,9 +35,15 @@ class TableData {
     }
 
     addData(profissional, nome, email, telefone, celular, corte, data, valor) {
-        const id = generateUniqueId();
+        const id = this.generateUniqueId()
         this.tableData.push({ id, profissional, nome, email, telefone, celular, corte, data, valor });
     }
+
+    generateUniqueId() {
+        this.lastId++;
+        return this.lastId.toString(36) + Math.random().toString(36).substring(2, 5);
+    }
+
     renderTable() {
         const tableBody = document.querySelector('#table tbody')
         tableBody.innerHTML = ""
@@ -509,12 +422,6 @@ submitButton.addEventListener('click', (event) => {
     }
 
 })
-
-function generateUniqueId() {
-    this.lastId++
-    return this.lastId.toString(36) + Math.random().toString(36).substring(2, 5);
-}
-
 // Captura o campo de busca pelo id
 const searchInput = document.querySelector('#search')
 const searchInputFinanceiro = document.querySelector('#searchFinaceiro')
@@ -674,6 +581,11 @@ const mascaraMoeda = (campo, evento) => {
     }
     campo.value = resultado
 }
+
+const valorEdicao = document.querySelector('#valorEdicao')
+valorEdicao.addEventListener('onkeyup', mascaraMoeda)
+const valor = document.querySelector('#valor')
+valor.addEventListener('onkeyup', mascaraMoeda)
 
 // Notificação
 
