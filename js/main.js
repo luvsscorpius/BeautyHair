@@ -532,7 +532,7 @@ gerarRelatorioFinanceiro()
 
 // Input Mask Phone
 
-const handlePhone = (event) => {
+const handlePhone = (campo, event) => {
     let input = event.target
     input.value = phoneMask(input.value)
 }
@@ -544,6 +544,26 @@ const phoneMask = (value) => {
     value = value.replace(/(\d)(\d{4})$/, "$1-$2")
     return value
 }
+
+const telefone = document.querySelector('#telefone')
+telefone.addEventListener('keyup', (event) => {
+    handlePhone(event.target, event)
+})
+
+const celular = document.querySelector('#celular')
+celular.addEventListener('keyup', (event) => {
+    handlePhone(event.target, event)
+})
+
+const telefoneEdicao = document.querySelector('#telefoneEdicao')
+telefoneEdicao.addEventListener('keyup', (event) => {
+    handlePhone(event.target, event)
+})
+
+const celularEdicao = document.querySelector('#celularEdicao')
+celularEdicao.addEventListener('keyup', (event) => {
+    handlePhone(event.target, event)
+})
 
 // Máscara moeda
 
