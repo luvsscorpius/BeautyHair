@@ -87,6 +87,13 @@ const calendar = () => {
 
         // Deixar a aba calendario visivel
         abaCalendar.style.display = 'flex'
+
+        // alertas ocultos
+        dangerAlert.style.display = 'none'
+        successAlert.style.display = 'none'
+        alertRelatorio.style.display = 'none'
+        updateAlert.style.display = 'none'
+        deletedAlert.style.display = 'none'
     }
 }
 
