@@ -1,3 +1,9 @@
+// Importando os alertas
+import { dangerAlert, successAlert, alertRelatorio, updateAlert, deletedAlert, alertRelatorioFinanceiro } from "./alertasModule.js"
+
+// Importando notificacaoModule
+import { adicionarNotificacao, removerNotificacao, atualizarNotificacaoBadge } from "./notificacaoModule.js"
+
 // Data
 const data = new Date()
 const dia = data.getDate()

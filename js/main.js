@@ -7,10 +7,12 @@ document.querySelector('.list-clientes').addEventListener('click', clientes)
 document.querySelector('.list-financeiro').addEventListener('click', financeiro)
 document.querySelector('.list-calendario').addEventListener('click', calendar)
 
-// Importando a tableData
+// Importando a tableDataModule e alertasModule e notificacaoModule
 import { TableData } from "./tableDataModule.js"
 import { tableData } from "./tableDataModule.js"
 
+import { dangerAlert, successAlert, alertRelatorio, updateAlert, deletedAlert, alertRelatorioFinanceiro } from "./alertasModule.js"
+import { adicionarNotificacao, removerNotificacao, atualizarNotificacaoBadge } from "./notificacaoModule.js"
 // Capturar o formulario
 
 const submitButton = document.getElementById("btnAdd");
@@ -108,8 +110,8 @@ searchInputFinanceiro.addEventListener("input", function () {
 })
 
 // Importando módulo gerarRelatorios
-import { gerarRelatorio } from "./gerarRelatorios.js"
-import { gerarRelatorioFinanceiro } from "./gerarRelatorios.js"
+import { gerarRelatorio } from "./gerarRelatoriosModule.js"
+import { gerarRelatorioFinanceiro } from "./gerarRelatoriosModule.js"
 
 // Gerar relatório
 
@@ -120,23 +122,10 @@ btn_gerarRelatorio.addEventListener('click', gerarRelatorio)
 btn_gerarRelatorioFinanceiro.addEventListener('click', gerarRelatorioFinanceiro)
 
 // Variaveis 
-
-//Alertas
-const dangerAlert = document.querySelector('.alert-danger')
-const successAlert = document.querySelector('.alert-success')
-const alertRelatorio = document.querySelector('#alert-relatorio')
-const updateAlert = document.querySelector('#alert-update')
-const deletedAlert = document.querySelector('#alert-deleted')
-const alertRelatorioFinanceiro = document.querySelector('#alert-relatorio-financeiro')
 const notificationAlertClientAdded = document.querySelector('#notificationAlertClientAdded')
 const notificationAlertClientDeleted = document.querySelector('#notificationAlertClientDeleted')
 const notificationAlertClientUpdated = document.querySelector('#notificationAlertClientUpdated')
 const notificationAlertGeneratedPDF = document.querySelector('#notificationAlertGeneratedPDF')
-
-const notificationBadge = document.querySelector('.notification-badge')
-const btnNotification = document.querySelector('#btnNotification')
-const notificacaoConteudo = document.querySelector('.notificacao-conteudo')
-const notificacaoBody = document.querySelector('.notificacao-body')
 
 // Input Mask Phone
 
@@ -223,7 +212,6 @@ const valorEdicao = document.querySelector('#valorEdicao').addEventListener('key
 // Variavel para verificar se o conteudo está aberto ou não
 
 let isOpen = false
-let numeroNotificacoes = 0
 
 btnNotification.addEventListener('click', () => {
     // Alterar visibilidade da notificação está aberta ou não
@@ -238,33 +226,7 @@ btnNotification.addEventListener('click', () => {
     isOpen = !isOpen
 })
 
-const adicionarNotificacao = (type, message) => {
-    const notificationItem = document.createElement('div')
-    const notificationP = document.createElement('p')
-    notificationItem.classList.add('alert', `alert-${type}`)
-    notificationItem.style.display = 'flex'
-    notificationItem.style.margin = '3px'
-    notificationP.textContent = message
-    notificationItem.appendChild(notificationP)
-    notificacaoBody.appendChild(notificationItem)
 
-    const firstNotification = notificacaoBody.firstChild
-    notificacaoBody.insertBefore(notificationItem, firstNotification)
-
-    numeroNotificacoes++
-    atualizarNotificacaoBadge()
-}
-
-const removerNotificacao = () => {
-    if (numeroNotificacoes > 0) {
-        numeroNotificacoes--
-        atualizarNotificacaoBadge()
-    }
-}
-
-const atualizarNotificacaoBadge = () => {
-    notificationBadge.innerHTML = numeroNotificacoes
-}
 
 const btnFechar = document.querySelector('#btnFechar')
 const btnLimpar = document.querySelector('#btnLimpar')

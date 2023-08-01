@@ -1,3 +1,7 @@
+// Importando alertasModule e notificacaoModule
+import { dangerAlert, successAlert, alertRelatorio, updateAlert, deletedAlert, alertRelatorioFinanceiro } from "./alertasModule.js"
+import { adicionarNotificacao, removerNotificacao, atualizarNotificacaoBadge } from "./notificacaoModule.js"
+
 // Adicionar dados na table com classes
 
 class TableData {
