@@ -70,7 +70,7 @@ class TableData {
             corteCell.textContent = data.corte
 
             const dataCell = row.insertCell()
-            dataCell.textContent = data.data.toISOString().slice(0, 16)
+            dataCell.textContent = data.data
 
             const valorCell = row.insertCell()
             valorCell.textContent = `R$ ${data.valor}`
@@ -582,10 +582,13 @@ const mascaraMoeda = (campo, evento) => {
     campo.value = resultado
 }
 
-const valorEdicao = document.querySelector('#valorEdicao')
-valorEdicao.addEventListener('onkeyup', mascaraMoeda)
-const valor = document.querySelector('#valor')
-valor.addEventListener('onkeyup', mascaraMoeda)
+const valor = document.querySelector('#valor').addEventListener('keyup', (event) => {
+    mascaraMoeda(event.target, event)
+})
+
+const valorEdicao = document.querySelector('#valorEdicao').addEventListener('keyup', (event) => {
+    mascaraMoeda(event.target, event)
+})
 
 // Notificação
 
