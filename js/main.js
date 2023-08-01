@@ -365,7 +365,7 @@ submitButton.addEventListener('click', (event) => {
     const telefone = telefoneInput.value
     const celular = celularInput.value
     const corte = corteInput.value
-    const data = new Date(dataInput.value.trim())
+    const data = new Date(dataInput.value.trim()).toISOString().slice(0, 16)
     const valor = valorInput.value
 
     if (nome.trim() === '' || email.trim() === '' || celular.trim() === '' || corte.trim() === '' || data === '' || valor.trim() === '') {
@@ -390,13 +390,13 @@ submitButton.addEventListener('click', (event) => {
         tableData.addData(profissional, nome, email, telefone, celular, corte, data, valor)
 
         // Limpe os campos do formulário
-        // nameInput.value = "";
-        // emailInput.value = "";
-        // telefoneInput.value = "";
-        // celularInput.value = "";
-        // corteInput.value = "";
-        // dataInput.value = "";
-        // valorInput.value = ""
+        nameInput.value = "";
+        emailInput.value = "";
+        telefoneInput.value = "";
+        celularInput.value = "";
+        corteInput.value = "";
+        dataInput.value = "";
+        valorInput.value = ""
 
         adicionarNotificacao('success', `Cliente ${nome} foi adicionado com sucesso.`);
         atualizarNotificacaoBadge()
@@ -411,10 +411,10 @@ submitButton.addEventListener('click', (event) => {
 
         const color = document.querySelector('#eventColor')
         color.value = "#1976d2"
-        eventManager.addEvent(nome, color.value, data, corte)
+        eventManager.addEvent(nome, color.value, new Date(data), corte)
 
-        currentMonth = data.getMonth()
-        currentYear = data.getFullYear()
+        currentMonth = new Date(data).getMonth()
+        currentYear = new Date(data).getFullYear()
 
         generateCalendar(currentMonth, currentYear, eventManager)
 
