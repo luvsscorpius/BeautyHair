@@ -121,26 +121,7 @@ const btn_gerarRelatorioFinanceiro = document.querySelector('#gerarRelatorioFina
 btn_gerarRelatorio.addEventListener('click', gerarRelatorio)
 btn_gerarRelatorioFinanceiro.addEventListener('click', gerarRelatorioFinanceiro)
 
-// Variaveis 
-const notificationAlertClientAdded = document.querySelector('#notificationAlertClientAdded')
-const notificationAlertClientDeleted = document.querySelector('#notificationAlertClientDeleted')
-const notificationAlertClientUpdated = document.querySelector('#notificationAlertClientUpdated')
-const notificationAlertGeneratedPDF = document.querySelector('#notificationAlertGeneratedPDF')
-
-// Input Mask Phone
-
-const handlePhone = (campo, event) => {
-    let input = event.target
-    input.value = phoneMask(input.value)
-}
-
-const phoneMask = (value) => {
-    if (!value) return ""
-    value = value.replace(/\D/g, '')
-    value = value.replace(/(\d{2})(\d)/, "($1) $2")
-    value = value.replace(/(\d)(\d{4})$/, "$1-$2")
-    return value
-}
+// Importando phoneMaskModules.js
 
 const telefone = document.querySelector('#telefone')
 telefone.addEventListener('keyup', (event) => {
