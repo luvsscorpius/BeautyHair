@@ -270,7 +270,7 @@ const generateCalendar = (month, year, eventManager) => {
                     // Armazenar as informações do evento como atributos de dados
                     eventItem.dataset.eventTitle = event.nome
                     eventItem.dataset.eventColor = event.color
-                    eventItem.dataset.eventDate = event.data
+                    eventItem.dataset.eventDate = new Date(event.data)
                     console.log(event.data)
                     // eventItem.dataset.eventDate = event.data.toISOString().slice(0, 16); // transforma O formato resultante será algo como "AAAA-MM-DDTHH:mm:ss.sssZ".
 
