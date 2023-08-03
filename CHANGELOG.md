@@ -1,3 +1,17 @@
+# [1.20.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.19.0...v1.20.0) (2023-08-03)
+
+
+### Bug Fixes
+
+* **event delete fixed:** event delete fixed (sometimes it wouldnt delete) ([9b4c67f](https://github.com/luvsscorpius/BeautyHair/commit/9b4c67fdd1597ac063c301f6f5ea780369350de8))
+* **notificacao fixed:** notificacaoConteudo & btnNotification imported ([35de64d](https://github.com/luvsscorpius/BeautyHair/commit/35de64d10ce4ce74dc1f581c082956007f7bfa94))
+* **notificacao fixed:** notificationBadge imported ([5db9a3e](https://github.com/luvsscorpius/BeautyHair/commit/5db9a3e0da5214cffe31c6522b58a04c61391551))
+
+
+### Features
+
+* **abrirmenumodule added:** now when u click the menu it will have an animation ([819a205](https://github.com/luvsscorpius/BeautyHair/commit/819a205a8208b968b546dae1a4777842fe2a0dec))
+
 # [1.19.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.18.1...v1.19.0) (2023-08-03)
 
 
