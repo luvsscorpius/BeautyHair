@@ -1,3 +1,24 @@
+# [1.19.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.18.1...v1.19.0) (2023-08-03)
+
+
+### Bug Fixes
+
+* **date string fixed:** when it was added a client to the table, it wouldnt add to the calendar ([dad0b1c](https://github.com/luvsscorpius/BeautyHair/commit/dad0b1cf1cfbbb46d3f34ad9a2bb28fc0111d21a))
+* **mascara moeda fixed:** when it was added the modules, it started going wrong ([b8efa8e](https://github.com/luvsscorpius/BeautyHair/commit/b8efa8edfd11a6e6b8c6feb8fede4586ed4387ff))
+* **phonemask fixed:** it wasnt working properly after adding modules ([9db11b3](https://github.com/luvsscorpius/BeautyHair/commit/9db11b341e06345eda168ed150add62ca3d0ba90))
+
+
+### Features
+
+* **eventomodule & getmonthnamemodule added[:** new modules added ([519822e](https://github.com/luvsscorpius/BeautyHair/commit/519822e6cb5773af4b4208d82aafc2662b996a4c))
+* **mascaramoedamodule added:** mascaraMoedaModule added ([8440370](https://github.com/luvsscorpius/BeautyHair/commit/84403705739abbc3dc528a59ae403c57b25dfaf2))
+* **menumodule updated:** calendar updated, hide alerts when clicked ([aaf4804](https://github.com/luvsscorpius/BeautyHair/commit/aaf48040e2095316355e93ec50411aad95ffd79f))
+* **modules added:** starting to add modules ([b794d5e](https://github.com/luvsscorpius/BeautyHair/commit/b794d5e6476be0a44184dcd7cb45b361598f65aa))
+* **modules updated:** modules updated to work better ([8765b23](https://github.com/luvsscorpius/BeautyHair/commit/8765b23c6d1aa315e56059545cadc5169b57af96))
+* **mostrarextratomodule addded:** mostrarExtratoModule added ([dff8452](https://github.com/luvsscorpius/BeautyHair/commit/dff845200add200825a1fa5f59725f917f29f645))
+* **phonemaskmodule added:** phoneMaskModule added ([bf7acd8](https://github.com/luvsscorpius/BeautyHair/commit/bf7acd8270a727257cf6862f28880b6d2acaae5c))
+* **tabledate & gerarrelatorios modules added:** new modules added ([a0d2798](https://github.com/luvsscorpius/BeautyHair/commit/a0d279858990391a8495028fc6f7865193f0f5d8))
+
 ## [1.18.1](https://github.com/luvsscorpius/BeautyHair/compare/v1.18.0...v1.18.1) (2023-07-31)
 
 
