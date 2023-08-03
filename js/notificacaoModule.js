@@ -34,4 +34,4 @@ const atualizarNotificacaoBadge = () => {
     notificationBadge.innerHTML = numeroNotificacoes
 }
 
-export { adicionarNotificacao, removerNotificacao, atualizarNotificacaoBadge }
+export { adicionarNotificacao, removerNotificacao, atualizarNotificacaoBadge, notificacaoConteudo, btnNotification }

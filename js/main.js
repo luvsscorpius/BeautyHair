@@ -162,7 +162,8 @@ const valorEdicao = document.querySelector('#valorEdicao').addEventListener('key
     mascaraMoeda(event.target, event)
 })
 
-// Variavel para verificar se o conteudo está aberto ou não
+//Importando notificacaoModule
+import { notificacaoConteudo, btnNotification } from "./notificacaoModule.js"
 
 let isOpen = false
 
