@@ -327,3 +327,12 @@ nextMonth.addEventListener('click', () => {
 getMonthName()
 generateCalendar(currentMonth, currentYear, eventManager)
 
+// Importando abrirMenuModule
+import { abrirMenu } from "./abrirMenuModule.js"
+
+const barras = document.querySelector('#barras')
+
+barras.addEventListener('click', (e) => {
+    e.preventDefault()
+    abrirMenu()
+})
