@@ -163,7 +163,7 @@ const valorEdicao = document.querySelector('#valorEdicao').addEventListener('key
 })
 
 //Importando notificacaoModule
-import { notificacaoConteudo, btnNotification } from "./notificacaoModule.js"
+import { notificacaoConteudo, btnNotification, notificationBadge } from "./notificacaoModule.js"
 
 let isOpen = false
 
