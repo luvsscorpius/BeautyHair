@@ -41,15 +41,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-}
-
-.navigation ul {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding-left: 5px;
-    padding-top: 48px;
+    margin-bottom: 50px;
 }
 
 .navigation ul li {
@@ -313,6 +305,7 @@ form .column .mb-3 input {
     margin: 0 auto;
     margin-top: 20px;
     height: 100%;
+    overflow-x: auto;
 }
 
 .containerTable .gerarRelatorio {
@@ -338,6 +331,7 @@ form .column .mb-3 input {
     margin: 0 auto;
     margin-top: 10px;
     height: 100%;
+    border-collapse: collapse;
 }
 
 .divTable .table th {

@@ -1,0 +1,38 @@
+.navigation {
+    height: 100%;
+}
+
+#list-header-account {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.information ul li a .information-title {
+    font-size: 2.5rem;
+}
+
+.input input {
+    width: 100%;
+}
+
+.input button {
+    width: 50px;
+}
+
+.divButton button {
+    width: 100%;
+}
+
+form .column .mb-3 {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+    flex-direction: column;
+}
+
+.divTable {
+    width: 100%;
+    /* Redimensiona a tabela para ocupar toda a largura da tela em dispositivos menores */
+}
