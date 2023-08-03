@@ -24,8 +24,12 @@ body {
     height: 100vh;
     background-color: var(--menu);
     width: 110px;
+    display: none;
     overflow-x: hidden;
-    transition: 0.5;
+}
+
+.ocultar-menu {
+    opacity: 0;
 }
 
 .navigation img {
