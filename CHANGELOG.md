@@ -1,3 +1,11 @@
+# [1.21.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.20.0...v1.21.0) (2023-08-04)
+
+
+### Features
+
+* **becoming responsive:** becoming responsive ([c46f99a](https://github.com/luvsscorpius/BeautyHair/commit/c46f99ad6ca4aeb6dc621ba21e3dbea2f4cb68a3))
+* **finishing responsive:** now this page is responsive to all mobiles ([039d717](https://github.com/luvsscorpius/BeautyHair/commit/039d7176db95c3aeb733735f674711f7442aae52))
+
 # [1.20.0](https://github.com/luvsscorpius/BeautyHair/compare/v1.19.0...v1.20.0) (2023-08-03)
 
 
