@@ -7,6 +7,7 @@
     <title>BeautyHair</title>
     <link rel="shortcut icon" href="img/salao-de-beleza-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" media="screen and (max-width: 1024px)" href="css/mobile.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Animate css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -77,7 +78,7 @@
             </ul>
 
             <ul class="bars-header">
-                <li class="list-header">
+                <li class="list-header" id="list-header-account">
                     <a href="#">
                         <span class="title" style="font-size: 1.5rem;">And</span>
                         <span style="font-size: 1.5rem;"><i class="fa-solid fa-arrow-down"></i></span>
@@ -304,7 +305,7 @@
                                     <label for="profissional">Profissional</label>
                                     <select required class="form-control">
                                         <option value="and" id="profissionalInput">and</option>
-                                        <label for="valor">Valor</label>
+                                        <label for="valorEdicao">Valor</label>
                                         <input type="text" id="valorEdicao" class="form-control" required
                                             placeholder="R$ 0,00">
                                     </select>
