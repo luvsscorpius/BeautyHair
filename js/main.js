@@ -185,6 +185,7 @@ btnFechar.addEventListener('click', () => {
 })
 
 btnLimpar.addEventListener('click', () => {
+    //Capturando todos os alertas
     const notifications = document.querySelectorAll('.alert');
 
     // Adicionar a classe de animação para desvanecer gradualmente
@@ -202,15 +203,19 @@ btnLimpar.addEventListener('click', () => {
 // Importando mostrarExtratoModule
 import { mostrarExtrato } from "./mostrarExtratoModule.js"
 
+//Capturando o botão de extrato
 const btnExtrato = document.querySelector('#btnExtrato')
 
+//Evento de escuta
 btnExtrato.addEventListener('click', () => {
+    //Chama a função de mostrar o extrato
     mostrarExtrato()
 })
 
 // Função para não permitir datas anteriores a atuais
 
 const bloquearMesesAnteriores = () => {
+    // Capturando a data atual
     const dataAtual = new Date();
 
     dataAtual.setMinutes(dataAtual.getMinutes() - 1);
@@ -225,11 +230,13 @@ const bloquearMesesAnteriores = () => {
     inputDateEdicao.setAttribute("min", valorMinimo)
 }
 
+//Chama a função de bloquear os meses
 bloquearMesesAnteriores()
 
 // Importando eventoModule
 import { generateCalendar, eventManager, monthYearText } from "./eventoModule.js"
 
+// Capturando o botão de salvar
 const btnSalvar = document.querySelector('#btnSalvar')
 
 //Capturando o botão de salvar
@@ -239,11 +246,14 @@ btnSalvar.addEventListener('click', () => {
     const color = document.querySelector('#eventColor').value
     const data = new Date(document.querySelector('#eventTime').value);
 
+    //Envia para o método addEvent o nome, cor e data do evento
     eventManager.addEvent(nome, color, data)
 
+    // Pegando o ano e o mes atual
     currentMonth = data.getMonth()
     currentYear = data.getFullYear()
 
+    //Gera o calendário novamente
     generateCalendar(currentMonth, currentYear, eventManager)
 })
 
@@ -259,6 +269,7 @@ eventColorSelect.addEventListener("change", () => {
     selectedOption.style.backgroundColor = color
 })
 
+//Evento de escuta
 eventColorEdicaoSelect.addEventListener("change", () => {
     const color = eventColorEdicaoSelect.value
     selectedOptionEdicao.style.backgroundColor = color
@@ -267,12 +278,14 @@ eventColorEdicaoSelect.addEventListener("change", () => {
 //Importando getMonthNameModule 
 import { getMonthName } from "./getMonthNameModule.js"
 
+//Capturando os botões (spans) de passar e voltar meses
 const previousMonth = document.querySelector('#previousMonth')
 const nextMonth = document.querySelector('#nextMonth')
 
 //Controlar a animação
 let isAnimating = false;
 
+//Evento de escuta
 previousMonth.addEventListener('click', () => {
     if (isAnimating) return; // Evita cliques repetidos durante a animação
     isAnimating = true;
@@ -292,9 +305,11 @@ previousMonth.addEventListener('click', () => {
         isAnimating = false;
     }, 300)
 
+    // Gera o calendário novamente
     generateCalendar(currentMonth, currentYear, eventManager)
 })
 
+//Evento de escuta
 nextMonth.addEventListener('click', () => {
     if (isAnimating) return; // Evita cliques repetidos durante a animação
     isAnimating = true;
@@ -308,6 +323,7 @@ nextMonth.addEventListener('click', () => {
         currentYear++
     }
 
+    // Adiciona a transição ao nome e ano
     monthYearText.classList.add('fade-slide-next')
 
     void monthYearText.offsetWidth;
@@ -318,18 +334,24 @@ nextMonth.addEventListener('click', () => {
         isAnimating = false;
     }, 300)
 
+    // Gera o calendário novamente
     generateCalendar(currentMonth, currentYear, eventManager)
 })
 
+//Chama a função getMonth
 getMonthName()
+// Gera o calendário novamente
 generateCalendar(currentMonth, currentYear, eventManager)
 
 // Importando abrirMenuModule
 import { abrirMenu } from "./abrirMenuModule.js"
 
+// Capturando o icone das barras
 const barras = document.querySelector('#barras')
 
+//Evento de clique
 barras.addEventListener('click', (e) => {
     e.preventDefault()
+    //Chama a função de abrir o menu
     abrirMenu()
 })
