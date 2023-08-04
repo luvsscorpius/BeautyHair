@@ -12,7 +12,13 @@ BeautyHair é um sistema de gerenciamento para salões de beleza, projetado para
 
 ## Demonstração
 
+Aqui estão algumas capturas de tela do software em funcionamento.
 
+Desktop/Laptops
+![Desktop/Laptops](Screenshot2023-08-04190037.png)
+
+Dispositivos mobiles
+![Dispositivos mobiles](IMG_8165.PNG)
 
 ## Como usar/testar
 
