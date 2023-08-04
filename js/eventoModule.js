@@ -59,7 +59,6 @@ class Evento {
     deleteEvent(nome, color, date) {
         // transformando a data em string
         const dateString = date.toDateString()
-        console.log(dateString)
 
         // Verificar se o evento existe
         if (this.eventsByDate[dateString]) {
@@ -145,7 +144,6 @@ const generateCalendar = (month, year, eventManager) => {
                     // Adicionando atributos na celula para quando for clicada abrir o modal
                     cell.setAttribute('data-target', '#modalEvento')
                     cell.setAttribute('data-toggle', 'modal')
-
                 }
 
                 // Capturar o evento clicado
@@ -178,7 +176,6 @@ const generateCalendar = (month, year, eventManager) => {
 
                     // Evento de clique
                     btnSalvarEdicao.addEventListener('click', () => {
-                        console.log('Salvei')
 
                         // Agora que o evento de clique foi adicionado, precisamos criar novas constantes que irão receber os novos dados do input
                         const novoNome = nomeInput.value
@@ -200,7 +197,6 @@ const generateCalendar = (month, year, eventManager) => {
 
                     // Evento de clique para apagar o evento
                     btnDeletar.addEventListener('click', () => {
-                        console.log('Deletei')
 
                         // Precisamos pegar as informações do evento clicado a serem deletados
                         const nomeToDelete = clickedEvent.dataset.eventTitle
@@ -214,7 +210,6 @@ const generateCalendar = (month, year, eventManager) => {
                         // E atualizar o calendário novamente
                         generateCalendar(currentMonth, currentYear, eventManager)
 
-                        console.log(eventManager.eventsByDate)
                     })
 
                 } else {
@@ -271,7 +266,6 @@ const generateCalendar = (month, year, eventManager) => {
                     eventItem.dataset.eventTitle = event.nome
                     eventItem.dataset.eventColor = event.color
                     eventItem.dataset.eventDate = new Date(event.data)
-                    console.log(event.data)
                     // eventItem.dataset.eventDate = event.data.toISOString().slice(0, 16); // transforma O formato resultante será algo como "AAAA-MM-DDTHH:mm:ss.sssZ".
 
                     eventElement.appendChild(eventItem)

@@ -28,10 +28,6 @@ body {
     overflow-x: hidden;
 }
 
-.ocultar-menu {
-    opacity: 0;
-}
-
 .navigation img {
     width: 50px;
 }
@@ -70,7 +66,6 @@ body {
     display: block;
     white-space: nowrap;
 }
-
 
 .navigation ul li a .icon {
     position: relative;
@@ -164,7 +159,6 @@ main {
 .list-icon {
     font-size: 3rem;
 }
-
 
 /* Information */
 
@@ -350,12 +344,10 @@ tfoot th {
 
 .espacamento-botoes {
     margin-right: 5px;
-    /* Espaçamento de 5 pixels à direita do botão */
 }
 
 /* Notificacao */
 
-/* Estilo do dropdown menu */
 .notification-dropdown {
     position: relative;
 }
@@ -398,13 +390,6 @@ tfoot th {
     height: auto;
     overflow-y: scroll;
     max-height: 50vh;
-}
-
-/* Estilo para o botão de fechar */
-.close-button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
 }
 
 /* Estilo para o badge da notificação */
@@ -707,9 +692,4 @@ select {
     opacity: 0;
     transform: translateX(-100%);
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-}
-
-/* Adicione esta classe para evitar que a transição ocorra ao remover a classe 'fade-slide' */
-.no-transition {
-    transition: none;
 }

@@ -8,7 +8,6 @@ document.querySelector('.list-financeiro').addEventListener('click', financeiro)
 document.querySelector('.list-calendario').addEventListener('click', calendar)
 
 // Importando a tableDataModule e alertasModule e notificacaoModule
-import { TableData } from "./tableDataModule.js"
 import { tableData } from "./tableDataModule.js"
 
 import { dangerAlert, successAlert, alertRelatorio, updateAlert, deletedAlert, alertRelatorioFinanceiro } from "./alertasModule.js"
@@ -95,8 +94,6 @@ submitButton.addEventListener('click', (event) => {
         currentYear = new Date(data).getFullYear()
 
         generateCalendar(currentMonth, currentYear, eventManager)
-
-        console.log(tableData)
     }
 
 })
@@ -129,7 +126,6 @@ btn_gerarRelatorioFinanceiro.addEventListener('click', gerarRelatorioFinanceiro)
 
 // Importando phoneMaskModules.js
 import { handlePhone } from "./phoneMaskModule.js"
-import { phoneMask } from "./phoneMaskModule.js"
 
 const telefone = document.querySelector('#telefone')
 telefone.addEventListener('keyup', (event) => {

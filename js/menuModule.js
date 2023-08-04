@@ -31,7 +31,6 @@ const alertRelatorioFinanceiro = document.querySelector('#alert-relatorio-financ
 const abaCalendar = document.querySelector('#calendar')
 
 const clientes = () => {
-    console.log(abaClientes.style.display)
     if (abaClientes.style.display == 'none' && navClientes.style.display == 'none') {
         // Colocar visivelmente aba cliente
         abaClientes.style.display = 'block'

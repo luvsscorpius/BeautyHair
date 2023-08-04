@@ -130,8 +130,6 @@ class TableData {
                         // Atualizar dados da tabela   
                         tableData.renderTable()
                         tableData.totalFinanceiro()
-
-                        console.log(tableData)
                     }
                 })
             })
@@ -167,7 +165,6 @@ class TableData {
                     tableData.renderTableFinanceiro()
                     tableData.totalFinanceiro()
                 })
-                console.log("Apagar o cliente com o id:", data.id)
             })
             actionsCell.appendChild(delButton)
         })
@@ -272,7 +269,6 @@ class TableData {
         this.tableData.forEach((data) => {
             const valorFormatado = parseFloat(data.valor.trim())
 
-            console.log(total)
             if (!isNaN(valorFormatado)) {
                 total += valorFormatado
             }

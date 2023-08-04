@@ -93,8 +93,6 @@ const mostrarExtrato = () => {
     // função para gerar relatório do extrato
     const gerarRelatorioExtrato = () => {
         btnExtrato.addEventListener('click', () => {
-            console.log('Botão PDF extrato')
-
             const doc = new jsPDF()
             doc.fromHTML(listaExtrato)
             doc.save('Extrato.pdf')
